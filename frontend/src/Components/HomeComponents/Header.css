@@ -1,0 +1,36 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 8vh;
+    padding: 1.5rem;
+    width: 100%;
+}
+
+nav span {
+    color: rgba(250, 150, 4, 0.73);
+    font-weight: bold;
+    font-size: 25px;
+    margin-left: 10%;
+}
+
+nav div {
+    display: flex;
+    margin-right: 10%;
+    align-items: center;
+}
+
+a{
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+a:hover{
+  color: white;
+} 
+
+nav div h3 {
+    margin-left: 50px;
+    font-weight: 200;
+}
