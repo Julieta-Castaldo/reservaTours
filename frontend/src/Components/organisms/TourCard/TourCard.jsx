@@ -7,6 +7,9 @@ import {
     TourCardPriceWrapper, TourCardTitle,
     TourCardWrapper
 } from "./TourCard.styled.js";
+import {IconText} from "../../molecules/IconText/IconText.jsx";
+import {IconCalendar1} from "../../svgs/IconCalendar1.jsx";
+import {IconLocation} from "../../svgs/IconLocation.jsx";
 
 export const TourCard = () => {
     return (
@@ -18,6 +21,24 @@ export const TourCard = () => {
                 <TourCardTitle>
                     Recorrido Guatape
                 </TourCardTitle>
+                <IconText
+                    text='Agosto 24 2023'
+                    src={
+                        <IconCalendar1
+                            size='16'
+                            color={'#58C1CE'}
+                        />
+                    }
+                />
+                <IconText
+                    text='Medellín, Colombia'
+                    src={
+                        <IconLocation
+                            size='16'
+                            color={'#58C1CE'}
+                        />
+                    }
+                />
             </TourCardDetails>
             <TourCardPriceWrapper>
                 <TourCardCurrency>USD</TourCardCurrency>
