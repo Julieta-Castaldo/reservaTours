@@ -4,7 +4,6 @@ import {ToursSection} from "../Components/sections/ToursSection/ToursSection.jsx
 const Home = () => {
     return (
         <main>
-            <h1>Home</h1>
             <MainSection/>
             <ToursSection/>
         </main>

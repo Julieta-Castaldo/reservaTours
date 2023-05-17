@@ -1,4 +1,4 @@
-import {IconArrowRight2} from "../../svgs/IconArrow.jsx";
+import {IconArrowRight2} from "../../svgs/IconArrowRight2.jsx";
 import {ButtonIcon} from "../../molecules/ButtonIcon/ButtonIcon.jsx";
 import {
     TourCardCurrency, TourCardDetails,
