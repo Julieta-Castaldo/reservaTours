@@ -1,6 +1,6 @@
 package com.example.PI_C3_E6_BACK.persistence.entities;
 import jakarta.persistence.*;
-
+import org.hibernate.annotations.Type;
 import java.time.LocalDate;
 
 @Entity
@@ -17,8 +17,10 @@ public class TourEntity {
     @Column(name = "descripcion")
     private String descripcion;
     @Column(name = "fechaSalida")
+    @Temporal(TemporalType.DATE)
     private LocalDate fechaSalida;
     @Column(name = "fechaLlegada")
+    @Temporal(TemporalType.DATE)
     private LocalDate fechaLlegada;
 
     @ManyToOne(fetch = FetchType.EAGER)

@@ -3,7 +3,7 @@ package com.example.PI_C3_E6_BACK.persistence.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Categoria")
+@Table(name = "Categorias")
 public class CategoriaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
