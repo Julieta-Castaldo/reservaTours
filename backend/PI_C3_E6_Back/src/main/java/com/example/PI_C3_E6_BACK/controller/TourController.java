@@ -67,4 +67,15 @@ public class TourController implements IController<TourDTO>{
         return ResponseEntity.badRequest().body("No se pudo crear el tour. Verificar los datos ingresados");
     }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> borrarPorId(@PathVariable int id){
+        try{
+            tourService.borrarPorId(id);
+        }catch (Exception ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+        return ResponseEntity.ok("Se borró el tour con éxito");
+    }
+
 }

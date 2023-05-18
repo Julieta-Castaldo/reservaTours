@@ -1,6 +1,7 @@
 package com.example.PI_C3_E6_BACK.service;
 
 import com.example.PI_C3_E6_BACK.configuration.MapperConfig;
+import com.example.PI_C3_E6_BACK.exceptions.ResourceNotFoundException;
 import com.example.PI_C3_E6_BACK.model.ImagenesDTO;
 import com.example.PI_C3_E6_BACK.model.TourDTO;
 import com.example.PI_C3_E6_BACK.persistence.entities.CategoriaEntity;
@@ -126,7 +127,24 @@ public class TourService {
         }else{
             log.error("No se pudo crear el tour ya que algunos de los datos otorgados es incorrecto");
         }
+    }
+
+    public void borrarPorId(int id){
+
+        if (id >= 0){
+            try {
+                TourEntity tour = repo.findTourById(id);
+                for (ImagenesEntity img : repoImagenes.findImgById(tour.getId())){
+                    repoImagenes.delete(img);
+                }
+                repo.deleteById(id);
+                log.info("Turno eliminado");
+            }catch (Exception ex) {
+                log.error(ex.getMessage());
+            }
         }
+        log.error("id inválido");
+    }
 
 
 
