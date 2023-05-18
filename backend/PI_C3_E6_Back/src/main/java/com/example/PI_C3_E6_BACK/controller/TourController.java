@@ -40,6 +40,17 @@ public class TourController implements IController<TourDTO>{
             throw new ResourceNotFoundException(ex.getMessage());
         }
     }
+
+    @GetMapping("/porCategoria/{categoria}")
+    @ResponseBody
+    public  ResponseEntity<List<TourDTO>> buscarPorCategoria (@PathVariable String categoria) throws ResourceNotFoundException {
+        try {
+            List<TourDTO> ListaTourDTO = tourService.buscarPorCategoria(categoria);
+            return ResponseEntity.ok(ListaTourDTO);
+        }catch (Exception ex){
+            throw new ResourceNotFoundException(ex.getMessage());
+        }
+    }
     @PostMapping("/agregar")
     public ResponseEntity<String> crearTour(@RequestBody TourDTO t){
         Duration duracion = Duration.between(t.getFechaSalida().atStartOfDay(), t.getFechaLlegada().atStartOfDay());
@@ -56,4 +67,15 @@ public class TourController implements IController<TourDTO>{
         return ResponseEntity.badRequest().body("No se pudo crear el tour. Verificar los datos ingresados");
     }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> borrarPorId(@PathVariable int id){
+        try{
+            tourService.borrarPorId(id);
+        }catch (Exception ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+        return ResponseEntity.ok("Se borró el tour con éxito");
+    }
+
 }

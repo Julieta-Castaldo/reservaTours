@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface TourRepository extends JpaRepository<TourEntity, Integer> {
 
@@ -15,7 +17,8 @@ public interface TourRepository extends JpaRepository<TourEntity, Integer> {
     @Query("SELECT t FROM TourEntity t WHERE t.nombre = :nombre")
     TourEntity findTourByName(@Param("nombre") String nombre);
 
-
+    @Query("SELECT t FROM TourEntity t JOIN t.categoria c WHERE c.nombre = :nombreCategoria")
+    List<TourEntity> findToursByCategoria(@Param("nombreCategoria") String nombreCategoria);
 
 
 
