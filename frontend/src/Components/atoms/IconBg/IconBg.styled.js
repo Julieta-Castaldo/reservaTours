@@ -20,5 +20,8 @@ export const IconBgWrapper = styled.div`
     & svg.iconSVG > path {
       fill: ${({hoverColor}) => hoverColor};
     }
+    & svg.iconSVG > g > path {
+      fill: ${({hoverColor}) => hoverColor};
+    }
   }
 `;

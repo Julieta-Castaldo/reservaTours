@@ -11,6 +11,12 @@ export const MainSection = () => {
                     <IconSearchNormal1 size='24'/>
                 </MainSectionSearch>
             </MainSectionSearchBar>
+            {/*<IconBg*/}
+            {/*    src={<IconUser color={'red'} className='iconSVG'/>}*/}
+            {/*    bgColor={'#fff'}*/}
+            {/*    hoverColor={'yellow'}*/}
+            {/*    hoverBgColor={'green'}*/}
+            {/*/>*/}
         </MainSectionWrapper>
     )
 }

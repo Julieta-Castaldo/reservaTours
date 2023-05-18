@@ -22,7 +22,6 @@ export const IconBg = (props) => {
 }
 
 IconBg.propTypes = {
-    text: PropTypes.string.isRequired,
     bgColor: PropTypes.string,
     src: PropTypes.element,
     hoverColor: PropTypes.string,
