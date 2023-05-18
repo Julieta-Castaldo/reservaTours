@@ -1,24 +1,22 @@
 import PropTypes from 'prop-types';
-import {ButtonIconWrapper} from "./ButtonIcon.styled.js";
+import {CircleButtonWrapper} from "./CircleButton.styled.js";
 
-export const ButtonIcon = (props) => {
+export const CircleButton = (props) => {
 
     const {
-        text,
         bgColor,
         src,
-        rIcon = true,
         borderColor,
         color,
         hoverColor,
         hoverBgColor,
         width,
         margin,
-        startPosition
+        height
     } = props;
 
     return (
-        <ButtonIconWrapper
+        <CircleButtonWrapper
             bgColor={bgColor}
             borderColor={borderColor}
             color={color}
@@ -26,27 +24,23 @@ export const ButtonIcon = (props) => {
             hoverBgColor={hoverBgColor}
             width={width}
             margin={margin}
+            height={height}
         >
             {
-                !rIcon && src
+                src
             }
-            {text}
-            {
-                rIcon && src
-            }
-        </ButtonIconWrapper>
+        </CircleButtonWrapper>
     )
 }
 
-ButtonIcon.propTypes = {
-    text: PropTypes.string.isRequired,
+CircleButton.propTypes = {
     bgColor: PropTypes.string,
-    rIcon: PropTypes.bool,
     src: PropTypes.element,
     borderColor: PropTypes.string,
     color: PropTypes.string,
     hoverColor: PropTypes.string,
     hoverBgColor: PropTypes.string,
     width: PropTypes.string,
-    margin: PropTypes.string
+    margin: PropTypes.string,
+    height: PropTypes.string
 };
