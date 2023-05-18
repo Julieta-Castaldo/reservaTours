@@ -40,6 +40,17 @@ public class TourController implements IController<TourDTO>{
             throw new ResourceNotFoundException(ex.getMessage());
         }
     }
+
+    @GetMapping("/porCategoria/{categoria}")
+    @ResponseBody
+    public  ResponseEntity<List<TourDTO>> buscarPorCategoria (@PathVariable String categoria) throws ResourceNotFoundException {
+        try {
+            List<TourDTO> ListaTourDTO = tourService.buscarPorCategoria(categoria);
+            return ResponseEntity.ok(ListaTourDTO);
+        }catch (Exception ex){
+            throw new ResourceNotFoundException(ex.getMessage());
+        }
+    }
     @PostMapping("/agregar")
     public ResponseEntity<String> crearTour(@RequestBody TourDTO t){
         Duration duracion = Duration.between(t.getFechaSalida().atStartOfDay(), t.getFechaLlegada().atStartOfDay());

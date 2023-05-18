@@ -87,6 +87,22 @@ public class TourService {
         }
         return listaDTO;
     }
+
+    public List<TourDTO> buscarPorCategoria(String categoria){
+        List<TourDTO> listaDTO =new ArrayList<>();
+        for(TourEntity tour : repo.findToursByCategoria(categoria)){
+            TourDTO tourDTO = modelMapper.getModelMapper().map(tour, TourDTO.class);
+            List<ImagenesEntity> imagenesEntities = repoImagenes.findImgById(tour.getId());
+            List<ImagenesDTO> imagenesDTOS = new ArrayList<>();
+            for (ImagenesEntity img : imagenesEntities){
+                imagenesDTOS.add(modelMapper.getModelMapper().map(img, ImagenesDTO.class));
+            }
+            tourDTO.setListaImagenes(imagenesDTOS);
+            listaDTO.add(tourDTO);
+        }
+        return listaDTO;
+    }
+
     public void agregarTour(TourDTO t) throws Exception{
         TourEntity tour = modelMapper.getModelMapper().map(t, TourEntity.class);
         CiudadEntity ciudad = modelMapper.getModelMapper().map(t.getCiudad(), CiudadEntity.class);
