@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "Imagenes_tours")
 public class ImagenesEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
     @Column(name="url_imagen")

@@ -7,8 +7,8 @@ public class CategoriaDTO implements Serializable {
     private String nombreCategoria;
 
     //constructors
-    public CategoriaDTO(int id, String nombreCategoria) {
-        this.id = id;
+    public CategoriaDTO(String nombreCategoria) {
+
         this.nombreCategoria = nombreCategoria;
     }
 

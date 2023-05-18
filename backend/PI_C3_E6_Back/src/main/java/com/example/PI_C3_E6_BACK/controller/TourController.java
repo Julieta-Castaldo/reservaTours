@@ -9,6 +9,9 @@ import org.springframework.boot.context.config.ConfigDataResourceNotFoundExcepti
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
+import java.util.List;
+
 @RestController
 @RequestMapping("Tour")
 public class TourController implements IController<TourDTO>{
@@ -27,4 +30,30 @@ public class TourController implements IController<TourDTO>{
         }
     }
 
+    @GetMapping("/todos")
+    @ResponseBody
+    public  ResponseEntity<List<TourDTO>> buscarTodos () throws ResourceNotFoundException {
+        try {
+            List<TourDTO> ListaTourDTO = tourService.buscarTodos();
+            return ResponseEntity.ok(ListaTourDTO);
+        }catch (Exception ex){
+            throw new ResourceNotFoundException(ex.getMessage());
+        }
+    }
+    @PostMapping("/agregar")
+    public ResponseEntity<String> crearTour(@RequestBody TourDTO t){
+        Duration duracion = Duration.between(t.getFechaSalida().atStartOfDay(), t.getFechaLlegada().atStartOfDay());
+        long diferenciaDias = duracion.toDays();
+        if(t.getNombre() != null && diferenciaDias >= 2 && t.getFechaLlegada()!= null
+                && t.getFechaSalida() != null){
+            try {
+                tourService.agregarTour(t);
+            }catch (Exception ex) {
+                return ResponseEntity.badRequest().body(ex.getMessage());
+            }
+        return ResponseEntity.ok("El tour fue creado con éxito");
+    }else{
+        return ResponseEntity.badRequest().body("No se pudo crear el tour. Verificar los datos ingresados");
+    }
+    }
 }
