@@ -4,8 +4,11 @@ import com.example.PI_C3_E6_BACK.configuration.MapperConfig;
 import com.example.PI_C3_E6_BACK.model.ImagenesDTO;
 import com.example.PI_C3_E6_BACK.model.TourDTO;
 import com.example.PI_C3_E6_BACK.persistence.entities.CategoriaEntity;
+import com.example.PI_C3_E6_BACK.persistence.entities.CiudadEntity;
 import com.example.PI_C3_E6_BACK.persistence.entities.ImagenesEntity;
 import com.example.PI_C3_E6_BACK.persistence.entities.TourEntity;
+import com.example.PI_C3_E6_BACK.persistence.repository.CategoriaRepository;
+import com.example.PI_C3_E6_BACK.persistence.repository.CiudadRepository;
 import com.example.PI_C3_E6_BACK.persistence.repository.ImagenesRepository;
 import com.example.PI_C3_E6_BACK.persistence.repository.TourRepository;
 import org.apache.logging.log4j.LogManager;
@@ -26,6 +29,10 @@ public class TourService {
     TourRepository repo;
     @Autowired
     ImagenesRepository repoImagenes;
+    @Autowired
+    CategoriaRepository repoCategoria;
+    @Autowired
+    CiudadRepository repoCiudad;
     @Autowired
     private MapperConfig modelMapper;
     private static final Logger log = LogManager.getLogger(TourService.class);
@@ -65,12 +72,48 @@ public class TourService {
         }
         return tourDTO;
     }
-    /*public void agregarTour(TourDTO t) throws Exception{
-        TourEntity tour = modelMapper.getModelMapper().map(t, TourEntity.class);
-        if (t.getFechaSalida().isAfter(LocalDate.now()) && repo.findTourByName(t.getNombre()) == null){
-            CategoriaEntity categoria =
+
+    public List<TourDTO> buscarTodos (){
+        List<TourDTO> listaDTO =new ArrayList<>();
+        for(TourEntity tour : repo.findAll()){
+            TourDTO tourDTO = modelMapper.getModelMapper().map(tour, TourDTO.class);
+            List<ImagenesEntity> imagenesEntities = repoImagenes.findImgById(tour.getId());
+            List<ImagenesDTO> imagenesDTOS = new ArrayList<>();
+            for (ImagenesEntity img : imagenesEntities){
+                imagenesDTOS.add(modelMapper.getModelMapper().map(img, ImagenesDTO.class));
+            }
+            tourDTO.setListaImagenes(imagenesDTOS);
+            listaDTO.add(tourDTO);
         }
-    }*/
+        return listaDTO;
+    }
+    public void agregarTour(TourDTO t) throws Exception{
+        TourEntity tour = modelMapper.getModelMapper().map(t, TourEntity.class);
+        CiudadEntity ciudad = modelMapper.getModelMapper().map(t.getCiudad(), CiudadEntity.class);
+
+        if (t.getFechaSalida().isAfter(LocalDate.now()) && repo.findTourByName(t.getNombre()) == null) {
+            try {
+                CategoriaEntity categoria = repoCategoria.findCategoriaByName(t.getCategoria().getNombreCategoria());
+                tour.setCiudad(ciudad);
+                tour.setCategoria(categoria);
+                repoCiudad.save(ciudad);
+                repo.save(tour);
+                for (ImagenesDTO img : t.getListaImagenes()){
+                    ImagenesEntity imagenEntity = modelMapper.getModelMapper().map(img,ImagenesEntity.class);
+                    imagenEntity.setTour(tour);
+                    repoImagenes.save(imagenEntity);
+                }
+
+            } catch (Exception ex) {
+                log.error(ex.getMessage());
+            }
+        }else{
+            log.error("No se pudo crear el tour ya que algunos de los datos otorgados es incorrecto");
+        }
+        }
+
+
+
 
 
 }

@@ -7,8 +7,8 @@ public class CiudadDTO implements Serializable {
     private String nombreCiudad;
 
     //constructors
-    public CiudadDTO(int id, String nombreCiudad) {
-        this.id = id;
+    public CiudadDTO( String nombreCiudad) {
+
         this.nombreCiudad = nombreCiudad;
     }
 

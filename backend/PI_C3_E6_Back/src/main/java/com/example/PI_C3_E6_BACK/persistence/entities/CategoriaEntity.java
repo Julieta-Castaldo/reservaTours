@@ -6,17 +6,17 @@ import jakarta.persistence.*;
 @Table(name = "Categorias")
 public class CategoriaEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
     @Column(name="nombre")
-    private String nombreCategoria;
+    private String nombre;
 
 
 
     //constructors
     public CategoriaEntity(String nombreCategoria) {
-        this.nombreCategoria = nombreCategoria;
+        this.nombre = nombreCategoria;
     }
     public CategoriaEntity() {
     }
@@ -31,10 +31,10 @@ public class CategoriaEntity {
     }
 
     public String getNombreCategoria() {
-        return nombreCategoria;
+        return nombre;
     }
 
     public void setNombreCategoria(String nombreCategoria) {
-        this.nombreCategoria = nombreCategoria;
+        this.nombre = nombreCategoria;
     }
 }

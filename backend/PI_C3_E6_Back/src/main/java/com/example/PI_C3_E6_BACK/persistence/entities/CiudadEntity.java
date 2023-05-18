@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class CiudadEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
     @Column(name="nombre")

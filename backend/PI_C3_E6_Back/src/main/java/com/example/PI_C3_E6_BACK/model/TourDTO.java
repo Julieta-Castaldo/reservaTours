@@ -16,8 +16,8 @@ public class TourDTO implements Serializable {
     private List<ImagenesDTO> listaImagenes;
 
     //constructors
-    public TourDTO(int id, String nombre, String descripcion, LocalDate fechaSalida, LocalDate fechaLlegada, CategoriaDTO categoria, CiudadDTO ciudad, List<ImagenesDTO> listaImagenes) {
-        this.id = id;
+    public TourDTO( String nombre, String descripcion, LocalDate fechaSalida, LocalDate fechaLlegada, CategoriaDTO categoria, CiudadDTO ciudad, List<ImagenesDTO> listaImagenes) {
+
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaSalida = fechaSalida;

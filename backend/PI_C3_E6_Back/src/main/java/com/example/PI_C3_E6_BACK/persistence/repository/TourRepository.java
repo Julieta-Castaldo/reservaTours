@@ -15,4 +15,8 @@ public interface TourRepository extends JpaRepository<TourEntity, Integer> {
     @Query("SELECT t FROM TourEntity t WHERE t.nombre = :nombre")
     TourEntity findTourByName(@Param("nombre") String nombre);
 
+
+
+
+
 }

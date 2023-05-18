@@ -7,8 +7,7 @@ public class ImagenesDTO implements Serializable {
     private String url;
 
     //constructors
-    public ImagenesDTO(int id, String url) {
-        this.id = id;
+    public ImagenesDTO( String url) {
         this.url = url;
     }
 
