@@ -11,7 +11,9 @@ export const ButtonIcon = (props) => {
         borderColor,
         color,
         hoverColor,
-        hoverBgColor
+        hoverBgColor,
+        width,
+        margin
     } = props;
 
     return (
@@ -21,6 +23,8 @@ export const ButtonIcon = (props) => {
             color={color}
             hoverColor={hoverColor}
             hoverBgColor={hoverBgColor}
+            width={width}
+            margin={margin}
         >
             {
                 !rIcon && src
@@ -41,5 +45,7 @@ ButtonIcon.propTypes = {
     borderColor: PropTypes.string,
     color: PropTypes.string,
     hoverColor: PropTypes.string,
-    hoverBgColor: PropTypes.string
+    hoverBgColor: PropTypes.string,
+    width: PropTypes.string,
+    margin: PropTypes.string
 };
