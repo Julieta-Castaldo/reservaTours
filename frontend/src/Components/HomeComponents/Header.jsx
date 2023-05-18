@@ -13,7 +13,7 @@ import { IconUser } from '../svgs/IconUser';
 
 const Header = () => {
     return (
-        <nav>
+        <nav className="mainNav">
             <div className="rainbow">
                 <div className="greenBox"></div>
                 <div className="yellowBox"></div>
