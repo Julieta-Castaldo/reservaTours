@@ -15,12 +15,12 @@ import PropTypes from "prop-types";
 
 export const AdminTable = ({ data }) => {
 
-    function toggleAll(source) {
-        const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
-        checkboxes.forEach(checkbox => {
-            checkbox.checked = source.checked;
-        });
-    }
+    // function toggleAll(source) {
+    //     const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+    //     checkboxes.forEach(checkbox => {
+    //         checkbox.checked = source.checked;
+    //     });
+    // }
 
     return (
         <AdminTableWrapper>
@@ -33,7 +33,7 @@ export const AdminTable = ({ data }) => {
                             width="max-content"
                             justify='center'
                         >
-                            <input type="checkbox" onClick={toggleAll(this)} />
+                            <input type="checkbox" /*onClick={toggleAll(this)}*/ />
                             <span className="selectAllLabel"></span>
                         </AdminTableTh>
                         <AdminTableTh
