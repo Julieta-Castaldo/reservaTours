@@ -7,6 +7,7 @@ import Home from './Routes/Home'
 import Login from './Routes/Login'
 import ProductDetail from './Routes/ProductDetail';
 import Admin from "./Routes/Admin.jsx";
+import CreateProduct from './Routes/CreateProduct';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
                 <Route path='/login' element={<Login/>}/>
                 <Route path={`/tour/:id`} element={<ProductDetail/>}/>
                 <Route path='/admin' element={<Admin/>}/>
+                <Route path='/newTour' element={<CreateProduct/>}/>
             </Routes>
             <Footer/>
         </div>

@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { IconTrash } from "../../svgs/IconTrash.jsx";
 import PropTypes from "prop-types";
 
+
 export const AdminTable = ({ data }) => {
 
     // function toggleAll(source) {
@@ -58,20 +59,22 @@ export const AdminTable = ({ data }) => {
                             width="12.4rem"
                             justify='center'
                         >
-                            <ButtonIcon
-                                text='Agregar'
-                                src={
-                                    <IconArrowRight2
-                                        size='18'
-                                        className='iconSVG'
-                                    />
-                                }
-                                borderColor={'#F2A63B'}
-                                color={'white'}
-                                hoverColor={'#F2A63B'}
-                                bgColor={'#F2A63B'}
-                                hoverBgColor={'transparent'}
-                            />
+                            <Link to='/newTour'>
+                                <ButtonIcon
+                                    text='Agregar'
+                                    src={
+                                        <IconArrowRight2
+                                            size='18'
+                                            className='iconSVG'
+                                        />
+                                    }
+                                    borderColor={'#F2A63B'}
+                                    color={'white'}
+                                    hoverColor={'#F2A63B'}
+                                    bgColor={'#F2A63B'}
+                                    hoverBgColor={'transparent'}
+                                />
+                            </Link>
                         </AdminTableTh>
 
                     </AdminTableTr>
