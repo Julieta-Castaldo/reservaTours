@@ -1,0 +1,56 @@
+.detailView{
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.mainImage{
+    width: 500px;
+    border-radius: 25px;
+}
+
+.secondaryImagesSection{
+   display: flex;
+   margin-top: 24px;
+}
+
+.secondaryImages{
+    width: 110px;
+    margin-right: 10px;
+}
+
+.productName{
+    font-size: 38px;
+    color: #58C1CE;
+    font-weight: 700;
+}
+
+.productDescription{
+    font-weight: 300;
+    color: #717B8A;
+    font-size: 16px;
+}
+
+.productData{
+    background-color: #F9F9F9;
+    height: 400px;
+    width: 330px;
+    padding: 24px;
+}
+
+.priceSection{
+    display: flex;
+    align-items: start;
+}
+
+.categoriesText{
+    font-weight: 600;
+    color: #717B8A;
+    margin-top: 10px;
+}
+
+.inputBox{
+    height: 50px;
+    border: 1px solid #DDE3EB;
+    border-radius: 5px;
+}

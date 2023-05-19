@@ -48,7 +48,7 @@ export const TourCard = ({product}) => {
                     ${Number(id)*1000}
                 </TourCardPrice>
             </TourCardPriceWrapper>
-            <Link to='/tour/:1'>
+            <Link to={`/tour/:${id}`}>
                 <ButtonIcon
                     text='Detalle'
                     src={
