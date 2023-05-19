@@ -10,19 +10,23 @@ import {
 import {IconText} from "../../molecules/IconText/IconText.jsx";
 import {IconCalendar1} from "../../svgs/IconCalendar1.jsx";
 import {IconLocation} from "../../svgs/IconLocation.jsx";
+import PropTypes from "prop-types";
 
-export const TourCard = () => {
+export const TourCard = (props) => {
+
+    const {imgUrl, title, date, location, currency, price } = props;
+
     return (
         <TourCardWrapper>
             <TourCardImgWrapper
-                imgUrl='https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/8e/0a/63/colombia-and-experience.jpg?w=600&h=400&s=1'
+                imgUrl={imgUrl}
             />
             <TourCardDetails>
                 <TourCardTitle>
-                    Recorrido Guatape
+                    {title}
                 </TourCardTitle>
                 <IconText
-                    text='Agosto 24 2023'
+                    text={date}
                     src={
                         <IconCalendar1
                             size='16'
@@ -31,7 +35,7 @@ export const TourCard = () => {
                     }
                 />
                 <IconText
-                    text='Medellín, Colombia'
+                    text={location}
                     src={
                         <IconLocation
                             size='16'
@@ -41,9 +45,9 @@ export const TourCard = () => {
                 />
             </TourCardDetails>
             <TourCardPriceWrapper>
-                <TourCardCurrency>USD</TourCardCurrency>
+                <TourCardCurrency>{currency}</TourCardCurrency>
                 <TourCardPrice>
-                    $1000
+                    ${price}
                 </TourCardPrice>
             </TourCardPriceWrapper>
             <ButtonIcon
@@ -63,3 +67,12 @@ export const TourCard = () => {
         </TourCardWrapper>
     )
 }
+
+TourCard.propTypes = {
+    title: PropTypes.string.isRequired,
+    imgUrl: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    location: PropTypes.string.isRequired,
+    currency: PropTypes.string.isRequired,
+    price: PropTypes.string.isRequired,
+};

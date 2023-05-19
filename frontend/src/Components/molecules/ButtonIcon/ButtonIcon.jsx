@@ -11,11 +11,13 @@ export const ButtonIcon = (props) => {
         borderColor,
         color,
         hoverColor,
-        hoverBgColor
+        hoverBgColor,
+        width,
     } = props;
 
     return (
         <ButtonIconWrapper
+            width={width}
             bgColor={bgColor}
             borderColor={borderColor}
             color={color}
@@ -41,5 +43,6 @@ ButtonIcon.propTypes = {
     borderColor: PropTypes.string,
     color: PropTypes.string,
     hoverColor: PropTypes.string,
-    hoverBgColor: PropTypes.string
+    hoverBgColor: PropTypes.string,
+    width: PropTypes.string
 };
