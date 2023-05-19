@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 
 export const ButtonIconWrapper = styled.button`
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   background-color: ${props => (props.bgColor ? props.bgColor : 'transparent')};
-  padding: 1.2rem 2.4rem;
+  padding: 1rem 2.4rem;
   border: ${({borderColor}) => (borderColor ? `1px solid ${borderColor}` : 'none')};;
   gap: 1.2rem;
   display: flex;
@@ -11,6 +11,7 @@ export const ButtonIconWrapper = styled.button`
   justify-content: center;
   color: ${({color}) => (color ? color : 'white')};
   width: ${({width}) => (width ? width : '100%')}; // auto
+  margin: ${({margin}) => (margin ? margin : '0')};
 
   :hover {
     cursor: pointer;

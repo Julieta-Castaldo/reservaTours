@@ -1,0 +1,60 @@
+.footer{
+    background-color: #58C1CE;
+}
+
+.footerContent{
+    width: 100%;
+    text-align: start;
+    padding: 24px 50px;
+}
+
+.logo{
+    width: 100px;
+}
+
+.copyText{
+    color: white;
+    margin-bottom: 8px;
+}
+
+.orangeButton{
+    color: white;
+    background-color: #F2A63B;
+}
+
+.mobileDisposition{
+    padding: 4px 4px;
+}
+
+.desktopDisposition{
+    padding: 4px 4px;
+}
+
+.mobileLinks{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+@media (min-width: 700px) {
+    .mobileDisposition{
+        display: none;
+    }
+
+    .desktopDisposition{
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 700px) {
+    .mobileDisposition{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .desktopDisposition{
+        display: none;
+    }
+}
+

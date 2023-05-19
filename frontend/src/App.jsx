@@ -2,9 +2,12 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 //Components
 import Header from './Components/HomeComponents/Header';
+import Footer from './Components/HomeComponents/Footer';
 //Routes
 import Home from './Routes/Home'
 import Login from './Routes/Login'
+import ProductDetail from './Routes/ProductDetail';
+
 
 function App() {
 
@@ -14,7 +17,9 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
+        <Route path={`/tour/:id`} element={<ProductDetail/>}/>
       </Routes>
+      <Footer/>
     </div>
   )
 }

@@ -1,5 +1,5 @@
-import {IconArrowRight2} from "../../svgs/IconArrowRight2.jsx";
-import {ButtonIcon} from "../../molecules/ButtonIcon/ButtonIcon.jsx";
+import { IconArrowRight2 } from "../../svgs/IconArrowRight2.jsx";
+import { ButtonIcon } from "../../molecules/ButtonIcon/ButtonIcon.jsx";
 import {
     TourCardCurrency, TourCardDetails,
     TourCardImgWrapper,
@@ -50,20 +50,22 @@ export const TourCard = (props) => {
                     ${price}
                 </TourCardPrice>
             </TourCardPriceWrapper>
-            <ButtonIcon
-                text='Detalle'
-                src={
-                    <IconArrowRight2
-                        size='18'
-                        className='iconSVG'
-                    />
-                }
-                borderColor={'#05848A'}
-                color={'white'}
-                hoverColor={'#05848A'}
-                bgColor={'#05848A'}
-                hoverBgColor={'transparent'}
-            />
+            <Link to='/tour/:1'>
+                <ButtonIcon
+                    text='Detalle'
+                    src={
+                        <IconArrowRight2
+                            size='18'
+                            className='iconSVG'
+                        />
+                    }
+                    borderColor={'#05848A'}
+                    color={'white'}
+                    hoverColor={'#05848A'}
+                    bgColor={'#05848A'}
+                    hoverBgColor={'transparent'}
+                />
+            </Link>
         </TourCardWrapper>
     )
 }

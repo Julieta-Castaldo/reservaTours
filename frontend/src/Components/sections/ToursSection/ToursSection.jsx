@@ -9,6 +9,16 @@ import {TourCard} from "../../organisms/TourCard/TourCard.jsx";
 
 
 export const ToursSection = () => {
+    const [products, setProducts] = useState([])
+    const url = `http://localhost:8080/Tour/todos`;
+
+    useEffect(() => {
+        fetch(url)
+            .then(res => res.json())
+            .then(data => setProducts(data))
+
+    }, [url])
+
     return (
         <ToursSectionWrapper>
             <ToursSectionTitle>Nuestros Tours</ToursSectionTitle>

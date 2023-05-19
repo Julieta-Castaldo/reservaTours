@@ -23,6 +23,8 @@ export const ButtonIcon = (props) => {
             color={color}
             hoverColor={hoverColor}
             hoverBgColor={hoverBgColor}
+            width={width}
+            margin={margin}
         >
             {
                 !rIcon && src
