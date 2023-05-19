@@ -6,6 +6,7 @@ export const ToursSectionWrapper = styled.section`
   align-items: center;
   padding: 20rem 0 10rem;
   gap: 5rem;
+
 `;
 
 export const ToursSectionTitle = styled.h2`
@@ -22,15 +23,4 @@ export const ToursSectionTitle = styled.h2`
   /* 3 */
 
   color: #58C1CE;
-`;
-
-export const SwiperWrapper = styled.div`
-  //padding: 0 8% 0 8%;
-  //@media (max-width: 740px) {
-  //  padding: 0;
-  //}
-  display: flex;
-  flex-direction: row;
-  gap: 2rem;
-  flex-wrap: wrap;
 `;
