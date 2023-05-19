@@ -7,7 +7,7 @@ export const SiteMapSection = () => {
     return (
         <SiteMapSectionWrapper>
             <Link
-                to='/home'
+                to='/'
                 rel="noopener noreferrer"
                 target="_self"
             >

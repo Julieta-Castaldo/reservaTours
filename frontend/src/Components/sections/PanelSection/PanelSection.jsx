@@ -17,7 +17,7 @@ export const PanelSection = () => {
     return (
         <PanelSectionWrapper>
             <AdminTable
-                api={products}
+                data={products}
             />
         </PanelSectionWrapper>
     )

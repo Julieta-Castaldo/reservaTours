@@ -8,7 +8,7 @@ export const CategoryCard = (props) => {
 
     return (
         <Link
-            to={url}
+            //to={url}
             rel="noopener noreferrer"
             target="_self"
         >
