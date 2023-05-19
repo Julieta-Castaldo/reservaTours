@@ -31,4 +31,5 @@ export const ToursSectionCards = styled.div`
   align-items: center;
   width: 100%;
   flex-wrap: wrap;
+  gap: 4rem;
 `;
