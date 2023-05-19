@@ -13,14 +13,14 @@ export const IconTextWrapper = styled.div`
 `;
 
 export const IconTextTitle = styled.p`
-  font-style: normal;
-  font-weight: 300;
-  font-size: 1.6rem;
-  line-height: 2.4rem;
+  font-style: ${({fontStyle}) => fontStyle ? fontStyle : 'normal'};
+  font-weight: ${({fontWeight}) => fontWeight ? fontWeight : '300'};
+  font-size: ${({fontSize}) => fontSize ? fontSize : '1.6rem'};
+  line-height: ${({lineHeight}) => lineHeight ? lineHeight : '2.4rem'};
 
   display: flex;
   align-items: center;
 
-  color: #717B8A;
+  color: ${({color}) => color ? color : '#717B8A'};
 
 `;

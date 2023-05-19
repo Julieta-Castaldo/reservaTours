@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const CategoriesSectionWrapper = styled.div`
+export const CategoriesSectionWrapper = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
