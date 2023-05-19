@@ -7,24 +7,26 @@ import {
     TourCardPriceWrapper, TourCardTitle,
     TourCardWrapper
 } from "./TourCard.styled.js";
-import { IconText } from "../../molecules/IconText/IconText.jsx";
-import { IconCalendar1 } from "../../svgs/IconCalendar1.jsx";
-import { IconLocation } from "../../svgs/IconLocation.jsx";
-import { Link } from "react-router-dom";
+import {IconText} from "../../molecules/IconText/IconText.jsx";
+import {IconCalendar1} from "../../svgs/IconCalendar1.jsx";
+import {IconLocation} from "../../svgs/IconLocation.jsx";
+import PropTypes from "prop-types";
 
-export const TourCard = ({product}) => {
-    const { listaImagenes, nombre, fechaLlegada, ciudad, id } = product
+export const TourCard = (props) => {
+
+    const {imgUrl, title, date, location, currency, price } = props;
+
     return (
         <TourCardWrapper>
             <TourCardImgWrapper
-                imgUrl={listaImagenes && listaImagenes[0] ? listaImagenes[0].url :'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/8e/0a/63/colombia-and-experience.jpg?w=600&h=400&s=1'}
+                imgUrl={imgUrl}
             />
             <TourCardDetails>
                 <TourCardTitle>
-                    {nombre}
+                    {title}
                 </TourCardTitle>
                 <IconText
-                    text={fechaLlegada}
+                    text={date}
                     src={
                         <IconCalendar1
                             size='16'
@@ -33,7 +35,7 @@ export const TourCard = ({product}) => {
                     }
                 />
                 <IconText
-                    text={ciudad.nombreCiudad ?? ''}
+                    text={location}
                     src={
                         <IconLocation
                             size='16'
@@ -43,9 +45,9 @@ export const TourCard = ({product}) => {
                 />
             </TourCardDetails>
             <TourCardPriceWrapper>
-                <TourCardCurrency>USD</TourCardCurrency>
+                <TourCardCurrency>{currency}</TourCardCurrency>
                 <TourCardPrice>
-                    ${Number(id)*1000}
+                    ${price}
                 </TourCardPrice>
             </TourCardPriceWrapper>
             <Link to='/tour/:1'>
@@ -67,3 +69,12 @@ export const TourCard = ({product}) => {
         </TourCardWrapper>
     )
 }
+
+TourCard.propTypes = {
+    title: PropTypes.string.isRequired,
+    imgUrl: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    location: PropTypes.string.isRequired,
+    currency: PropTypes.string.isRequired,
+    price: PropTypes.string.isRequired,
+};
