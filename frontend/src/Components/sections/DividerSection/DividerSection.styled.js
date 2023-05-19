@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const DividerSectionWrapper = styled.div`
+export const DividerSectionWrapper = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
