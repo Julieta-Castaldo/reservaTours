@@ -89,10 +89,18 @@ export const AdminTableTd = styled.td`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  
+
   gap: 2rem;
 
   :after {
     ${({ellipsis}) => ellipsis ? `content: '...';` : null}
   }
+`;
+
+export const AdminTableTdImg = styled.td`
+  width: 9.051rem;
+  height: 5.973rem;
+  background: url(${({imgUrl}) => imgUrl}) center/contain no-repeat;
+  background-size: cover;
+  border-radius: 1rem;
 `;

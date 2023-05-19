@@ -17,7 +17,12 @@ export const ToursSection = () => {
         <ToursSectionWrapper>
             <ToursSectionTitle>Nuestros Tours</ToursSectionTitle>
             <ToursSectionCards>
-                {products && products.map(product => <TourCard product={product} key={product.id}/>)}
+                {products && products.map(product =>
+                    <TourCard
+                        product={product}
+                        key={product.id}
+                    />
+                )}
             </ToursSectionCards>
         </ToursSectionWrapper>
     )
