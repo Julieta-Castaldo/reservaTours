@@ -18,7 +18,6 @@ const ProductDetail = () => {
 
   }, [url])
 
-  console.log(productData)
   const { listaImagenes, nombre, descripcion } = productData
 
   return (
