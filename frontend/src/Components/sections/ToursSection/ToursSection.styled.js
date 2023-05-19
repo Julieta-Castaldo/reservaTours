@@ -4,7 +4,7 @@ export const ToursSectionWrapper = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20rem 0 10rem;
+  padding: 5rem 0 10rem 0;
   gap: 5rem;
 
 `;
@@ -23,4 +23,13 @@ export const ToursSectionTitle = styled.h2`
   /* 3 */
 
   color: #58C1CE;
+`;
+
+export const ToursSectionCards = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 4rem;
 `;

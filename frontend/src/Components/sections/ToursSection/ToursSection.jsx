@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { TourCard } from "../../organisms/TourCard/TourCard.jsx";
-import { ToursSectionTitle, ToursSectionWrapper } from "./ToursSection.styled.js";
+import {useEffect, useState} from "react";
+import {TourCard} from "../../organisms/TourCard/TourCard.jsx";
+import {ToursSectionCards, ToursSectionTitle, ToursSectionWrapper} from "./ToursSection.styled.js";
 
 export const ToursSection = () => {
     const [products, setProducts] = useState([])
@@ -16,7 +16,9 @@ export const ToursSection = () => {
     return (
         <ToursSectionWrapper>
             <ToursSectionTitle>Nuestros Tours</ToursSectionTitle>
-            {products && products.map(product => <TourCard product={product} key={product.id}/>)}
+            <ToursSectionCards>
+                {products && products.map(product => <TourCard product={product} key={product.id}/>)}
+            </ToursSectionCards>
         </ToursSectionWrapper>
     )
 }
