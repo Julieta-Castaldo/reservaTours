@@ -4,6 +4,11 @@
     justify-content: space-evenly;
 }
 
+.breadcrumSection{
+   display: flex;
+   margin-bottom: 24px;
+}
+
 .mainImage{
     width: 500px;
     border-radius: 25px;
@@ -33,7 +38,7 @@
 
 .productData{
     background-color: #F9F9F9;
-    height: 400px;
+    height: 440px;
     width: 330px;
     padding: 24px;
 }
@@ -53,4 +58,18 @@
     height: 50px;
     border: 1px solid #DDE3EB;
     border-radius: 5px;
+    display: flex;
+    justify-content: end;
+    padding: 8px;
+    align-items: center;
+}
+
+@media (max-width: 900px) {
+    .detailView{
+        flex-direction: column;
+    }
+
+    .productName{
+        font-size: 24px;
+    }
 }
