@@ -6,15 +6,19 @@ import com.example.PI_C3_E6_BACK.model.TourDTO;
 import com.example.PI_C3_E6_BACK.service.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
 @RequestMapping("Tour")
-@CrossOrigin(origins = "http://127.0.0.1:5173")
+@CrossOrigin(origins = "*")
 public class TourController implements IController<TourDTO>{
     @Autowired
     private TourService tourService;
@@ -42,13 +46,27 @@ public class TourController implements IController<TourDTO>{
         }
     }
 
-    @GetMapping("/porCategoria/{categoria}")
+    @GetMapping("/porCategoria/{categoriaId}")
     @ResponseBody
-    public  ResponseEntity<List<TourDTO>> buscarPorCategoria (@PathVariable String categoria) throws ResourceNotFoundException {
+    public  ResponseEntity<List<TourDTO>> buscarPorCategoria (@PathVariable int categoriaId) throws ResourceNotFoundException {
         try {
-            List<TourDTO> ListaTourDTO = tourService.buscarPorCategoria(categoria);
+            List<TourDTO> ListaTourDTO = tourService.buscarPorCategoria(categoriaId);
             return ResponseEntity.ok(ListaTourDTO);
         }catch (Exception ex){
+            throw new ResourceNotFoundException(ex.getMessage());
+        }
+    }
+    @GetMapping("/todosAleatorio")
+    @ResponseBody
+    public ResponseEntity<List<TourDTO>> buscarTodosAleatorio() throws ResourceNotFoundException {
+        try {
+            List<TourDTO> ListaTourDTO = tourService.buscarTodos();
+
+            // Barajar aleatoriamente la lista
+            Collections.shuffle(ListaTourDTO);
+
+            return ResponseEntity.ok(ListaTourDTO);
+        } catch (Exception ex) {
             throw new ResourceNotFoundException(ex.getMessage());
         }
     }
@@ -77,6 +95,20 @@ public class TourController implements IController<TourDTO>{
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
         return ResponseEntity.ok("Se borró el tour con éxito");
+    }
+
+
+    //Paginado de tours
+    @GetMapping("/pages")
+    public List<TourDTO> getPaginatedTours(@RequestParam(defaultValue = "1") int page,
+                                           @RequestParam(defaultValue = "10") int size,
+                                           @RequestParam(required = false) Integer categoryId){
+        Pageable pageable =  PageRequest.of(page - 1, size);
+        List<TourDTO> tourPage = tourService.buscarTodosPaginado(pageable);
+        if (categoryId != null){
+            tourPage = tourService.buscarPorCategoriaPaginado(pageable,categoryId );
+        }
+        return tourPage;
     }
 
 }

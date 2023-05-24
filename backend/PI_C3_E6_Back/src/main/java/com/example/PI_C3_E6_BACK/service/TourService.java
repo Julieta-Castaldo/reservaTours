@@ -15,6 +15,9 @@ import com.example.PI_C3_E6_BACK.persistence.repository.TourRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -89,9 +92,40 @@ public class TourService {
         return listaDTO;
     }
 
-    public List<TourDTO> buscarPorCategoria(String categoria){
+    public List<TourDTO> buscarTodosPaginado(Pageable pageable){
+        Page<TourEntity> listaEntity = repo.findAll(pageable);
+        List<TourDTO> listaDTO = new ArrayList<>();
+        for(TourEntity tour : listaEntity){
+            TourDTO tourDTO = modelMapper.getModelMapper().map(tour, TourDTO.class);
+            List<ImagenesEntity> imagenesEntities = repoImagenes.findImgById(tour.getId());
+            List<ImagenesDTO> imagenesDTOS = new ArrayList<>();
+            for (ImagenesEntity img : imagenesEntities){
+                imagenesDTOS.add(modelMapper.getModelMapper().map(img, ImagenesDTO.class));
+            }
+            tourDTO.setListaImagenes(imagenesDTOS);
+            listaDTO.add(tourDTO);
+        }
+        return listaDTO;
+    }
+
+    public List<TourDTO> buscarPorCategoriaPaginado(Pageable pageable, int id){
+        Page<TourEntity> listaEntity = repo.findByCategoria_id(id, pageable);
+        List<TourDTO> listaDTO = new ArrayList<>();
+        for(TourEntity tour : listaEntity){
+            TourDTO tourDTO = modelMapper.getModelMapper().map(tour, TourDTO.class);
+            List<ImagenesEntity> imagenesEntities = repoImagenes.findImgById(tour.getId());
+            List<ImagenesDTO> imagenesDTOS = new ArrayList<>();
+            for (ImagenesEntity img : imagenesEntities){
+                imagenesDTOS.add(modelMapper.getModelMapper().map(img, ImagenesDTO.class));
+            }
+            tourDTO.setListaImagenes(imagenesDTOS);
+            listaDTO.add(tourDTO);
+        }
+        return listaDTO;
+    }
+    public List<TourDTO> buscarPorCategoria(int idCategoria){
         List<TourDTO> listaDTO =new ArrayList<>();
-        for(TourEntity tour : repo.findToursByCategoria(categoria)){
+        for(TourEntity tour : repo.findToursByCategoria(idCategoria)){
             TourDTO tourDTO = modelMapper.getModelMapper().map(tour, TourDTO.class);
             List<ImagenesEntity> imagenesEntities = repoImagenes.findImgById(tour.getId());
             List<ImagenesDTO> imagenesDTOS = new ArrayList<>();

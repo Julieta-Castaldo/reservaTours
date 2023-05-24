@@ -9,9 +9,6 @@
         <module name="PI_C3_E6_BACK" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="PI_C3_E6_BACK" target="17" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
