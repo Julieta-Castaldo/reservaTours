@@ -52,7 +52,7 @@ const CreateProduct = () => {
     }
 
     return (
-        <div style={{ padding: '20px 50px', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+        <div style={{ padding: '20px 50px', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', height: '100%' }}>
             <div className="breadCrumbSection">
 
             </div>

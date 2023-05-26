@@ -1,25 +1,34 @@
+import React, { useState, useEffect } from 'react';
 import {
     CategoriesSectionCards,
-    CategoriesSectionTitle,
     CategoriesSectionWrapper
 } from "./Categories.styled.js";
-import {categoriesData} from "../../../data/categories.data.js";
 import {CategoryCard} from "../../organisms/CategoryCard/CategoryCard.jsx";
+import { IconLocation } from '../../svgs/IconLocation.jsx';
 
-export const CategoriesSection = () => {
+export const CategoriesSection = ({ filter }) => {
+    const [categories, setCategories] = useState([])
+    const url = `http://localhost:8080/Categoria/todos`;
+
+    useEffect(() => {
+        fetch(url)
+            .then(res => res.json())
+            .then(data => setCategories(data))
+
+    }, [url])
+
     return (
         <CategoriesSectionWrapper>
-            <CategoriesSectionTitle>Categorias</CategoriesSectionTitle>
             <CategoriesSectionCards>
                 {
-                    categoriesData.map((category) => {
+                    categories && categories.map((category) => {
                         return (
                             <CategoryCard
                                 key={category.id}
-                                url={category.url}
-                                title={category.title}
+                                id={category.id}
+                                title={category.nombreCategoria}
                                 icon={
-                                    <category.icon
+                                    <IconLocation
                                         color={'#FACA0A'}
                                         size={'68'}
                                     />
