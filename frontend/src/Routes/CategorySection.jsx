@@ -27,10 +27,10 @@ const CategorySection = () => {
     }, [url, currentPage])
 
     return (
-        <div style={{ padding: '50px' }}>
+        <div style={{ padding: '50px 0' }}>
             {loading && <Spinner />}
             {!loading && <>
-                <article className='breadcrumSection'>
+                <article className='breadcrumSection' style={{ marginLeft: '50px' }}>
                     <Link to='/' style={{ color: '#DDE3EB', marginRight: '12px' }}>Home</Link>
                     <span style={{ color: '#DDE3EB', marginRight: '12px' }}>{'<'}</span>
                     <Link to='/' style={{ fontWeight: 700, color: '#58C1CE' }}>{categoryName}</Link>
