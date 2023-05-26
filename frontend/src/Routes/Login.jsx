@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import mobileLogo from '../Util/images/mobileLogo.svg'
 import './Login.css';
 import { Link } from "react-router-dom";
@@ -6,6 +6,11 @@ import { IconArrowRight2 } from "../Components/svgs/IconArrowRight2";
 import { ButtonIcon } from "../Components/molecules/ButtonIcon/ButtonIcon";
 
 const Login = () => {
+
+    useEffect(() => {
+       window.scrollTo(0,0)
+    }, [])
+    
     return (
         <div className="loginView">
             <section className="headerSection">
