@@ -8,7 +8,6 @@ import Login from './Routes/Login'
 import ProductDetail from './Routes/ProductDetail';
 import Admin from "./Routes/Admin.jsx";
 import CreateProduct from './Routes/CreateProduct';
-import CategorySection from './Routes/CategorySection';
 
 
 function App() {
@@ -22,7 +21,6 @@ function App() {
                 <Route path={`/tour/:id`} element={<ProductDetail/>}/>
                 <Route path='/admin' element={<Admin/>}/>
                 <Route path='/newTour' element={<CreateProduct/>}/>
-                <Route path={`/category/:id`} element={<CategorySection/>} />
             </Routes>
             <Footer/>
         </div>

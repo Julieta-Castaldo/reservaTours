@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {ButtonIconWrapper} from "./ButtonIcon.styled.js";
+import { ButtonIconWrapper } from "./ButtonIcon.styled.js";
 
 export const ButtonIcon = (props) => {
 
@@ -14,11 +14,13 @@ export const ButtonIcon = (props) => {
         hoverBgColor,
         width,
         margin,
-        startPosition
+        startPosition,
+        onClick
     } = props;
 
     return (
         <ButtonIconWrapper
+            onClick={onClick}
             bgColor={bgColor}
             borderColor={borderColor}
             color={color}
