@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const CreateProduct = () => {
-    const [user, setUser] = useState({
+    const [product, setProduct] = useState({
         nombre: '',
         descripcion: '',
         ciudad: { nombreCiudad: '' },
@@ -9,7 +9,6 @@ const CreateProduct = () => {
         fechaSalida: '',
         fechaLlegada: '',
         listaImagenes: [
-            { url: '' },
             { url: '' }
         ]
 
@@ -23,7 +22,6 @@ const CreateProduct = () => {
         fechaSalida: '',
         fechaLlegada: '',
         listaImagenes: [
-            { url: '' },
             { url: '' }
         ]
 
@@ -34,16 +32,16 @@ const CreateProduct = () => {
     const postTour = (e) => {
         e.preventDefault()
         fetch('http://localhost:8080/Tour/agregar', {
-            method: 'POST', 
-            body: JSON.stringify(user),
+            method: 'POST',
+            body: JSON.stringify(product),
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
             }
         })
             .then(response => {
-               // history.push('/admin')
-               setSuccess(true)
-               setUser(initialValues)
+                // history.push('/admin')
+                setSuccess(true)
+                setProduct(initialValues)
             })
             .catch(error => {
                 // Handle any errors that occurred during the request
@@ -59,35 +57,46 @@ const CreateProduct = () => {
             <div>
                 <form onSubmit={postTour} style={{ display: 'flex', flexDirection: 'column', width: '60vw' }}>
                     <label>Nombre*</label>
-                    <input style={{ marginBottom: '12px' }} type="text" value={user.nombre} onChange={(e) => setUser({ ...user, nombre: e.target.value })} />
+                    <input style={{ marginBottom: '12px' }} type="text" value={product.nombre} onChange={(e) => setProduct({ ...product, nombre: e.target.value })} />
                     <label>Descripción*</label>
-                    <input style={{ marginBottom: '12px' }} type="text" value={user.descripcion} onChange={(e) => setUser({ ...user, descripcion: e.target.value })} />
+                    <input style={{ marginBottom: '12px' }} type="text" value={product.descripcion} onChange={(e) => setProduct({ ...product, descripcion: e.target.value })} />
 
                     <div style={{ display: 'flex', marginBottom: '12px' }}>
                         <div>
                             <label>Ciudad*</label>
-                            <input type="text" value={user.ciudad.nombreCiudad} onChange={(e) => setUser({ ...user, ciudad: { nombreCiudad: e.target.value } })} />
+                            <input type="text" value={product.ciudad.nombreCiudad} onChange={(e) => setProduct({ ...product, ciudad: { nombreCiudad: e.target.value } })} />
                         </div>
                         <div>
                             <label>Categoría*</label>
-                            <input type="text" value={user.categoria.nombreCategoria} onChange={(e) => setUser({ ...user, categoria: { nombreCategoria: e.target.value } })} />
+                            <input type="text" value={product.categoria.nombreCategoria} onChange={(e) => setProduct({ ...product, categoria: { nombreCategoria: e.target.value } })} />
                         </div>
                         <div>
                             <label>Fecha inicio*</label>
-                            <input type="text" value={user.fechaSalida} onChange={(e) => setUser({ ...user, fechaSalida: e.target.value })} />
+                            <input type="text" value={product.fechaSalida} onChange={(e) => setProduct({ ...product, fechaSalida: e.target.value })} />
                         </div>
                         <div>
                             <label>Fecha salida *</label>
-                            <input type="text" value={user.fechaLlegada} onChange={(e) => setUser({ ...user, fechaLlegada: e.target.value })} />
+                            <input type="text" value={product.fechaLlegada} onChange={(e) => setProduct({ ...product, fechaLlegada: e.target.value })} />
                         </div>
                     </div>
-                    <label>Imagen*</label>
-                    <input style={{ marginBottom: '12px' }} type="text" value={user.listaImagenes[0].url} onChange={(e) => setUser({ ...user, listaImagenes: [{ url: e.target.value }] })} />
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <label>Imagenes*</label>
+                        {product.listaImagenes && product.listaImagenes.map((img, idx) => {
+                            return (
+                                <input style={{ marginBottom: '12px' }} type="text" value={product.listaImagenes[idx].url} onChange={(e) => {
+                                    const imgArray = [...product.listaImagenes]
+                                    imgArray[idx] = { url: e.target.value }
+                                    setProduct({ ...product, listaImagenes: imgArray })
+                                }} />
+                            )
+                        })}
 
+                        <button style={{ width: '200px' }} disabled={product.listaImagenes.length === 5} onClick={() => setProduct({ ...product, listaImagenes: [...product.listaImagenes, { url: '' }] })} >+ Add Image</button>
+                    </div>
 
-                    <button style={{ width: '200px' }} className="submitButton">Guardar producto</button>
+                    <button style={{ width: '200px', marginTop: '20px' }} className="submitButton">Guardar producto</button>
                 </form>
-                {sucess && <p>Producto creado correctamente</p> }
+                {sucess && <p>Producto creado correctamente</p>}
 
             </div>
         </div>
