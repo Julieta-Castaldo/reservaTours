@@ -1,6 +1,7 @@
 import {PanelSectionWrapper} from "./PanelSection.styled.js";
-import {AdminTable} from "../../organisms/AdminTable/AdminTable.jsx";
+import {AdminTable} from "../../organisms/AdminTable/AdminProductsTable/AdminTable.jsx";
 import {useEffect, useState} from "react";
+import { AdminUsersTable } from "../../organisms/AdminTable/AdminUsersTable/AdminUsersTable.jsx";
 
 export const PanelSection = () => {
 
@@ -19,6 +20,7 @@ export const PanelSection = () => {
             <AdminTable
                 data={products}
             />
+            {/* <AdminUsersTable/> */}
         </PanelSectionWrapper>
     )
 }

@@ -1,20 +1,20 @@
 import {
-    AdminTableTBody,
-    AdminTableTd, AdminTableTdImg,
-    AdminTableTh,
-    AdminTableTr,
-    AdminTabletTHead,
-    AdminTableWrapper
-} from "./AdminTable.styled.js";
-import { IconArrowRight2 } from "../../svgs/IconArrowRight2.jsx";
-import { ButtonIcon } from "../../molecules/ButtonIcon/ButtonIcon.jsx";
-import { IconEdit } from "../../svgs/IconEdit.jsx";
+    AdminUsersTableTBody,
+    AdminUsersTableTd, AdminUsersTableTdImg,
+    AdminUsersTableTh,
+    AdminUsersTableTr,
+    AdminUsersTabletTHead,
+    AdminUsersTableWrapper
+} from "./AdminUsersTable.styled.js";
+import { IconArrowRight2 } from "../../../svgs/IconArrowRight2.jsx";
+import { ButtonIcon } from "../../../molecules/ButtonIcon/ButtonIcon.jsx";
+import { IconEdit } from "../../../svgs/IconEdit.jsx";
 import { Link } from "react-router-dom";
-import { IconTrash } from "../../svgs/IconTrash.jsx";
+import { IconTrash } from "../../../svgs/IconTrash.jsx";
 import PropTypes from "prop-types";
 
 
-export const AdminTable = ({ data }) => {
+export const AdminUsersTable = ({ data }) => {
 
     // function toggleAll(source) {
     //     const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
@@ -24,44 +24,54 @@ export const AdminTable = ({ data }) => {
     // }
 
     return (
-        <AdminTableWrapper>
+        <AdminUsersTableWrapper>
             <table>
-                <AdminTabletTHead>
-                    <AdminTableTr
-                        background={'#EBDECA'}
+                <AdminUsersTabletTHead>
+                    <AdminUsersTableTr
+                        background={'#58C1CE'}
                     >
-                        <AdminTableTh
+                        <AdminUsersTableTh
                             width="max-content"
                             justify='center'
                         >
                             <input type="checkbox" /*onClick={toggleAll(this)}*/ />
                             <span className="selectAllLabel"></span>
-                        </AdminTableTh>
-                        <AdminTableTh
+                        </AdminUsersTableTh>
+                        <AdminUsersTableTh
                             width="10.8rem"
-                        >Nombre</AdminTableTh>
-                        <AdminTableTh
+                        >
+                            Nombre
+                        </AdminUsersTableTh>
+                        <AdminUsersTableTh
                             width="15.1rem"
-                        >Descripción</AdminTableTh>
-                        <AdminTableTh
+                        >
+
+                            Apellido
+                        </AdminUsersTableTh>
+                        <AdminUsersTableTh
                             width="8.9rem"
-                        >Ciudad</AdminTableTh>
-                        <AdminTableTh
+                        >
+                            Email
+                        </AdminUsersTableTh>
+                        <AdminUsersTableTh
                             width="13rem"
-                        >Fecha salida</AdminTableTh>
-                        <AdminTableTh
+                        >
+                            Estado
+                        </AdminUsersTableTh>
+                        <AdminUsersTableTh
                             width="13rem"
-                        >Fecha entrada</AdminTableTh>
-                        <AdminTableTh
-                            width="8.9rem"
-                        >Imagen</AdminTableTh>
-                        <AdminTableTh
+                        >
+                            Rol Actual
+                        </AdminUsersTableTh>
+
+                        {/* <AdminUsersTableTh
                             width="12.4rem"
                             justify='center'
                         >
                             <Link to='/newTour'>
                                 <ButtonIcon
                                     text='Agregar'
+                                    disabled={true}
                                     src={
                                         <IconArrowRight2
                                             size='18'
@@ -75,51 +85,46 @@ export const AdminTable = ({ data }) => {
                                     hoverBgColor={'transparent'}
                                 />
                             </Link>
-                        </AdminTableTh>
+                        </AdminUsersTableTh> */}
 
-                    </AdminTableTr>
-                </AdminTabletTHead>
-                <AdminTableTBody>
+                    </AdminUsersTableTr>
+                </AdminUsersTabletTHead>
+                <AdminUsersTableTBody>
                     {
                         data && data.length !== 0 && data.map((row) => {
                             return (
-                                <AdminTableTr key={row.id}>
-                                    <AdminTableTd
+                                <AdminUsersTableTr key={row.id}>
+                                    <AdminUsersTableTd
                                         width="max-content"
                                         justify='center'
                                     ><input type="checkbox" />
-                                    </AdminTableTd>
-                                    <AdminTableTd
+                                    </AdminUsersTableTd>
+                                    <AdminUsersTableTd
                                         width="10.8rem"
                                     >
                                         {row.nombre}
-                                    </AdminTableTd>
-                                    <AdminTableTd
+                                    </AdminUsersTableTd>
+                                    <AdminUsersTableTd
                                         width="15.1rem"
                                     >
-                                        {row.descripcion}
-                                    </AdminTableTd>
-                                    <AdminTableTd
+                                        {row.apellido}
+                                    </AdminUsersTableTd>
+                                    <AdminUsersTableTd
                                         width="8.9rem"
                                     >
-                                        {row.ciudad && row.ciudad.nombreCiudad}
-                                    </AdminTableTd>
-                                    <AdminTableTd
+                                        {row.mail}
+                                    </AdminUsersTableTd>
+                                    <AdminUsersTableTd
                                         width="13rem"
                                     >
-                                        {row.fechaEntrada}
-                                    </AdminTableTd>
-                                    <AdminTableTd
+                                        {row.estado}
+                                    </AdminUsersTableTd>
+                                    <AdminUsersTableTd
                                         width="13rem"
                                     >
-                                        {row.fechaSalida}
-                                    </AdminTableTd>
-                                    <AdminTableTdImg
-                                        width="8.9rem"
-                                        imgUrl={row.listaImagenes && row.listaImagenes[0] && row.listaImagenes[0].url}
-                                    >
-                                    </AdminTableTdImg>
-                                    <AdminTableTd
+                                        {row.rol}
+                                    </AdminUsersTableTd>
+                                    <AdminUsersTableTd
                                         width="12.4rem"
                                         justify='center'
                                     >
@@ -137,17 +142,17 @@ export const AdminTable = ({ data }) => {
                                                 color={"#E72328"}
                                             />
                                         </Link>
-                                    </AdminTableTd>
-                                </AdminTableTr>
+                                    </AdminUsersTableTd>
+                                </AdminUsersTableTr>
                             )
                         })
                     }
-                </AdminTableTBody>
+                </AdminUsersTableTBody>
             </table>
-        </AdminTableWrapper>
+        </AdminUsersTableWrapper>
     )
 }
 
-AdminTable.propTypes = {
+AdminUsersTable.propTypes = {
     api: PropTypes.array,
 };
