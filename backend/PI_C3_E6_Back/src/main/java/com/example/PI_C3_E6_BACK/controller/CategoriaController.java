@@ -5,6 +5,7 @@ import com.example.PI_C3_E6_BACK.model.CategoriaDTO;
 import com.example.PI_C3_E6_BACK.model.TourDTO;
 import com.example.PI_C3_E6_BACK.service.CategoriaService;
 import com.example.PI_C3_E6_BACK.service.TourService;
+import jakarta.annotation.security.PermitAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ public class CategoriaController implements IController<CategoriaDTO>{
     @Autowired
     private CategoriaService categoriaService;
 
+    @PermitAll
     @GetMapping("/todos")
     @ResponseBody
     public ResponseEntity<List<CategoriaDTO>> buscarTodos () throws ResourceNotFoundException {

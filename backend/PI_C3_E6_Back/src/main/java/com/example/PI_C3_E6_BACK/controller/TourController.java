@@ -4,12 +4,14 @@ package com.example.PI_C3_E6_BACK.controller;
 import com.example.PI_C3_E6_BACK.exceptions.ResourceNotFoundException;
 import com.example.PI_C3_E6_BACK.model.TourDTO;
 import com.example.PI_C3_E6_BACK.service.TourService;
+import jakarta.annotation.security.PermitAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
@@ -23,7 +25,7 @@ public class TourController implements IController<TourDTO>{
     @Autowired
     private TourService tourService;
 
-
+    @PermitAll
     @GetMapping("/porId/{id}")
     @ResponseBody
     public ResponseEntity<TourDTO> buscarPorId (@PathVariable int id) throws ResourceNotFoundException {
@@ -34,7 +36,7 @@ public class TourController implements IController<TourDTO>{
             throw new ResourceNotFoundException(ex.getMessage());
         }
     }
-
+    @PermitAll
     @GetMapping("/todos")
     @ResponseBody
     public  ResponseEntity<List<TourDTO>> buscarTodos () throws ResourceNotFoundException {
@@ -45,7 +47,7 @@ public class TourController implements IController<TourDTO>{
             throw new ResourceNotFoundException(ex.getMessage());
         }
     }
-
+    @PermitAll
     @GetMapping("/porCategoria/{categoriaId}")
     @ResponseBody
     public  ResponseEntity<List<TourDTO>> buscarPorCategoria (@PathVariable int categoriaId) throws ResourceNotFoundException {
@@ -56,6 +58,7 @@ public class TourController implements IController<TourDTO>{
             throw new ResourceNotFoundException(ex.getMessage());
         }
     }
+    @PermitAll
     @GetMapping("/todosAleatorio")
     @ResponseBody
     public ResponseEntity<List<TourDTO>> buscarTodosAleatorio() throws ResourceNotFoundException {
@@ -64,12 +67,14 @@ public class TourController implements IController<TourDTO>{
 
             // Barajar aleatoriamente la lista
             Collections.shuffle(ListaTourDTO);
+            List<TourDTO> primeros10 = ListaTourDTO.subList(0, Math.min(ListaTourDTO.size(), 10));
 
-            return ResponseEntity.ok(ListaTourDTO);
+            return ResponseEntity.ok(primeros10);
         } catch (Exception ex) {
             throw new ResourceNotFoundException(ex.getMessage());
         }
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/agregar")
     public ResponseEntity<String> crearTour(@RequestBody TourDTO t){
         Duration duracion = Duration.between(t.getFechaSalida().atStartOfDay(), t.getFechaLlegada().atStartOfDay());
@@ -98,7 +103,7 @@ public class TourController implements IController<TourDTO>{
         }
     }
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> borrarPorId(@PathVariable int id){
         try{
@@ -111,6 +116,7 @@ public class TourController implements IController<TourDTO>{
 
 
     //Paginado de tours
+    @PermitAll
     @GetMapping("/pages")
     public List<TourDTO> getPaginatedTours(@RequestParam(defaultValue = "1") int page,
                                            @RequestParam(defaultValue = "10") int size,
