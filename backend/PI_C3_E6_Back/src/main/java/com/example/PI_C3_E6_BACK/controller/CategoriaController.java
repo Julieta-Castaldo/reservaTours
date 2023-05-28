@@ -20,7 +20,7 @@ public class CategoriaController implements IController<CategoriaDTO>{
     @Autowired
     private CategoriaService categoriaService;
 
-    @PermitAll
+
     @GetMapping("/todos")
     @ResponseBody
     public ResponseEntity<List<CategoriaDTO>> buscarTodos () throws ResourceNotFoundException {

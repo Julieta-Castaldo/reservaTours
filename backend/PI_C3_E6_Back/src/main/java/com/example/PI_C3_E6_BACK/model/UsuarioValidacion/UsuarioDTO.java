@@ -18,6 +18,9 @@ public class UsuarioDTO implements Serializable {
         this.rol = rol;
     }
 
+    public UsuarioDTO() {
+    }
+
     public String getUsername() {
         return username;
     }

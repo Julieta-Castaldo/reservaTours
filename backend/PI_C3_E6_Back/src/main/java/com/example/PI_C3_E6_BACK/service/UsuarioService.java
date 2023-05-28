@@ -1,5 +1,6 @@
 package com.example.PI_C3_E6_BACK.service;
 
+import com.example.PI_C3_E6_BACK.configuration.MapperConfig;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.PageResponseDTO;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.SignUpRequest;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.UsuarioDTO;
@@ -27,6 +28,8 @@ public class UsuarioService implements UserDetailsService {
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
     private final ConversionService conversionService;
+    @Autowired
+    private MapperConfig modelMapper;
     @Autowired
     public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, ConversionService conversionService) {
         this.usuarioRepository = usuarioRepository;
@@ -65,9 +68,8 @@ public class UsuarioService implements UserDetailsService {
                 , userPage.getTotalPages());
     }
 
-
     private UsuarioDTO convertToUsuarioDTO(UsuarioEntity user) {
-        UsuarioDTO usuarioDTO = conversionService.convert(user, UsuarioDTO.class);
+        UsuarioDTO usuarioDTO =  modelMapper.getModelMapper().map(user, UsuarioDTO.class);
         usuarioDTO.setUsername(user.getNombre());
         usuarioDTO.setLastname(user.getApellido());
         usuarioDTO.setEmail(user.getEmail());

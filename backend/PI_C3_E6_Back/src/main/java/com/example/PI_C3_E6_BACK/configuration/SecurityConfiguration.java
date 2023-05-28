@@ -24,7 +24,7 @@ import static com.example.PI_C3_E6_BACK.persistence.entities.Rol.USER;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
+//@EnableMethodSecurity
 public class SecurityConfiguration {
 
     private final JwtRequestFilter jwtRequestFilter;
@@ -42,6 +42,15 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorizeHttpRequestsCustomizer -> authorizeHttpRequestsCustomizer
                         .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/sign-up").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/Categoria/todos").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/Tour/porId/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/Tour/pages").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/Tour/todos").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/Tour/todosAleatorio").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/Tour/porCategoria/*").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/Tour/*").hasAuthority(ADMIN.name())
+                        .requestMatchers(HttpMethod.POST, "/Tour/agregar").hasAuthority(ADMIN.name())
+                        .requestMatchers(HttpMethod.GET, "/User/api/users").hasAuthority(ADMIN.name())
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

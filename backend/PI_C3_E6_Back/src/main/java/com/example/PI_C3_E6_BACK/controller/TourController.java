@@ -25,7 +25,7 @@ public class TourController implements IController<TourDTO>{
     @Autowired
     private TourService tourService;
 
-    @PermitAll
+
     @GetMapping("/porId/{id}")
     @ResponseBody
     public ResponseEntity<TourDTO> buscarPorId (@PathVariable int id) throws ResourceNotFoundException {
@@ -36,7 +36,7 @@ public class TourController implements IController<TourDTO>{
             throw new ResourceNotFoundException(ex.getMessage());
         }
     }
-    @PermitAll
+
     @GetMapping("/todos")
     @ResponseBody
     public  ResponseEntity<List<TourDTO>> buscarTodos () throws ResourceNotFoundException {
@@ -47,7 +47,7 @@ public class TourController implements IController<TourDTO>{
             throw new ResourceNotFoundException(ex.getMessage());
         }
     }
-    @PermitAll
+
     @GetMapping("/porCategoria/{categoriaId}")
     @ResponseBody
     public  ResponseEntity<List<TourDTO>> buscarPorCategoria (@PathVariable int categoriaId) throws ResourceNotFoundException {
@@ -58,7 +58,7 @@ public class TourController implements IController<TourDTO>{
             throw new ResourceNotFoundException(ex.getMessage());
         }
     }
-    @PermitAll
+
     @GetMapping("/todosAleatorio")
     @ResponseBody
     public ResponseEntity<List<TourDTO>> buscarTodosAleatorio() throws ResourceNotFoundException {
@@ -74,7 +74,7 @@ public class TourController implements IController<TourDTO>{
             throw new ResourceNotFoundException(ex.getMessage());
         }
     }
-    @PreAuthorize("hasRole('ADMIN')")
+
     @PostMapping("/agregar")
     public ResponseEntity<String> crearTour(@RequestBody TourDTO t){
         Duration duracion = Duration.between(t.getFechaSalida().atStartOfDay(), t.getFechaLlegada().atStartOfDay());
@@ -103,7 +103,7 @@ public class TourController implements IController<TourDTO>{
         }
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> borrarPorId(@PathVariable int id){
         try{
@@ -116,7 +116,7 @@ public class TourController implements IController<TourDTO>{
 
 
     //Paginado de tours
-    @PermitAll
+
     @GetMapping("/pages")
     public List<TourDTO> getPaginatedTours(@RequestParam(defaultValue = "1") int page,
                                            @RequestParam(defaultValue = "10") int size,

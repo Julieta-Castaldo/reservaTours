@@ -3,6 +3,7 @@ package com.example.PI_C3_E6_BACK.controller;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.PageResponseDTO;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.UserPageDTO;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.UsuarioDTO;
+import com.example.PI_C3_E6_BACK.persistence.entities.Rol;
 import com.example.PI_C3_E6_BACK.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -30,7 +31,7 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Get page of users",
            /* parameters = { @Parameter(in = ParameterIn.QUERY, name = "page", description = "Page"),
                     @Parameter(in = ParameterIn.QUERY, name = "size", description = "Size") },*/
