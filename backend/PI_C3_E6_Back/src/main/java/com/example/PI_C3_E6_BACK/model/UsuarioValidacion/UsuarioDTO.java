@@ -1,7 +1,9 @@
 package com.example.PI_C3_E6_BACK.model.UsuarioValidacion;
 
-import java.io.Serializable;
+import lombok.Builder;
 
+import java.io.Serializable;
+@Builder
 public class UsuarioDTO implements Serializable {
     private String username;
     private String lastname;

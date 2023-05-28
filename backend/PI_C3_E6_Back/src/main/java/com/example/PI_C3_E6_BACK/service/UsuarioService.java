@@ -20,6 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.ErrorResponseException;
 
+import java.util.List;
+
 @Service
 public class UsuarioService implements UserDetailsService {
     private final UsuarioRepository usuarioRepository;
@@ -34,7 +36,7 @@ public class UsuarioService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return usuarioRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User Email not found"));
+        return usuarioRepository.findByEmail(email);
     }
 
     public UserDetails createUser(SignUpRequest signUpRequest) {
@@ -52,16 +54,29 @@ public class UsuarioService implements UserDetailsService {
     public PageResponseDTO<UsuarioDTO> getUsers(Pageable pageable) {
 
         Page<UsuarioEntity> userPage = usuarioRepository.findAll(pageable);
+
+        List<UsuarioDTO> usuarioDTOList = userPage.getContent().stream()
+                .map(this::convertToUsuarioDTO)
+                .toList();
+        System.out.println(usuarioDTOList.size());
         return new PageResponseDTO<>(
-                userPage.getContent().stream()
-                        .map(user -> conversionService.convert(user, UsuarioDTO.class)).toList()
+                usuarioDTOList
                 , userPage.getPageable()
                 , userPage.getTotalPages());
     }
 
+
+    private UsuarioDTO convertToUsuarioDTO(UsuarioEntity user) {
+        UsuarioDTO usuarioDTO = conversionService.convert(user, UsuarioDTO.class);
+        usuarioDTO.setUsername(user.getNombre());
+        usuarioDTO.setLastname(user.getApellido());
+        usuarioDTO.setEmail(user.getEmail());
+        usuarioDTO.setRol(user.getRol().name());
+        return usuarioDTO;
+    }
+
     public void cambiarRolUsuario(String email) {
-        UsuarioEntity usuario = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User Email not found"));
+        UsuarioEntity usuario = usuarioRepository.findByEmail(email);
 
         usuario.setRol(Rol.ADMIN); // Cambiar el rol a "ADMIN"
         usuarioRepository.save(usuario);

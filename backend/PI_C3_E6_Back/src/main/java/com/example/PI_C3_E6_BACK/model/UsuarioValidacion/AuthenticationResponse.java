@@ -1,8 +1,15 @@
 package com.example.PI_C3_E6_BACK.model.UsuarioValidacion;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class AuthenticationResponse {
+import java.io.Serializable;
+@Data
+@NoArgsConstructor
+@Builder
+public class AuthenticationResponse  implements Serializable {
     private String jwt;
 
     public AuthenticationResponse(String jwt) {

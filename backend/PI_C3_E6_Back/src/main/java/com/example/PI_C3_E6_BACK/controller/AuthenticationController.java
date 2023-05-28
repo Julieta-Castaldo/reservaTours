@@ -13,10 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -32,14 +29,16 @@ public class AuthenticationController {
     }
 
     @PermitAll
-    @Operation(summary = "Login with user and password and returns JWT token", responses = {
+    /*@Operation(summary = "Login with user and password and returns JWT token", responses = {
             @ApiResponse(responseCode = "200",description = "Successful Operation", content = @Content),
-            @ApiResponse(responseCode = "401", description = "Authentication Failure", content = @Content)})
+            @ApiResponse(responseCode = "401", description = "Authentication Failure", content = @Content)})*/
     @PostMapping("/api/login")
+    @ResponseBody
     public AuthenticationResponse login(@RequestBody @Valid @NonNull LoginRequest loginRequest) {
         logger.info(loginRequest.getPassword());
         logger.info(loginRequest.getEmail());
         AuthenticationResponse response = authenticationService.login(loginRequest);
+        System.out.println("RESPONSE: " + response);
         return response;
     }
     @PermitAll

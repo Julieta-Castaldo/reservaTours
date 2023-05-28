@@ -22,7 +22,7 @@ public class Dataloader implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        //if (usuarioRepository.findByEmail("admin@admin.com") == null) {
+        if (usuarioRepository.findByEmail("admin@admin.com") == null) {
             UsuarioEntity admin = new UsuarioEntity();
                     admin.setNombre("admin");
                     admin.setApellido("admin");
@@ -32,6 +32,6 @@ public class Dataloader implements CommandLineRunner {
                     admin.setEstaValidado("SI");
 
             usuarioRepository.save(admin);
-        //}
+        }
     }
 }

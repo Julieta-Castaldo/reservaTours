@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Entity
-
 @Table(name = "Usuarios")
 public class UsuarioEntity implements UserDetails {
 
@@ -118,12 +117,12 @@ public class UsuarioEntity implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return contrasena;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return nombre;
     }
 
     @Override

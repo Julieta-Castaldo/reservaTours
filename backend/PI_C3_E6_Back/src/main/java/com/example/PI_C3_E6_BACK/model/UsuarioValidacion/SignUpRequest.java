@@ -1,7 +1,11 @@
 package com.example.PI_C3_E6_BACK.model.UsuarioValidacion;
 import jakarta.validation.constraints.*;
+import lombok.Builder;
 
-public class SignUpRequest {
+import java.io.Serializable;
+
+@Builder
+public class SignUpRequest implements Serializable {
     @NotEmpty
     @Size(min = 4, max = 50)
     private String username;

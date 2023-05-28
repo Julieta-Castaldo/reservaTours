@@ -14,12 +14,11 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Tag(name = "UsuarioController" )
@@ -33,14 +32,17 @@ public class UsuarioController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Get page of users",
-            parameters = { @Parameter(in = ParameterIn.QUERY, name = "page", description = "Page"),
-                    @Parameter(in = ParameterIn.QUERY, name = "size", description = "Size") },
+           /* parameters = { @Parameter(in = ParameterIn.QUERY, name = "page", description = "Page"),
+                    @Parameter(in = ParameterIn.QUERY, name = "size", description = "Size") },*/
             responses = {
                     @ApiResponse(responseCode = "200",description = "Successful Operation",
                             content = @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = UserPageDTO.class)))})
     @GetMapping("/api/users")
-    public PageResponseDTO<UsuarioDTO> getUsers(@PageableDefault(size = 10,page = 0) @ParameterObject Pageable pageable) {
+    @ResponseBody
+    public PageResponseDTO<UsuarioDTO> getUsers(@RequestParam(defaultValue = "1") int page,
+                                                @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable =  PageRequest.of(page - 1, size);
         return usuarioService.getUsers(pageable);
     }
 }

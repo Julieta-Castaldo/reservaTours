@@ -20,15 +20,15 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String extractUserName(String token) {
-        return jwtUtil.extractUserName(token, jwtConfig.secretKey());
+        return jwtUtil.extractUserName(token, jwtConfig.getSecretKey());
     }
 
     @Override
     public String generateToken(UserDetails userDetails) {
         return jwtUtil.generateToken(userDetails,
                 clock.millis(),
-                jwtConfig.expiration(),
-                jwtConfig.secretKey());
+                jwtConfig.getExpiration(),
+                jwtConfig.getSecretKey());
     }
 
     @Override
@@ -37,7 +37,7 @@ public class JwtServiceImpl implements JwtService {
     }
 
     private boolean isTokenExpired(String token) {
-        return jwtUtil.extractExpiration(token, jwtConfig.secretKey()).before(new Date(clock.millis()));
+        return jwtUtil.extractExpiration(token, jwtConfig.getSecretKey()).before(new Date(clock.millis()));
     }
 
 }

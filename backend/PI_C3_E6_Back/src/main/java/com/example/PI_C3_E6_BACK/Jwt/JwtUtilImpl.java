@@ -24,6 +24,7 @@ public class JwtUtilImpl implements JwtUtil {
                                 long systemCurrentMillis,
                                 long configuredExpirationTimeInMillis,
                                 String secretKey) {
+
         return Jwts
                 .builder()
                 .setSubject(userDetails.getUsername())

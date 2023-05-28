@@ -4,37 +4,45 @@ import com.example.PI_C3_E6_BACK.Jwt.JwtService;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.AuthenticationResponse;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.LoginRequest;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.SignUpRequest;
+import com.example.PI_C3_E6_BACK.persistence.entities.UsuarioEntity;
+import com.example.PI_C3_E6_BACK.persistence.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final UsuarioService userService;
     private final JwtService jwtService;
+    private final UsuarioRepository usuarioRepository;
 
     @Autowired
-    public AuthenticationService(AuthenticationManager authenticationManager, UsuarioService userService, JwtService jwtService) {
+    public AuthenticationService(AuthenticationManager authenticationManager, UsuarioService userService, JwtService jwtService, UsuarioRepository usuarioRepository) {
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.jwtService = jwtService;
+        this.usuarioRepository = usuarioRepository;
     }
 
     public AuthenticationResponse login(LoginRequest loginRequest) {
+        System.out.println("loginREQUEST: " + loginRequest.getEmail() + ", " + loginRequest.getPassword());
 
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
-                        loginRequest.getPassword()));
-
-        String jwt =jwtService
-                .generateToken((UserDetails) authentication.getPrincipal());
-
-        AuthenticationResponse authenticationResponse = new AuthenticationResponse(jwt);
-        return authenticationResponse;
+        try {
+            Authentication authentication = authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword() ));
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        UserDetails userDetails = userService.loadUserByUsername(loginRequest.getEmail());
+        String token =jwtService.generateToken(userDetails);
+        return new AuthenticationResponse(token);
     }
 
     public AuthenticationResponse signUp(SignUpRequest signUpRequest) {

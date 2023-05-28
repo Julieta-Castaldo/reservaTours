@@ -3,8 +3,12 @@ package com.example.PI_C3_E6_BACK.model.UsuarioValidacion;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 
-public class LoginRequest {
+import java.io.Serializable;
+
+@Builder
+public class LoginRequest implements Serializable {
     @NotEmpty
     @Email
     private String email;

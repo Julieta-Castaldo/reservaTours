@@ -1,4 +1,6 @@
 package com.example.PI_C3_E6_BACK.Jwt;
+import com.example.PI_C3_E6_BACK.persistence.entities.UsuarioEntity;
+import com.example.PI_C3_E6_BACK.persistence.repository.UsuarioRepository;
 import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -22,11 +24,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
     private final JwtService jwtService;
     private final BearerTokenResolver bearerTokenResolver;
+    private final UsuarioRepository usuarioRepository;
     @Autowired
-    public JwtRequestFilter(UserDetailsService userDetailsService, JwtService jwtService, BearerTokenResolver bearerTokenResolver) {
+    public JwtRequestFilter(UserDetailsService userDetailsService, JwtService jwtService, BearerTokenResolver bearerTokenResolver, UsuarioRepository usuarioRepository) {
         this.userDetailsService = userDetailsService;
         this.jwtService = jwtService;
         this.bearerTokenResolver = bearerTokenResolver;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Override
@@ -37,9 +41,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (jwt != null) {
             String username = jwtService.extractUserName(jwt);
-
+            UsuarioEntity usuario = usuarioRepository.findByNombre(username);   //SE AGREGA
+            System.out.println(usuario.getEmail());
             if (StringUtils.isNotEmpty(username) && null == SecurityContextHolder.getContext().getAuthentication()) {
-                UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+                UserDetails userDetails = this.userDetailsService.loadUserByUsername(usuario.getEmail());
                 if (jwtService.isTokenValid(jwt,userDetails,username)) {
                     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                             new UsernamePasswordAuthenticationToken(
