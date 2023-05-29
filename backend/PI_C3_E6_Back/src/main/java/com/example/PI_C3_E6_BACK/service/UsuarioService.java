@@ -72,7 +72,7 @@ public class UsuarioService implements UserDetailsService {
         return new PageResponseDTO<>(
                 usuarioDTOList
                 , userPage.getPageable()
-                , userPage.getTotalPages());
+                , userPage.getTotalElements());
     }
 
     private UsuarioDTO convertToUsuarioDTO(UsuarioEntity user) {

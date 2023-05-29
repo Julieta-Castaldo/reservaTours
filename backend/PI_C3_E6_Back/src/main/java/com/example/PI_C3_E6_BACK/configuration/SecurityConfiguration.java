@@ -44,7 +44,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/api/sign-up").permitAll()
                         .requestMatchers(HttpMethod.GET, "/Categoria/todos").permitAll()
                         .requestMatchers(HttpMethod.GET, "/Tour/porId/*").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/Tour/pages").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/Tour/pages**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/Tour/todos").permitAll()
                         .requestMatchers(HttpMethod.GET, "/Tour/todosAleatorio").permitAll()
                         .requestMatchers(HttpMethod.GET, "/Tour/porCategoria/*").permitAll()

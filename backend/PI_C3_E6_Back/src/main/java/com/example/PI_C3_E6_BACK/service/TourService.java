@@ -4,6 +4,7 @@ import com.example.PI_C3_E6_BACK.configuration.MapperConfig;
 import com.example.PI_C3_E6_BACK.exceptions.ResourceNotFoundException;
 import com.example.PI_C3_E6_BACK.model.ImagenesDTO;
 import com.example.PI_C3_E6_BACK.model.TourDTO;
+import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.PageResponseDTO;
 import com.example.PI_C3_E6_BACK.persistence.entities.CategoriaEntity;
 import com.example.PI_C3_E6_BACK.persistence.entities.CiudadEntity;
 import com.example.PI_C3_E6_BACK.persistence.entities.ImagenesEntity;
@@ -93,7 +94,7 @@ public class TourService {
         return listaDTO;
     }
 
-    public List<TourDTO> buscarTodosPaginado(Pageable pageable){
+    public PageResponseDTO<TourDTO> buscarTodosPaginado(Pageable pageable){
         Page<TourEntity> listaEntity = repo.findAll(pageable);
         List<TourDTO> listaDTO = new ArrayList<>();
         for(TourEntity tour : listaEntity){
@@ -106,10 +107,14 @@ public class TourService {
             tourDTO.setListaImagenes(imagenesDTOS);
             listaDTO.add(tourDTO);
         }
-        return listaDTO;
+        return new PageResponseDTO<>(
+                listaDTO,
+                listaEntity.getPageable(),
+                listaEntity.getTotalElements()
+        );
     }
 
-    public List<TourDTO> buscarPorCategoriaPaginado(Pageable pageable, int id){
+    public PageResponseDTO<TourDTO> buscarPorCategoriaPaginado(Pageable pageable, int id){
         Page<TourEntity> listaEntity = repo.findByCategoria_id(id, pageable);
         List<TourDTO> listaDTO = new ArrayList<>();
         for(TourEntity tour : listaEntity){
@@ -122,7 +127,11 @@ public class TourService {
             tourDTO.setListaImagenes(imagenesDTOS);
             listaDTO.add(tourDTO);
         }
-        return listaDTO;
+        return new PageResponseDTO<>(
+                listaDTO,
+                listaEntity.getPageable(),
+                listaEntity.getTotalElements()
+        );
     }
     public List<TourDTO> buscarPorCategoria(int idCategoria){
         List<TourDTO> listaDTO =new ArrayList<>();

@@ -3,6 +3,7 @@ package com.example.PI_C3_E6_BACK.controller;
 
 import com.example.PI_C3_E6_BACK.exceptions.ResourceNotFoundException;
 import com.example.PI_C3_E6_BACK.model.TourDTO;
+import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.PageResponseDTO;
 import com.example.PI_C3_E6_BACK.service.TourService;
 import jakarta.annotation.security.PermitAll;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,11 +119,11 @@ public class TourController implements IController<TourDTO>{
     //Paginado de tours
 
     @GetMapping("/pages")
-    public List<TourDTO> getPaginatedTours(@RequestParam(defaultValue = "1") int page,
-                                           @RequestParam(defaultValue = "10") int size,
-                                           @RequestParam(required = false) Integer categoryId){
+    public PageResponseDTO<TourDTO> getPaginatedTours(@RequestParam(defaultValue = "1") int page,
+                                                      @RequestParam(defaultValue = "10") int size,
+                                                      @RequestParam(required = false) Integer categoryId){
         Pageable pageable =  PageRequest.of(page - 1, size);
-        List<TourDTO> tourPage = tourService.buscarTodosPaginado(pageable);
+        PageResponseDTO<TourDTO> tourPage = tourService.buscarTodosPaginado(pageable);
         if (categoryId != null){
             tourPage = tourService.buscarPorCategoriaPaginado(pageable,categoryId );
         }
