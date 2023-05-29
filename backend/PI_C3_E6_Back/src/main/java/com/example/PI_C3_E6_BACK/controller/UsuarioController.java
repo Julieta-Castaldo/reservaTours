@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,5 +46,10 @@ public class UsuarioController {
                                                 @RequestParam(defaultValue = "10") int size) {
         Pageable pageable =  PageRequest.of(page - 1, size);
         return usuarioService.getUsers(pageable);
+    }
+
+    @PutMapping("/{id}/rol")
+    public ResponseEntity<UsuarioDTO> updateRoleToAdmin(@PathVariable int id) {
+        return usuarioService.cambiarRolUsuario(id);
     }
 }

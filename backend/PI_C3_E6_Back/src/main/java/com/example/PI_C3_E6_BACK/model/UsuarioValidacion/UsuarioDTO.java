@@ -5,13 +5,14 @@ import lombok.Builder;
 import java.io.Serializable;
 @Builder
 public class UsuarioDTO implements Serializable {
+    private int id;
     private String username;
     private String lastname;
     private String email;
     private String rol;
 
-
-    public UsuarioDTO(String username, String lastname, String email, String rol) {
+    public UsuarioDTO(int id, String username, String lastname, String email, String rol) {
+        this.id = id;
         this.username = username;
         this.lastname = lastname;
         this.email = email;
@@ -19,6 +20,14 @@ public class UsuarioDTO implements Serializable {
     }
 
     public UsuarioDTO() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsername() {
