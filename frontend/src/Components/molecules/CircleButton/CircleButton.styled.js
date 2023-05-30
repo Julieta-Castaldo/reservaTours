@@ -24,4 +24,12 @@ export const CircleButtonWrapper = styled.button`
     }
   }
 
+  :disabled {
+    opacity: 0.5;
+    border: grey;
+    background-color: grey;
+    pointer-events: none;
+  }
+
+
 `;
