@@ -1,31 +1,92 @@
-
 stages:
   - build
   - test
   - deploy
 
-build-job:
+build-frontend-job:
   stage: build
   script:
-    - echo "Compiling the code..."
-    - echo "Compile complete."
+    - echo "Compiling the FRONTEND code..."
+    - npm install
+    - npm run build
+    - echo "FRONTEND Compile complete."
+#  rules:
+#    - changes:
+#        - frontend/**/*
 
-unit-test-job:
+build-backend-job:
+  stage: build
+  script:
+    - echo "Compiling the BACKEND code..."
+    - echo "BACKEND Compile complete."
+#  rules:
+#    - changes:
+#        - backend/**/*
+
+unit-test-frontend-job:
   stage: test
   script:
     - echo "Running unit tests... This will take about 60 seconds."
     - sleep 60
     - echo "Code coverage is 90%"
+#  rules:
+#    - changes:
+#        - frontend/**/*
 
-lint-test-job:
+unit-test-backend-job:
+  stage: test
+  script:
+    - echo "Running unit tests... This will take about 60 seconds."
+    - sleep 60
+    - echo "Code coverage is 90%"
+#  rules:
+#    - changes:
+#        - backend/**/*
+
+lint-test-frontend-job:
   stage: test
   script:
     - echo "Linting code... This will take about 10 seconds."
     - sleep 10
     - echo "No lint issues found."
+#  rules:
+#    - changes:
+#        - frontend/**/*
 
-deploy-job:
+lint-test-backend-job:
+  stage: test
+  script:
+    - echo "Linting code... This will take about 10 seconds."
+    - sleep 10
+    - echo "No lint issues found."
+#  rules:
+#    - changes:
+#        - backend/**/*
+
+deploy-frontend-job:
+  stage: deploy
+  image: node:14
+  before_script:
+    - apt-get update && apt-get install -y awscli
+  script:
+    - echo "Deploying FRONTEND application..."
+#    - - cd ./frontend && chmod +x frontend.sh && sh frontend.sh
+#    - npm install
+#    - npm run build
+    - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+    - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+    - aws s3 rm --recursive s3://dh-g6-front
+    - aws s3 sync ./dist s3://dh-g6-front
+    - echo "Application successfully deployed."
+  only:
+    - main
+
+deploy-backend-job:
   stage: deploy
   script:
-    - echo "Deploying application..."
+    - echo "Deploying BACKEND application..."
+    - cd ./backend && chmod +x backend.sh && sh backend.sh
     - echo "Application successfully deployed."
+#  rules:
+#    - changes:
+#        - backend/**/*
