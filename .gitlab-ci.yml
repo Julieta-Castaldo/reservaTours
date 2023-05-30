@@ -7,6 +7,7 @@ build-frontend-job:
   stage: build
   script:
     - echo "Compiling the FRONTEND code..."
+    - cd ./frontend
     - npm install
     - npm run build
     - echo "FRONTEND Compile complete."
@@ -78,8 +79,8 @@ deploy-frontend-job:
     - aws s3 rm --recursive s3://dh-g6-front
     - aws s3 sync ./dist s3://dh-g6-front
     - echo "Application successfully deployed."
-  only:
-    - main
+#  only:
+#    - main
 
 deploy-backend-job:
   stage: deploy
