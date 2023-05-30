@@ -4,6 +4,7 @@ stages:
   - deploy
 
 build-frontend-job:
+  image: node:latest
   stage: build
   script:
     - echo "Compiling the FRONTEND code..."
@@ -66,7 +67,7 @@ lint-test-backend-job:
 
 deploy-frontend-job:
   stage: deploy
-  image: node:14
+  image: node:latest
   before_script:
     - apt-get update && apt-get install -y awscli
   script:
