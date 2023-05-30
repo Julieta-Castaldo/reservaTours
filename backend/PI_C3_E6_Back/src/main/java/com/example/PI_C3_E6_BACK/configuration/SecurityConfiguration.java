@@ -52,7 +52,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/Tour/agregar").hasAuthority(ADMIN.name())
                         .requestMatchers(HttpMethod.GET, "/User/api/users").hasAuthority(ADMIN.name())
                         .requestMatchers(HttpMethod.PUT, "/User/**").hasAuthority(ADMIN.name())
-                        .requestMatchers(HttpMethod.GET, "/swagger-ui.html").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
