@@ -15,9 +15,12 @@ public class TourDTO implements Serializable {
     private CiudadDTO ciudad;
     private List<ImagenesDTO> listaImagenes;
 
-    //constructors
-    public TourDTO( String nombre, String descripcion, LocalDate fechaSalida, LocalDate fechaLlegada, CategoriaDTO categoria, CiudadDTO ciudad, List<ImagenesDTO> listaImagenes) {
+    private double precio;
 
+    //constructors
+
+
+    public TourDTO(String nombre, String descripcion, LocalDate fechaSalida, LocalDate fechaLlegada, CategoriaDTO categoria, CiudadDTO ciudad, List<ImagenesDTO> listaImagenes, double precio) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaSalida = fechaSalida;
@@ -25,6 +28,7 @@ public class TourDTO implements Serializable {
         this.categoria = categoria;
         this.ciudad = ciudad;
         this.listaImagenes = listaImagenes;
+        this.precio = precio;
     }
 
     public TourDTO() {
@@ -32,6 +36,14 @@ public class TourDTO implements Serializable {
 
     //getters y setters
 
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
 
     public int getId() {
         return id;
