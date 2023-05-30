@@ -1,16 +1,97 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import mobileLogo from '../Util/images/mobileLogo.svg'
 import './Login.css';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IconArrowRight2 } from "../Components/svgs/IconArrowRight2";
 import { ButtonIcon } from "../Components/molecules/ButtonIcon/ButtonIcon";
+import { useGlobalState } from "../Context/Context";
+
 
 const Login = () => {
+    const { setAuth } = useGlobalState()
+    const [user, setUser] = useState({
+        email: "",
+        password: ""
+    })
+    const initialValues = {
+        email: '',
+        password: ''
+    }
+    const navigate = useNavigate()
+    const [error, setError] = useState('');
+
+    const validateEmail = () => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(user.email);
+    };
+
+    const validatePassword = () => {
+        return user.password.length >= 1;
+    };
+
+    const postData = async () => {
+        const postUser = fetch('http://localhost:8080/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+        postUser
+            .then((res) => {
+                if (res.status === 200) {
+                    setAuth(res.data);
+                    setUser(initialValues)
+                    // Swal.fire({
+                    //     position: 'center',
+                    //     icon: 'success',
+                    //     title: 'Ingreso exitoso',
+                    //     showConfirmButton: false,
+                    //     timer: 1500
+                    // })
+                    navigate('/');
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                // if (error.response && error.response.status === 404) {
+                //     Swal.fire({
+                //         icon: 'error',
+                //         title: 'Oops...',
+                //         text: 'El email o la contraseña son incorrectos',
+                //     })
+                // } else {
+                //     Swal.fire({
+                //         icon: 'error',
+                //         title: 'Oops...',
+                //         text: 'Hubo un error. Intente más tarde',
+                //     })
+                // }
+            });
+    }
+    const handleLogin = (e) => {
+        e.preventDefault()
+        setError('');
+
+        if (!validateEmail()) {
+            setError('El correo electrónico no tiene el formato correcto.');
+            return;
+        }
+
+        if (!validatePassword()) {
+            setError('La contraseña es demasiado corta.');
+            return;
+        }
+
+        postData();
+    };
 
     useEffect(() => {
-       window.scrollTo(0,0)
+        window.scrollTo(0, 0)
     }, [])
-    
+
+
+
     return (
         <div className="loginView">
             <section className="headerSection">
@@ -24,13 +105,29 @@ const Login = () => {
                 <form className="loginForm">
 
                     <label>Email</label>
-                    <input style={{ marginBottom: '12px' }} type="mail" />
-
+                    <input style={{ marginBottom: '12px', borderColor: error ? 'red' : '' }}
+                        type="email"
+                        id="email"
+                        onChange={(e) => {
+                            setUser({ ...user, email: e.target.value })
+                            setError('')
+                        }}
+                        value={user.email}
+                    />
                     <label>Contraseña</label>
-                    <input style={{ marginBottom: '12px' }} type="password" />
+                    <input style={{ marginBottom: '12px', borderColor: error ? 'red' : '' }}
+                        type="password"
+                        id="password"
+                        onChange={(e) => {
+                            setUser({ ...user, password: e.target.value })
+                            setError('')
+                        }}
+                        value={user.password}
+                    />
 
                     <Link className="passwordLink">Olvidé mi contraseña</Link>
 
+                    {error && <p>{error}</p>}
                     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
                         <ButtonIcon
                             text='Iniciar sesión'
@@ -46,6 +143,8 @@ const Login = () => {
                             bgColor={'#58C1CE'}
                             hoverBgColor={'#00B9C2'}
                             width={'180px'}
+                            onClick={handleLogin}
+                            disabled={error}
                         />
                     </div>
                 </form>

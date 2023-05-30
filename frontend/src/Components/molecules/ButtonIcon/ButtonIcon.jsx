@@ -15,7 +15,8 @@ export const ButtonIcon = (props) => {
         width,
         margin,
         startPosition,
-        onClick
+        onClick,
+        disabled
     } = props;
 
     return (
@@ -28,6 +29,7 @@ export const ButtonIcon = (props) => {
             hoverBgColor={hoverBgColor}
             width={width}
             margin={margin}
+            disabled={disabled}
         >
             {
                 !rIcon && src

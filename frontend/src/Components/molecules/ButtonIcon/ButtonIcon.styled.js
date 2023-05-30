@@ -23,4 +23,10 @@ export const ButtonIconWrapper = styled.button`
     }
   }
 
+  :disabled {
+    background-color: grey;
+    pointer-events: none;
+    border-color: grey;
+  }
+
 `;
