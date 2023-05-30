@@ -17,7 +17,9 @@ export const CategoriesSection = ({ filter }) => {
     useEffect(() => {
         fetch(url)
             .then(res => res.json())
-            .then(data => setCategories(data))
+            .then(data => {
+                setCategories(data)
+            })
 
     }, [url])
 
