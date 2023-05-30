@@ -8,7 +8,7 @@ import './CategorySection.css'
 const CategorySection = () => {
     const { id } = useParams()
     const categoryId = id && id.replace(':', '')
-
+    const [totalPages, setTotalPages] = useState(0)
     const [currentPage, setCurrentPage] = useState(0);
     const [products, setProducts] = useState([])
     const [categoryName, setCategoryName] = useState('')
@@ -20,7 +20,8 @@ const CategorySection = () => {
         fetch(url)
             .then(res => res.json())
             .then(data => {
-                setProducts(data)
+                setProducts(data.content)
+                setTotalPages(data.totalPages)
                 if (data && data[0] && data[0].categoria.nombreCategoria) setCategoryName(data[0].categoria.nombreCategoria)
                 setLoading(false)
             })
@@ -38,7 +39,7 @@ const CategorySection = () => {
                 <ToursSection products={products} title={`Resultados de ${categoryName}`} />
             </>}
             <ReactPaginate
-                pageCount={3}
+                pageCount={totalPages}
                 pageRangeDisplayed={5}
                 marginPagesDisplayed={2}
                 onPageChange={(selectedPage) => setCurrentPage(selectedPage.selected)}

@@ -13,7 +13,8 @@ export const CircleButton = (props) => {
         width,
         margin,
         height,
-        onClick
+        onClick,
+        disabled
     } = props;
 
     return (
@@ -27,6 +28,7 @@ export const CircleButton = (props) => {
             width={width}
             margin={margin}
             height={height}
+            disabled={disabled}
         >
             {
                 src

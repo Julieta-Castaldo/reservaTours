@@ -8,7 +8,7 @@ export const CategoryCardWrapper = styled.div`
   padding: 0;
   gap: 0.9rem;
 
-  width: 295px;
+  width: 280px;
   height: 178px;
 
   background: #FFFFFF;
