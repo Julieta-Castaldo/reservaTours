@@ -70,6 +70,7 @@
 
 .mobileInitials{
     display: flex;
+    align-items: center;
 }
 
 

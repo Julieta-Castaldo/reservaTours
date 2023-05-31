@@ -119,12 +119,16 @@ const Header = () => {
 
                                     />
                                 </Link>}
+                                <p style={{ color: '#05848A', fontWeight: '700', fontSize: '18px', marginLeft: '16px' }}>
+                                    {auth && auth.username}
+                                </p>
                                 <Button onClick={handleClick}
                                     sx={{
                                         border: '4px solid white',
                                         backgroundColor: '#00EBEB',
                                         color: '#05848A',
                                         fontSize: '24px',
+                                        fontWeight: '700',
                                         maxWidth: '32px',
                                         heigth: '32px',
                                         borderRadius: '50%',
@@ -216,6 +220,9 @@ const Header = () => {
 
                                     />
                                 </Link>}
+                                <p style={{ color: '#05848A', fontWeight: '700', fontSize: '16px', marginLeft: '16px' }}>
+                                    {auth && auth.username}
+                                </p>
                                 <Button onClick={handleClick}
                                     sx={{
                                         border: '4px solid white',
@@ -225,6 +232,7 @@ const Header = () => {
                                         maxWidth: '24px',
                                         heigth: '24px',
                                         borderRadius: '50%',
+                                        fontWeight: '700',
                                         boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
                                         '&:hover': {
                                             backgroundColor: '#05848A',
