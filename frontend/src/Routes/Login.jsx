@@ -29,44 +29,25 @@ const Login = () => {
         return user.password.length >= 1;
     };
 
-    const postData = async () => {
-        const postUser = fetch('http://localhost:8080/api/login', {
+    const postData = () => {
+        fetch('http://localhost:8080/api/login', {
             method: 'POST',
+            body: JSON.stringify(user),
             headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user)
+                "Content-type": "application/json; charset=UTF-8"
+            }
         })
-        postUser
-            .then((res) => {
-                if (res.status === 200) {
-                    setAuth(res.data);
-                    setUser(initialValues)
-                    // Swal.fire({
-                    //     position: 'center',
-                    //     icon: 'success',
-                    //     title: 'Ingreso exitoso',
-                    //     showConfirmButton: false,
-                    //     timer: 1500
-                    // })
-                    navigate('/');
-                }
+            .then(response => response.json())
+            .then(data => {
+                const jwtToken = data.response.jwt;
+                const userData = data.usuarioDTO 
+                setAuth(userData)
+                setUser(initialValues)
+                sessionStorage.setItem('token', jwtToken)
+                navigate('/')
             })
-            .catch((error) => {
-                console.log(error);
-                // if (error.response && error.response.status === 404) {
-                //     Swal.fire({
-                //         icon: 'error',
-                //         title: 'Oops...',
-                //         text: 'El email o la contraseña son incorrectos',
-                //     })
-                // } else {
-                //     Swal.fire({
-                //         icon: 'error',
-                //         title: 'Oops...',
-                //         text: 'Hubo un error. Intente más tarde',
-                //     })
-                // }
+            .catch(error => {
+                console.error("Error:", error);
             });
     }
     const handleLogin = (e) => {

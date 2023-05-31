@@ -63,6 +63,15 @@
     display: flex;
 }
 
+.desktopInitials{
+    display: flex;
+    align-items: center;
+}
+
+.mobileInitials{
+    display: flex;
+}
+
 
 @media (max-width: 700px) {
     .header {
@@ -85,6 +94,14 @@
     .mobileLogo {
         display: flex;
     }
+
+    .desktopInitials{
+        display: none;
+    }
+
+    .mobileInitials{
+        display: flex;
+    }
 }
 
 @media (min-width: 700px) {
@@ -104,5 +121,10 @@
 
     .mobileLogo {
         display: none;
+    }
+
+    .mobileInitials{
+        display: none;
+        align-items: center;
     }
 }

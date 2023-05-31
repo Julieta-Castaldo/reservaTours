@@ -7,7 +7,7 @@ const Context = ({ children }) => {
     const [products, setProducts] = useState([])
     const urlProducts = `http://localhost:8080/Tour/todos`;
     
-    let token = localStorage.getItem('token')
+    let token = sessionStorage.getItem('token')
     useEffect(() => {
         const fetchUsers = async () => {
             let res = await fetch(urlProducts)
