@@ -78,7 +78,7 @@ deploy-frontend-job:
     - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
     - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
     - aws s3 rm s3://dh-g6-front --recursive
-    - aws s3 sync ./dist s3://dh-g6-front
+    - aws s3 sync ./frontend/dist s3://dh-g6-front
     - echo "Application successfully deployed."
 #  only:
 #    - main
