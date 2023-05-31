@@ -11,8 +11,9 @@ export const ToursSectionWrapper = styled.section`
 
 export const ToursSectionTitle = styled.h2`
   font-style: normal;
-  font-weight: 400;
-  font-size: 45px;
+  font-weight: 700;
+  font-family: 'Roboto';
+  font-size: 38px;
   line-height: 24px;
   /* identical to box height, or 53% */
 
@@ -22,7 +23,7 @@ export const ToursSectionTitle = styled.h2`
 
   /* 3 */
 
-  color: #58C1CE;
+  color: #FACA0A;
 `;
 
 export const ToursSectionCards = styled.div`
