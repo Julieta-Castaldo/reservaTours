@@ -72,9 +72,12 @@ deploy-frontend-job:
     - apt-get update && apt-get install -y awscli
   script:
     - echo "Deploying FRONTEND application..."
-#    - - cd ./frontend && chmod +x frontend.sh && sh frontend.sh
-#    - npm install
-#    - npm run build
+    #    - - cd ./frontend && chmod +x frontend.sh && sh frontend.sh
+    #    - npm install
+    #    - npm run build
+    - cd ./frontend
+    - npm install
+    - npm run build
     - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
     - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
     - aws s3 rm s3://dh-g6-front --recursive
