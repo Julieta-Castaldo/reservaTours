@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { IconArrowRight2 } from "../Components/svgs/IconArrowRight2";
 import { ButtonIcon } from "../Components/molecules/ButtonIcon/ButtonIcon";
 import { useGlobalState } from "../Context/Context";
-
+import Swal from 'sweetalert';
 
 const Login = () => {
     const { setAuth } = useGlobalState()
@@ -29,6 +29,15 @@ const Login = () => {
         return user.password.length >= 1;
     };
 
+    const showErrorAlert = () => {
+        Swal({
+            title: 'Error',
+            text: 'Email o contraseña incorrectos. Intente nuevamente.',
+            icon: 'error',
+            button: 'Aceptar',
+        });
+    };
+
     const postData = () => {
         fetch('http://localhost:8080/api/login', {
             method: 'POST',
@@ -39,8 +48,15 @@ const Login = () => {
         })
             .then(response => response.json())
             .then(data => {
+                Swal({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: '¡Bienvenido!',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
                 const jwtToken = data.response.jwt;
-                const userData = data.usuarioDTO 
+                const userData = data.usuarioDTO
                 setAuth(userData)
                 setUser(initialValues)
                 sessionStorage.setItem('token', jwtToken)
@@ -48,6 +64,7 @@ const Login = () => {
             })
             .catch(error => {
                 console.error("Error:", error);
+                showErrorAlert();
             });
     }
     const handleLogin = (e) => {

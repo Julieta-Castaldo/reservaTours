@@ -47,8 +47,6 @@ const Header = () => {
         }
     }, [auth])
 
-    console.log(auth)
-
     return (
         <>
             <nav className="mainNav">

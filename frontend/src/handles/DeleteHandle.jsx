@@ -3,9 +3,7 @@ import {DeleteHandleWrapper} from "./DeleteHandle.styled.js"
 import {IconTrash} from "../Components/svgs/IconTrash.jsx";
 
 const DeleteHandle = ({tourId}) => {
-    // const tourId = 3; // ID del tour que deseas eliminar
-
-    const token = `eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4NTQxMzE3NywiZXhwIjoxNjg1NDE0Mzc3fQ.qGryAbEgUw_F8c-JPoRRrPuNqclWVwvthzHiYH8AMgo`;
+    const token = sessionStorage.getItem('token')
 
     const handleDelete = () => {
         fetch(`http://localhost:8080/Tour/${tourId}`, {
@@ -17,17 +15,12 @@ const DeleteHandle = ({tourId}) => {
         })
             .then(response => {
                 if (response.ok) {
-                    console.log('El tour fue eliminado correctamente');
                     window.alert('El tour fue eliminado correctamente');
-                    console.log(response);
                 } else {
-                    console.error('Error al eliminar el tour');
                     window.alert('Error al eliminar el tour');
-                    console.log(response);
                 }
             })
             .catch(error => {
-                console.error('Error al realizar la solicitud DELETE', error);
                 window.alert('Error al realizar la solicitud DELETE');
             });
     };
