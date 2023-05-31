@@ -1,9 +1,13 @@
 import PropTypes from "prop-types";
-import {DeleteHandleWrapper} from "./DeleteHandle.styled.js"
-import {IconTrash} from "../Components/svgs/IconTrash.jsx";
+import { DeleteHandleWrapper } from "./DeleteHandle.styled.js"
+import { IconTrash } from "../Components/svgs/IconTrash.jsx";
+import Swal from 'sweetalert';
+import { useGlobalState } from "../Context/Context.jsx";
 
-const DeleteHandle = ({tourId}) => {
+const DeleteHandle = ({ tourId }) => {
     const token = sessionStorage.getItem('token')
+    const {setReloadProductsFlag} = useGlobalState()
+    const {setProducts} = useGlobalState()
 
     const handleDelete = () => {
         fetch(`http://localhost:8080/Tour/${tourId}`, {
@@ -15,13 +19,30 @@ const DeleteHandle = ({tourId}) => {
         })
             .then(response => {
                 if (response.ok) {
-                    window.alert('El tour fue eliminado correctamente');
+                    Swal({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'El tour ha sido eliminado correctamente',
+                        timer: 2000
+                    });
+                    setReloadProductsFlag(true)
+                    setProducts([])
                 } else {
-                    window.alert('Error al eliminar el tour');
+                    Swal({
+                        title: 'Error',
+                        text: 'El tour no pudo ser eliminado, intente más tarde.',
+                        icon: 'error',
+                        button: 'Aceptar',
+                    });
                 }
             })
             .catch(error => {
-                window.alert('Error al realizar la solicitud DELETE');
+                Swal({
+                    title: 'Error',
+                    text: 'El tour no pudo ser eliminado, intente más tarde.',
+                    icon: 'error',
+                    button: 'Aceptar',
+                });
             });
     };
 

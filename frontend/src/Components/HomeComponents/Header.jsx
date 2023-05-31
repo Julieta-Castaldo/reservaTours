@@ -16,12 +16,14 @@ import { IconUser } from '../svgs/IconUser';
 import SignInModal from "../molecules/Modal/SignInModal";
 import { useGlobalState } from "../../Context/Context";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const Header = () => {
     const [openSignIn, setOpenSignIn] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null);
     const [initials, setInitials] = useState('')
+    const navigate = useNavigate()
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -35,6 +37,8 @@ const Header = () => {
     const handleCloseSession = () => {
         setAuth(false)
         sessionStorage.removeItem('token')
+        navigate('/')
+        
     }
 
     useEffect(() => {
