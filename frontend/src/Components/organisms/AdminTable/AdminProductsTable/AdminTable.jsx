@@ -6,15 +6,15 @@ import {
     AdminTabletTHead,
     AdminTableWrapper
 } from "./AdminTable.styled.js";
-import {IconArrowRight2} from "../../../svgs/IconArrowRight2.jsx";
-import {ButtonIcon} from "../../../molecules/ButtonIcon/ButtonIcon.jsx";
-import {IconEdit} from "../../../svgs/IconEdit.jsx";
-import {Link} from "react-router-dom";
+import { IconArrowRight2 } from "../../../svgs/IconArrowRight2.jsx";
+import { ButtonIcon } from "../../../molecules/ButtonIcon/ButtonIcon.jsx";
+import { IconEdit } from "../../../svgs/IconEdit.jsx";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import DeleteHandle from "../../../../handles/DeleteHandle.jsx";
 
 
-export const AdminTable = ({data}) => {
+export const AdminTable = ({ data }) => {
 
     // function toggleAll(source) {
     //     const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
@@ -25,6 +25,11 @@ export const AdminTable = ({data}) => {
 
     return (
         <AdminTableWrapper>
+            <div style={{ width:'100%', textAlign: 'end'}}>
+                <Link to='/newCategory' style={{ textDecoration: 'underline', color: 'grey' }}>
+                    <p>Nueva categoría</p>
+                </Link>
+            </div>
             <table>
                 <AdminTabletTHead>
                     <AdminTableTr
@@ -87,7 +92,7 @@ export const AdminTable = ({data}) => {
                                     <AdminTableTd
                                         width="max-content"
                                         justify='center'
-                                    ><input type="checkbox"/>
+                                    ><input type="checkbox" />
                                     </AdminTableTd>
                                     <AdminTableTd
                                         width="10.8rem"
