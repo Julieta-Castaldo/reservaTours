@@ -31,21 +31,35 @@ public class TourEntity {
     @JoinColumn(name="Ciudades_id", nullable = false)
     private CiudadEntity ciudad;
 
+    @Column(name = "precio")
+    private double precio;
+
+
     //constructors
 
-    public TourEntity(String nombre, String descripcion, LocalDate fechaSalida, LocalDate fechaLlegada, CategoriaEntity categoria, CiudadEntity ciudad) {
+
+    public TourEntity(String nombre, String descripcion, LocalDate fechaSalida, LocalDate fechaLlegada, CategoriaEntity categoria, CiudadEntity ciudad, double precio, CaracteristicaEntity caracteristica) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaSalida = fechaSalida;
         this.fechaLlegada = fechaLlegada;
         this.categoria = categoria;
         this.ciudad = ciudad;
+        this.precio = precio;
     }
 
     public TourEntity() {
     }
 
     //getters y setters
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
 
     public int getId() {
         return id;

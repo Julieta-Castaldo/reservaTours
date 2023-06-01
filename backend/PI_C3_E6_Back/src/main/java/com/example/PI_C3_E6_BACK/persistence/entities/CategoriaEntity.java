@@ -12,12 +12,22 @@ public class CategoriaEntity {
     @Column(name="nombre")
     private String nombre;
 
+    @Column(name="descripcion")
+    private String descripcion;
+
+    @Column(name="url_imagen")
+    private String url_imagen;
+
 
 
     //constructors
-    public CategoriaEntity(String nombreCategoria) {
-        this.nombre = nombreCategoria;
+
+    public CategoriaEntity(String nombre, String descripcion, String url_imagen) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.url_imagen = url_imagen;
     }
+
     public CategoriaEntity() {
     }
 
@@ -36,5 +46,21 @@ public class CategoriaEntity {
 
     public void setNombreCategoria(String nombreCategoria) {
         this.nombre = nombreCategoria;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getUrl_imagen() {
+        return url_imagen;
+    }
+
+    public void setUrl_imagen(String url_imagen) {
+        this.url_imagen = url_imagen;
     }
 }

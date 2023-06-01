@@ -1,0 +1,62 @@
+.loginView {
+    display: flex;
+    flex-direction: column;
+    padding: 50px 30px;
+    align-items: center;
+}
+
+.headerSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.imageBox {
+    padding: 12px;
+    border-radius: 9px;
+    box-shadow: 0px 4px 15px 0px #97979780;
+    display: flex;
+    justify-content: center;
+    width: 100px;
+}
+
+.sectionTitle {
+    color: #58C1CE;
+    font-size: 30px;
+}
+
+.subtitle {
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 24px;
+    color: #717B8A;
+}
+
+.formSection{
+    margin-top: 40px;
+}
+
+.loginForm{
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+}
+
+label{
+    color: #717B8A;
+    font-weight: 500;
+}
+
+input{
+    background-color: rgba(0, 235, 235, 0.05);
+    border: 1px solid #58C1CE;
+    border-radius: 8px;
+    height: 42px;
+    padding: 2px 8px;
+}
+
+.passwordLink{
+    color: #58C1CE;
+    font-size: 16px;
+    text-align: end;
+}

@@ -5,6 +5,7 @@ import { IconCalendar1 } from '../Components/svgs/IconCalendar1';
 import { IconUser } from '../Components/svgs/IconUser';
 import { ButtonIcon } from '../Components/molecules/ButtonIcon/ButtonIcon';
 import { IconArrowRight2 } from '../Components/svgs/IconArrowRight2';
+import { FeatureBlock } from '../Components/organisms/FeatureBlock/FeatureBlock';
 
 const ProductDetail = () => {
   const { id } = useParams()
@@ -47,6 +48,7 @@ const ProductDetail = () => {
           <p className='productName'>{nombre}</p>
           <p className='productDescription'>{descripcion}</p>
         </article>
+        <FeatureBlock/>
       </section>
       <section>
         <article className='productData'>
@@ -83,6 +85,7 @@ const ProductDetail = () => {
           />
         </article>
       </section>
+      
     </div>
   )
 }

@@ -3,24 +3,31 @@ import styled from "@emotion/styled";
 export const IconTextWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   padding: 0;
   gap: 1rem;
 
-  width: max-content;
+  width: 100%;
   height: max-content;
+
+  @media only screen and (max-width: 600px) {
+  
+    height: max-content;
+    justify-content: center;
+    align-items: center;
+}
 `;
 
 export const IconTextTitle = styled.p`
-  font-style: normal;
-  font-weight: 300;
-  font-size: 1.6rem;
-  line-height: 2.4rem;
+  font-style: ${({fontStyle}) => fontStyle ? fontStyle : 'normal'};
+  font-weight: ${({fontWeight}) => fontWeight ? fontWeight : '300'};
+  font-size: ${({fontSize}) => fontSize ? fontSize : '1.6rem'};
+  line-height: ${({lineHeight}) => lineHeight ? lineHeight : '2.4rem'};
 
   display: flex;
-  align-items: center;
+  align-items: left;
 
-  color: #717B8A;
+  color: ${({color}) => color ? color : '#717B8A'};
 
 `;

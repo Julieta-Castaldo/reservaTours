@@ -4,11 +4,11 @@ import {Link} from "react-router-dom";
 
 export const CategoryCard = (props) => {
 
-    const {title, icon, url} = props;
+    const {id, icon, title} = props;
 
     return (
         <Link
-            to={url}
+            to={`/category/:${id}`}
             rel="noopener noreferrer"
             target="_self"
         >

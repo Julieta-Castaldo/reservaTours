@@ -21,47 +21,11 @@ const Footer = () => {
                         <img src={logo} alt='Digital Booking' />
                     </Link>
                     <p className="copyText">Copyright © 2023 Digital Booking Todos los derechos reservados.</p>
-                    <Link to='/admin'>
-                        <ButtonIcon
-                            text='Admin'
-                            src={
-                                <IconArrowRight2
-                                    size='22'
-                                    className='iconSVG'
-                                />
-                            }
-                            borderColor={'#F2A63B'}
-                            color={'white'}
-                            hoverColor={'white'}
-                            bgColor={'#F2A63B'}
-                            hoverBgColor={'#F2A63B'}
-                            width={'120px'}
-
-                        />
-                    </Link>
                 </div>
                 <div className="mobileDisposition">
                     <div className="mobileLinks">
                         <Link to='/'>
                             <img src={mobileLogo} alt='Digital Booking' />
-                        </Link>
-                        <Link to='/admin'>
-                            <ButtonIcon
-                                text='Admin'
-                                src={
-                                    <IconArrowRight2
-                                        size='22'
-                                        className='iconSVG'
-                                    />
-                                }
-                                borderColor={'#F2A63B'}
-                                color={'white'}
-                                hoverColor={'white'}
-                                bgColor={'#F2A63B'}
-                                hoverBgColor={'#F2A63B'}
-                                width={'120px'}
-
-                            />
                         </Link>
                     </div>
                     <p className="copyText">Copyright © 2023 Digital Booking Todos los derechos reservados.</p>

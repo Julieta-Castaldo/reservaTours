@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {CircleButtonWrapper} from "./CircleButton.styled.js";
+import { CircleButtonWrapper } from "./CircleButton.styled.js";
 
 export const CircleButton = (props) => {
 
@@ -12,11 +12,14 @@ export const CircleButton = (props) => {
         hoverBgColor,
         width,
         margin,
-        height
+        height,
+        onClick,
+        disabled
     } = props;
 
     return (
         <CircleButtonWrapper
+            onClick={onClick}
             bgColor={bgColor}
             borderColor={borderColor}
             color={color}
@@ -25,6 +28,7 @@ export const CircleButton = (props) => {
             width={width}
             margin={margin}
             height={height}
+            disabled={disabled}
         >
             {
                 src

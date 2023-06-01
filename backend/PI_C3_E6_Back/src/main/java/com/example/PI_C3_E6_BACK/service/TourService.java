@@ -2,19 +2,19 @@ package com.example.PI_C3_E6_BACK.service;
 
 import com.example.PI_C3_E6_BACK.configuration.MapperConfig;
 import com.example.PI_C3_E6_BACK.exceptions.ResourceNotFoundException;
+import com.example.PI_C3_E6_BACK.model.CaracteristicaDTO;
 import com.example.PI_C3_E6_BACK.model.ImagenesDTO;
 import com.example.PI_C3_E6_BACK.model.TourDTO;
-import com.example.PI_C3_E6_BACK.persistence.entities.CategoriaEntity;
-import com.example.PI_C3_E6_BACK.persistence.entities.CiudadEntity;
-import com.example.PI_C3_E6_BACK.persistence.entities.ImagenesEntity;
-import com.example.PI_C3_E6_BACK.persistence.entities.TourEntity;
-import com.example.PI_C3_E6_BACK.persistence.repository.CategoriaRepository;
-import com.example.PI_C3_E6_BACK.persistence.repository.CiudadRepository;
-import com.example.PI_C3_E6_BACK.persistence.repository.ImagenesRepository;
-import com.example.PI_C3_E6_BACK.persistence.repository.TourRepository;
+import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.PageResponseDTO;
+import com.example.PI_C3_E6_BACK.persistence.entities.*;
+import com.example.PI_C3_E6_BACK.persistence.repository.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -35,6 +35,10 @@ public class TourService {
     @Autowired
     CiudadRepository repoCiudad;
     @Autowired
+    CaracteristicaRepository repoCaracteristicas;
+    @Autowired
+    CaracteristicaService caracteristicaService;
+    @Autowired
     private MapperConfig modelMapper;
     private static final Logger log = LogManager.getLogger(TourService.class);
 
@@ -43,11 +47,17 @@ public class TourService {
         List<ImagenesDTO> imagenesDTO = new ArrayList<>();
         List<ImagenesEntity> imagenes = new ArrayList<>();
         TourEntity tour = new TourEntity();
+        List<String> caracteristicaDTO = new ArrayList<String>();
+
         if(id >=0){
             try{
                 tour = repo.findTourById(id);
                 imagenes = repoImagenes.findImgById(id);
-            }catch (Exception e){
+                caracteristicaDTO = caracteristicaService
+                        .convertCaracteristicaDTO(
+                                repoCaracteristicas.findCaracteristicaByTour(id));
+
+            }catch (Exception e) {
                 log.error(e.getMessage());
             }
             for(ImagenesEntity img : imagenes){
@@ -56,6 +66,7 @@ public class TourService {
             }
             tourDTO = modelMapper.getModelMapper().map(tour, TourDTO.class);
             tourDTO.setListaImagenes(imagenesDTO);
+            tourDTO.setCaracteristicasSi(caracteristicaDTO);
 
             return tourDTO;
         }
@@ -89,9 +100,48 @@ public class TourService {
         return listaDTO;
     }
 
-    public List<TourDTO> buscarPorCategoria(String categoria){
+    public PageResponseDTO<TourDTO> buscarTodosPaginado(Pageable pageable){
+        Page<TourEntity> listaEntity = repo.findAll(pageable);
+        List<TourDTO> listaDTO = new ArrayList<>();
+        for(TourEntity tour : listaEntity){
+            TourDTO tourDTO = modelMapper.getModelMapper().map(tour, TourDTO.class);
+            List<ImagenesEntity> imagenesEntities = repoImagenes.findImgById(tour.getId());
+            List<ImagenesDTO> imagenesDTOS = new ArrayList<>();
+            for (ImagenesEntity img : imagenesEntities){
+                imagenesDTOS.add(modelMapper.getModelMapper().map(img, ImagenesDTO.class));
+            }
+            tourDTO.setListaImagenes(imagenesDTOS);
+            listaDTO.add(tourDTO);
+        }
+        return new PageResponseDTO<>(
+                listaDTO,
+                listaEntity.getPageable(),
+                listaEntity.getTotalElements()
+        );
+    }
+
+    public PageResponseDTO<TourDTO> buscarPorCategoriaPaginado(Pageable pageable, int id){
+        Page<TourEntity> listaEntity = repo.findByCategoria_id(id, pageable);
+        List<TourDTO> listaDTO = new ArrayList<>();
+        for(TourEntity tour : listaEntity){
+            TourDTO tourDTO = modelMapper.getModelMapper().map(tour, TourDTO.class);
+            List<ImagenesEntity> imagenesEntities = repoImagenes.findImgById(tour.getId());
+            List<ImagenesDTO> imagenesDTOS = new ArrayList<>();
+            for (ImagenesEntity img : imagenesEntities){
+                imagenesDTOS.add(modelMapper.getModelMapper().map(img, ImagenesDTO.class));
+            }
+            tourDTO.setListaImagenes(imagenesDTOS);
+            listaDTO.add(tourDTO);
+        }
+        return new PageResponseDTO<>(
+                listaDTO,
+                listaEntity.getPageable(),
+                listaEntity.getTotalElements()
+        );
+    }
+    public List<TourDTO> buscarPorCategoria(int idCategoria){
         List<TourDTO> listaDTO =new ArrayList<>();
-        for(TourEntity tour : repo.findToursByCategoria(categoria)){
+        for(TourEntity tour : repo.findToursByCategoria(idCategoria)){
             TourDTO tourDTO = modelMapper.getModelMapper().map(tour, TourDTO.class);
             List<ImagenesEntity> imagenesEntities = repoImagenes.findImgById(tour.getId());
             List<ImagenesDTO> imagenesDTOS = new ArrayList<>();
@@ -104,28 +154,42 @@ public class TourService {
         return listaDTO;
     }
 
-    public void agregarTour(TourDTO t) throws Exception{
+    public ResponseEntity<String> agregarTour(TourDTO t) throws Exception{
         TourEntity tour = modelMapper.getModelMapper().map(t, TourEntity.class);
         CiudadEntity ciudad = modelMapper.getModelMapper().map(t.getCiudad(), CiudadEntity.class);
 
-        if (t.getFechaSalida().isAfter(LocalDate.now()) && repo.findTourByName(t.getNombre()) == null) {
-            try {
-                CategoriaEntity categoria = repoCategoria.findCategoriaByName(t.getCategoria().getNombreCategoria());
-                tour.setCiudad(ciudad);
-                tour.setCategoria(categoria);
-                repoCiudad.save(ciudad);
-                repo.save(tour);
-                for (ImagenesDTO img : t.getListaImagenes()){
-                    ImagenesEntity imagenEntity = modelMapper.getModelMapper().map(img,ImagenesEntity.class);
-                    imagenEntity.setTour(tour);
-                    repoImagenes.save(imagenEntity);
+        if (t.getFechaSalida().isAfter(LocalDate.now())){
+            if( repo.findTourByName(t.getNombre()) == null) {
+                try {
+                    CategoriaEntity categoria = repoCategoria
+                            .findCategoriaByName(
+                                    t.getCategoria().getNombreCategoria());
+                    tour.setCiudad(ciudad);
+                    tour.setCategoria(categoria);
+                    repoCiudad.save(ciudad);
+                    repo.save(tour);
+                    caracteristicaService
+                            .convertCaracteristicaEntity(
+                                    t.getCaracteristicasSi(),tour);
+                    for (ImagenesDTO img : t.getListaImagenes()){
+                        ImagenesEntity imagenEntity = modelMapper.getModelMapper().map(img,ImagenesEntity.class);
+                        imagenEntity.setTour(tour);
+                        repoImagenes.save(imagenEntity);
+                    }
+                    return ResponseEntity.ok("El tour fue creado con éxito");
+                } catch (Exception ex) {
+                    log.error(ex.getMessage());
+                    return ResponseEntity.badRequest().body(ex.getMessage());
                 }
-
-            } catch (Exception ex) {
-                log.error(ex.getMessage());
+            }else{
+                String error = "No se pudo crear el tour ya que ya existe otro tour con el mismo nombre";
+                log.error(error);
+                return ResponseEntity.badRequest().body(error);
             }
         }else{
-            log.error("No se pudo crear el tour ya que algunos de los datos otorgados es incorrecto");
+            String error = "No se pudo crear el tour. Verificar que la fecha de salida sea posterior a la fecha de hoy";
+            log.error(error);
+            return ResponseEntity.badRequest().body(error);
         }
     }
 

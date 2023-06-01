@@ -10,7 +10,7 @@ export const ButtonIconWrapper = styled.button`
   align-items: center;
   justify-content: center;
   color: ${({color}) => (color ? color : 'white')};
-  width: ${({width}) => (width ? width : '100%')}; // auto
+  width: ${({width}) => (width ? width : '95%')}; // auto
   margin: ${({margin}) => (margin ? margin : '0')};
 
   :hover {
@@ -22,5 +22,22 @@ export const ButtonIconWrapper = styled.button`
       fill: ${({hoverColor}) => hoverColor};
     }
   }
+
+  :disabled {
+    background-color: grey;
+    pointer-events: none;
+    border-color: grey;
+  }
+  
+
+  @media only screen and (max-width: 600px) {
+    width: ${({width}) => (width ? width : '78%')}; // auto
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-botton: 1rem;
+}
+  
 
 `;
