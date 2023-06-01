@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,6 @@ public class CategoriaController implements IController<CategoriaDTO>{
     @Autowired
     private CategoriaService categoriaService;
 
-
     @GetMapping("/todos")
     @ResponseBody
     public ResponseEntity<List<CategoriaDTO>> buscarTodos () throws ResourceNotFoundException {
@@ -29,6 +29,20 @@ public class CategoriaController implements IController<CategoriaDTO>{
             return ResponseEntity.ok(listaCategoriaDTO);
         }catch (Exception ex){
             throw new ResourceNotFoundException(ex.getMessage());
+        }
+    }
+
+    @PostMapping("/agregar")
+    public ResponseEntity<String> crearCategoria(@RequestBody CategoriaDTO c){
+        if(c.getNombreCategoria() != null) {
+            try {
+                ResponseEntity response = categoriaService.agregarCategoria(c);
+                return response;
+            } catch (Exception ex) {
+                return ResponseEntity.badRequest().body(ex.getMessage());
+            }
+        }else{
+            return ResponseEntity.badRequest().body("No se pudo crear la categoría ya que falta ingresar el nombre de la misma");
         }
     }
 }

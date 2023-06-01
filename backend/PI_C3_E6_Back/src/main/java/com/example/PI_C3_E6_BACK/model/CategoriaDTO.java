@@ -6,10 +6,16 @@ public class CategoriaDTO implements Serializable {
     private int id;
     private String nombreCategoria;
 
+    private String descripcionCategoria;
+
+    private String url_imagen;
+
     //constructors
-    public CategoriaDTO(String nombreCategoria) {
+    public CategoriaDTO(String nombreCategoria, String descripcionCategoria, String url_imagen) {
 
         this.nombreCategoria = nombreCategoria;
+        this.descripcionCategoria = descripcionCategoria;
+        this.url_imagen = url_imagen;
     }
 
     public CategoriaDTO() {
@@ -31,5 +37,21 @@ public class CategoriaDTO implements Serializable {
 
     public void setNombreCategoria(String nombreCategoria) {
         this.nombreCategoria = nombreCategoria;
+    }
+
+    public String getDescripcionCategoria() {
+        return descripcionCategoria;
+    }
+
+    public void setDescripcionCategoria(String descripcionCategoria) {
+        this.descripcionCategoria = descripcionCategoria;
+    }
+
+    public String getUrl_imagen() {
+        return url_imagen;
+    }
+
+    public void setUrl_imagen(String url_imagen) {
+        this.url_imagen = url_imagen;
     }
 }
