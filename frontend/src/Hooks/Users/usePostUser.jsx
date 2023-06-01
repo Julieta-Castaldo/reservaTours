@@ -4,7 +4,7 @@ import { useGlobalState } from "../../Context/Context";
 
 export const usePostUser = () => {
     const navigate = useNavigate()
-    const {setAuth} = useGlobalState
+    const { setAuth } = useGlobalState()
     const handlePostUser = (userData, onClose) => {
         fetch('http://localhost:8080/api/sign-up', {
             method: 'POST',
@@ -32,11 +32,12 @@ export const usePostUser = () => {
                         button: 'Aceptar',
                     });
                 }
+                console.log(response)
                 return response.json()
             })
             .then(data => {
-                if(data && data.jwt) sessionStorage.setItem('token', data.jwt)
-                if(data.usuarioDto) setAuth(data.usuarioDTO)
+                sessionStorage.setItem('token', data.response.jwt)
+                setAuth(data.usuarioDTO)
             })
             .catch(error => {
                 Swal({

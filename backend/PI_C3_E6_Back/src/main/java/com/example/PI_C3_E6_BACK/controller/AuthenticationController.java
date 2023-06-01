@@ -55,8 +55,10 @@ public class AuthenticationController {
             @ApiResponse(responseCode = "409", description = "User already exists", content = @Content)}*/)
     @PostMapping("/api/sign-up")
     @ResponseBody
-    public AuthenticationResponse signUp(@RequestBody @Valid @NonNull SignUpRequest signUpRequest) {
-
-        return authenticationService.signUp(signUpRequest);
+    public ResponseEntity<UserLoguinResponse> signUp(@RequestBody @Valid @NonNull SignUpRequest signUpRequest) {
+        UserLoguinResponse response = authenticationService.signUp(signUpRequest);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(response);
     }
 }

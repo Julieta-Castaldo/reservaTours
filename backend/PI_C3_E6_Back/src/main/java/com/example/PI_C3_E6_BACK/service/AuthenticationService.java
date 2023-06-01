@@ -48,9 +48,10 @@ public class AuthenticationService {
         return new UserLoguinResponse(authenticationResponse, usuarioDTO);
     }
 
-    public AuthenticationResponse signUp(SignUpRequest signUpRequest) {
+    public UserLoguinResponse signUp(SignUpRequest signUpRequest) {
         UserDetails userDetails = userService.createUser(signUpRequest);
+        UsuarioDTO usuarioDTO  =  modelMapper.getModelMapper().map(usuarioRepository.findByEmail(signUpRequest.getEmail()), UsuarioDTO.class);
         AuthenticationResponse authenticationResponse = new AuthenticationResponse(jwtService.generateToken(userDetails));
-        return authenticationResponse;
+        return new UserLoguinResponse(authenticationResponse, usuarioDTO);
     }
 }
