@@ -22,7 +22,7 @@ const CategorySection = () => {
             .then(data => {
                 setProducts(data.content)
                 setTotalPages(data.totalPages)
-                if (data && data[0] && data[0].categoria.nombreCategoria) setCategoryName(data[0].categoria.nombreCategoria)
+                if (data && data.content && data.content[0] && data.content[0].categoria.nombreCategoria) setCategoryName(data.content[0].categoria.nombreCategoria)
                 setLoading(false)
             })
     }, [url, currentPage])

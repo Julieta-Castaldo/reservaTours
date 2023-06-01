@@ -41,8 +41,8 @@ export const TourCard = ({product}) => {
                         />
                     }
                 />
-            </TourCardDetails>
-            <TourCardPriceWrapper>
+
+                <TourCardPriceWrapper>
                 <TourCardCurrency>USD</TourCardCurrency>
                 <TourCardPrice>
                     ${Number(id)*1000}
@@ -62,8 +62,11 @@ export const TourCard = ({product}) => {
                     hoverColor={'#05848A'}
                     bgColor={'#05848A'}
                     hoverBgColor={'transparent'}
+                    
                 />
             </Link>
+            </TourCardDetails>
+           
         </TourCardWrapper>
     )
 }
