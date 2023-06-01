@@ -36,7 +36,7 @@ export const usePostUser = () => {
             })
             .then(data => {
                 if(data && data.jwt) sessionStorage.setItem('token', data.jwt)
-                if(data.usuarioDto) setAuth(data.usuarioDto)
+                if(data.usuarioDto) setAuth(data.usuarioDTO)
             })
             .catch(error => {
                 Swal({
