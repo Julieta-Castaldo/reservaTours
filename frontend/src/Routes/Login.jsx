@@ -6,6 +6,7 @@ import { IconArrowRight2 } from "../Components/svgs/IconArrowRight2";
 import { ButtonIcon } from "../Components/molecules/ButtonIcon/ButtonIcon";
 import { useGlobalState } from "../Context/Context";
 import Swal from 'sweetalert';
+import { validateEmail, validatePassword } from "../Helpers/UserFormValidations";
 
 const Login = () => {
     const { setAuth } = useGlobalState()
@@ -19,15 +20,6 @@ const Login = () => {
     }
     const navigate = useNavigate()
     const [error, setError] = useState('');
-
-    const validateEmail = () => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(user.email);
-    };
-
-    const validatePassword = () => {
-        return user.password.length >= 1;
-    };
 
     const showErrorAlert = () => {
         Swal({

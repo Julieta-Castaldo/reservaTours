@@ -20,7 +20,7 @@ function SignInModal({ isOpen, onClose }) {
                         <p>Podrás reservar y calificar tu experiencia.</p>
                     </article>
                     <article>
-                        <SignInForm/>
+                        <SignInForm onClose={onClose}/>
                     </article>
                 </div>
             </section>
