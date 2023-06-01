@@ -42,23 +42,26 @@ public class CaracteristicaService {
     }
     public void convertCaracteristicaEntity(List<String> caracteristicasSi, TourEntity tourEntity){
         CaracteristicaEntity caracteristicaEntity = new CaracteristicaEntity();
-        for (String caracteristica : caracteristicasSi){
-            if ("Desayuno".equals(caracteristica)) {
-                caracteristicaEntity.setDesayuno("SI");
-            }
-            if ("Transporte".equals(caracteristica)) {
-                caracteristicaEntity.setTransporte("SI");
-            }
-            if ("Almuerzo".equals(caracteristica)) {
-                caracteristicaEntity.setAlmuerzo("SI");
-            }
-            if ("Cena".equals(caracteristica)) {
-                caracteristicaEntity.setCena("SI");
-            }
-            if ("Guía Turístico".equals(caracteristica)) {
-                caracteristicaEntity.setGuiaTuristico("SI");
+        if(caracteristicasSi != null) {
+            for (String caracteristica : caracteristicasSi) {
+                if ("Desayuno".equals(caracteristica)) {
+                    caracteristicaEntity.setDesayuno("SI");
+                }
+                if ("Transporte".equals(caracteristica)) {
+                    caracteristicaEntity.setTransporte("SI");
+                }
+                if ("Almuerzo".equals(caracteristica)) {
+                    caracteristicaEntity.setAlmuerzo("SI");
+                }
+                if ("Cena".equals(caracteristica)) {
+                    caracteristicaEntity.setCena("SI");
+                }
+                if ("Guía Turístico".equals(caracteristica)) {
+                    caracteristicaEntity.setGuiaTuristico("SI");
+                }
             }
         }
+        caracteristicaEntity.setTour(tourEntity);
         repoCaracteristicas.save(caracteristicaEntity);
     }
 }

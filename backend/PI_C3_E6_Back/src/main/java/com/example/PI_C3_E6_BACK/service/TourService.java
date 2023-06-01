@@ -48,12 +48,16 @@ public class TourService {
         List<ImagenesEntity> imagenes = new ArrayList<>();
         TourEntity tour = new TourEntity();
         List<String> caracteristicaDTO = new ArrayList<String>();
+
         if(id >=0){
             try{
                 tour = repo.findTourById(id);
                 imagenes = repoImagenes.findImgById(id);
-                caracteristicaDTO = caracteristicaService.convertCaracteristicaDTO(repoCaracteristicas.findCaracteristicaByTour(id));
-            }catch (Exception e){
+                caracteristicaDTO = caracteristicaService
+                        .convertCaracteristicaDTO(
+                                repoCaracteristicas.findCaracteristicaByTour(id));
+
+            }catch (Exception e) {
                 log.error(e.getMessage());
             }
             for(ImagenesEntity img : imagenes){
@@ -157,12 +161,16 @@ public class TourService {
         if (t.getFechaSalida().isAfter(LocalDate.now())){
             if( repo.findTourByName(t.getNombre()) == null) {
                 try {
-                    CategoriaEntity categoria = repoCategoria.findCategoriaByName(t.getCategoria().getNombreCategoria());
-                    caracteristicaService.convertCaracteristicaEntity(t.getCaracteristicasSi(),tour);
+                    CategoriaEntity categoria = repoCategoria
+                            .findCategoriaByName(
+                                    t.getCategoria().getNombreCategoria());
                     tour.setCiudad(ciudad);
                     tour.setCategoria(categoria);
                     repoCiudad.save(ciudad);
                     repo.save(tour);
+                    caracteristicaService
+                            .convertCaracteristicaEntity(
+                                    t.getCaracteristicasSi(),tour);
                     for (ImagenesDTO img : t.getListaImagenes()){
                         ImagenesEntity imagenEntity = modelMapper.getModelMapper().map(img,ImagenesEntity.class);
                         imagenEntity.setTour(tour);
