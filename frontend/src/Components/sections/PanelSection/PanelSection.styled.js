@@ -5,7 +5,7 @@ export const PanelSectionWrapper = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 10rem 0;
+  padding: 10rem 50px;
 
   width: 100%;
   height: max-content;
