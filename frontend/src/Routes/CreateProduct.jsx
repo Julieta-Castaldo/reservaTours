@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import Swal from 'sweetalert';
-
+import { useGlobalState } from "../Context/Context";
+import { useNavigate } from "react-router-dom";
 const CreateProduct = () => {
     const token = sessionStorage.getItem('token')
+    const {setReloadProductsFlag} = useGlobalState();
+    const navigate = useNavigate()
     const [product, setProduct] = useState({
         nombre: '',
         descripcion: '',
@@ -49,6 +52,8 @@ const CreateProduct = () => {
                         timer: 2000
                     });
                     setProduct(initialValues)
+                    setReloadProductsFlag(true)
+                    navigate('/admin')
                 } else {
                     Swal({
                         title: 'Error',
