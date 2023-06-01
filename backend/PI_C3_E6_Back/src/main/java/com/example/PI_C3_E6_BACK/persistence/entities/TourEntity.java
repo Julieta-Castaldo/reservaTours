@@ -38,7 +38,7 @@ public class TourEntity {
     //constructors
 
 
-    public TourEntity(String nombre, String descripcion, LocalDate fechaSalida, LocalDate fechaLlegada, CategoriaEntity categoria, CiudadEntity ciudad, double precio) {
+    public TourEntity(String nombre, String descripcion, LocalDate fechaSalida, LocalDate fechaLlegada, CategoriaEntity categoria, CiudadEntity ciudad, double precio, CaracteristicaEntity caracteristica) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaSalida = fechaSalida;
@@ -52,7 +52,6 @@ public class TourEntity {
     }
 
     //getters y setters
-
 
     public double getPrecio() {
         return precio;

@@ -2,17 +2,12 @@ package com.example.PI_C3_E6_BACK.service;
 
 import com.example.PI_C3_E6_BACK.configuration.MapperConfig;
 import com.example.PI_C3_E6_BACK.exceptions.ResourceNotFoundException;
+import com.example.PI_C3_E6_BACK.model.CaracteristicaDTO;
 import com.example.PI_C3_E6_BACK.model.ImagenesDTO;
 import com.example.PI_C3_E6_BACK.model.TourDTO;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.PageResponseDTO;
-import com.example.PI_C3_E6_BACK.persistence.entities.CategoriaEntity;
-import com.example.PI_C3_E6_BACK.persistence.entities.CiudadEntity;
-import com.example.PI_C3_E6_BACK.persistence.entities.ImagenesEntity;
-import com.example.PI_C3_E6_BACK.persistence.entities.TourEntity;
-import com.example.PI_C3_E6_BACK.persistence.repository.CategoriaRepository;
-import com.example.PI_C3_E6_BACK.persistence.repository.CiudadRepository;
-import com.example.PI_C3_E6_BACK.persistence.repository.ImagenesRepository;
-import com.example.PI_C3_E6_BACK.persistence.repository.TourRepository;
+import com.example.PI_C3_E6_BACK.persistence.entities.*;
+import com.example.PI_C3_E6_BACK.persistence.repository.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +35,10 @@ public class TourService {
     @Autowired
     CiudadRepository repoCiudad;
     @Autowired
+    CaracteristicaRepository repoCaracteristicas;
+    @Autowired
+    CaracteristicaService caracteristicaService;
+    @Autowired
     private MapperConfig modelMapper;
     private static final Logger log = LogManager.getLogger(TourService.class);
 
@@ -48,10 +47,12 @@ public class TourService {
         List<ImagenesDTO> imagenesDTO = new ArrayList<>();
         List<ImagenesEntity> imagenes = new ArrayList<>();
         TourEntity tour = new TourEntity();
+        List<String> caracteristicaDTO = new ArrayList<String>();
         if(id >=0){
             try{
                 tour = repo.findTourById(id);
                 imagenes = repoImagenes.findImgById(id);
+                caracteristicaDTO = caracteristicaService.convertCaracteristicaDTO(repoCaracteristicas.findCaracteristicaByTour(id));
             }catch (Exception e){
                 log.error(e.getMessage());
             }
@@ -61,6 +62,7 @@ public class TourService {
             }
             tourDTO = modelMapper.getModelMapper().map(tour, TourDTO.class);
             tourDTO.setListaImagenes(imagenesDTO);
+            tourDTO.setCaracteristicasSi(caracteristicaDTO);
 
             return tourDTO;
         }
@@ -156,6 +158,7 @@ public class TourService {
             if( repo.findTourByName(t.getNombre()) == null) {
                 try {
                     CategoriaEntity categoria = repoCategoria.findCategoriaByName(t.getCategoria().getNombreCategoria());
+                    caracteristicaService.convertCaracteristicaEntity(t.getCaracteristicasSi(),tour);
                     tour.setCiudad(ciudad);
                     tour.setCategoria(categoria);
                     repoCiudad.save(ciudad);

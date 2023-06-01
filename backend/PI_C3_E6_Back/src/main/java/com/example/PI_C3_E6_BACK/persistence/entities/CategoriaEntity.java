@@ -14,10 +14,13 @@ public class CategoriaEntity {
 
 
 
+
+
     //constructors
     public CategoriaEntity(String nombreCategoria) {
         this.nombre = nombreCategoria;
     }
+
     public CategoriaEntity() {
     }
 
