@@ -77,6 +77,7 @@ public class TourController implements IController<TourDTO>{
     }
 
     @PostMapping("/agregar")
+    @ResponseBody
     public ResponseEntity<String> crearTour(@RequestBody TourDTO t){
         Duration duracion = Duration.between(t.getFechaSalida().atStartOfDay(), t.getFechaLlegada().atStartOfDay());
         long diferenciaDias = duracion.toDays();

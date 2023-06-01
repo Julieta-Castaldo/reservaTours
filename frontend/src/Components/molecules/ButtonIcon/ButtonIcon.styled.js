@@ -23,6 +23,13 @@ export const ButtonIconWrapper = styled.button`
     }
   }
 
+  :disabled {
+    background-color: grey;
+    pointer-events: none;
+    border-color: grey;
+  }
+  
+
   @media only screen and (max-width: 600px) {
     width: ${({width}) => (width ? width : '78%')}; // auto
     justify-content: center;
@@ -31,5 +38,6 @@ export const ButtonIconWrapper = styled.button`
     margin-right: auto;
     margin-botton: 1rem;
 }
+  
 
 `;

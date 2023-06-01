@@ -1,9 +1,8 @@
 package com.example.PI_C3_E6_BACK.service;
 
 import com.example.PI_C3_E6_BACK.Jwt.JwtService;
-import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.AuthenticationResponse;
-import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.LoginRequest;
-import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.SignUpRequest;
+import com.example.PI_C3_E6_BACK.configuration.MapperConfig;
+import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.*;
 import com.example.PI_C3_E6_BACK.persistence.entities.UsuarioEntity;
 import com.example.PI_C3_E6_BACK.persistence.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,8 @@ public class AuthenticationService {
     private final UsuarioService userService;
     private final JwtService jwtService;
     private final UsuarioRepository usuarioRepository;
+    @Autowired
+    private MapperConfig modelMapper;
 
     @Autowired
     public AuthenticationService(AuthenticationManager authenticationManager, UsuarioService userService, JwtService jwtService, UsuarioRepository usuarioRepository) {
@@ -31,7 +32,7 @@ public class AuthenticationService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public AuthenticationResponse login(LoginRequest loginRequest) {
+    public UserLoguinResponse login(LoginRequest loginRequest) {
         System.out.println("loginREQUEST: " + loginRequest.getEmail() + ", " + loginRequest.getPassword());
 
         try {
@@ -42,12 +43,15 @@ public class AuthenticationService {
         }
         UserDetails userDetails = userService.loadUserByUsername(loginRequest.getEmail());
         String token =jwtService.generateToken(userDetails);
-        return new AuthenticationResponse(token);
+        UsuarioDTO usuarioDTO  =  modelMapper.getModelMapper().map(usuarioRepository.findByEmail(loginRequest.getEmail()), UsuarioDTO.class);
+        AuthenticationResponse authenticationResponse = new AuthenticationResponse(token);
+        return new UserLoguinResponse(authenticationResponse, usuarioDTO);
     }
 
-    public AuthenticationResponse signUp(SignUpRequest signUpRequest) {
+    public UserLoguinResponse signUp(SignUpRequest signUpRequest) {
         UserDetails userDetails = userService.createUser(signUpRequest);
+        UsuarioDTO usuarioDTO  =  modelMapper.getModelMapper().map(usuarioRepository.findByEmail(signUpRequest.getEmail()), UsuarioDTO.class);
         AuthenticationResponse authenticationResponse = new AuthenticationResponse(jwtService.generateToken(userDetails));
-        return authenticationResponse;
+        return new UserLoguinResponse(authenticationResponse, usuarioDTO);
     }
 }

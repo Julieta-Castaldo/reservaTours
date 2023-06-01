@@ -1,6 +1,11 @@
 import React, { useState } from "react";
-
+import Swal from 'sweetalert';
+import { useGlobalState } from "../Context/Context";
+import { useNavigate } from "react-router-dom";
 const CreateProduct = () => {
+    const token = sessionStorage.getItem('token')
+    const {setReloadProductsFlag} = useGlobalState();
+    const navigate = useNavigate()
     const [product, setProduct] = useState({
         nombre: '',
         descripcion: '',
@@ -27,25 +32,41 @@ const CreateProduct = () => {
 
     }
 
-    //const history = useHistory();
-    const [sucess, setSuccess] = useState(false)
     const postTour = (e) => {
         e.preventDefault()
         fetch('http://localhost:8080/Tour/agregar', {
             method: 'POST',
             body: JSON.stringify(product),
             headers: {
-                "Content-type": "application/json; charset=UTF-8"
+                "Content-type": "application/json; charset=UTF-8",
+                'Authorization': `Bearer ${token}`
             }
         })
             .then(response => {
-                // history.push('/admin')
-                setSuccess(true)
-                setProduct(initialValues)
+                if (response.status === 200) {
+                    Swal({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Tour creado correctamente',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                    setProduct(initialValues)
+                    setReloadProductsFlag(true)
+                    navigate('/admin')
+                } else {
+                    Swal({
+                        title: 'Error',
+                        text: 'El tour no pudo ser creado. Intente nuevamente más tarde.',
+                        icon: 'error',
+                        button: 'Aceptar',
+                    });
+                }
+                return response.json()
             })
+            .then(data => console.log(data))
             .catch(error => {
-                // Handle any errors that occurred during the request
-                console.error(error);
+                console.log(error);
             });
     }
 
@@ -96,7 +117,6 @@ const CreateProduct = () => {
 
                     <button style={{ width: '200px', marginTop: '20px' }} className="submitButton">Guardar producto</button>
                 </form>
-                {sucess && <p>Producto creado correctamente</p>}
 
             </div>
         </div>

@@ -6,16 +6,17 @@ import {
     AdminUsersTabletTHead,
     AdminUsersTableWrapper
 } from "./AdminUsersTable.styled.js";
-import { IconArrowRight2 } from "../../../svgs/IconArrowRight2.jsx";
-import { ButtonIcon } from "../../../molecules/ButtonIcon/ButtonIcon.jsx";
 import { IconEdit } from "../../../svgs/IconEdit.jsx";
 import { Link } from "react-router-dom";
 import { IconTrash } from "../../../svgs/IconTrash.jsx";
 import PropTypes from "prop-types";
+import { InputLabel, MenuItem, FormControl, Select } from '@mui/material';
+import { usePutUserRol } from "../../../../Hooks/Users/usePutUserRol.jsx";
+import { useGlobalState } from "../../../../Context/Context.jsx";
 
-
-export const AdminUsersTable = ({ data }) => {
-
+export const AdminUsersTable = ({ data, setReloadUsers }) => {
+    const [handlePutUserRol] = usePutUserRol()
+    const {auth} = useGlobalState()
     // function toggleAll(source) {
     //     const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
     //     checkboxes.forEach(checkbox => {
@@ -64,28 +65,12 @@ export const AdminUsersTable = ({ data }) => {
                             Rol Actual
                         </AdminUsersTableTh>
 
-                        {/* <AdminUsersTableTh
+                        <AdminUsersTableTh
                             width="12.4rem"
                             justify='center'
                         >
-                            <Link to='/newTour'>
-                                <ButtonIcon
-                                    text='Agregar'
-                                    disabled={true}
-                                    src={
-                                        <IconArrowRight2
-                                            size='18'
-                                            className='iconSVG'
-                                        />
-                                    }
-                                    borderColor={'#F2A63B'}
-                                    color={'white'}
-                                    hoverColor={'#F2A63B'}
-                                    bgColor={'#F2A63B'}
-                                    hoverBgColor={'transparent'}
-                                />
-                            </Link>
-                        </AdminUsersTableTh> */}
+                            Actions
+                        </AdminUsersTableTh>
 
                     </AdminUsersTableTr>
                 </AdminUsersTabletTHead>
@@ -102,27 +87,43 @@ export const AdminUsersTable = ({ data }) => {
                                     <AdminUsersTableTd
                                         width="10.8rem"
                                     >
-                                        {row.nombre}
+                                        {row.username}
                                     </AdminUsersTableTd>
                                     <AdminUsersTableTd
                                         width="15.1rem"
                                     >
-                                        {row.apellido}
+                                        {row.lastname}
                                     </AdminUsersTableTd>
                                     <AdminUsersTableTd
                                         width="8.9rem"
                                     >
-                                        {row.mail}
+                                        {row.email}
                                     </AdminUsersTableTd>
                                     <AdminUsersTableTd
                                         width="13rem"
                                     >
-                                        {row.estado}
+                                        Active
                                     </AdminUsersTableTd>
                                     <AdminUsersTableTd
                                         width="13rem"
                                     >
-                                        {row.rol}
+                                        <FormControl variant="standard">
+                                            <Select
+                                                labelId="demo-simple-select-standard-label"
+                                                id="demo-simple-select-standard"
+                                                value={row.rol}
+                                                onChange={() => {
+                                                    setReloadUsers(true)
+                                                    handlePutUserRol(row.id, setReloadUsers)
+                                                }}
+                                                disabled={row.id === auth.id || row.id === 1}
+                                                label="Rol"
+                                                sx={{fontSize:'14px'}}
+                                            >
+                                                <MenuItem disabled={row.rol==='ADMIN'} value='ADMIN' sx={{fontSize:'14px'}} >Admin</MenuItem>
+                                                <MenuItem disabled={row.rol==='USER'} value='USER' sx={{fontSize:'14px'}}>Client</MenuItem>
+                                            </Select>
+                                        </FormControl>
                                     </AdminUsersTableTd>
                                     <AdminUsersTableTd
                                         width="12.4rem"
