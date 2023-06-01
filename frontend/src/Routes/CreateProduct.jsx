@@ -61,12 +61,7 @@ const CreateProduct = () => {
             })
             .then(data => console.log(data))
             .catch(error => {
-                Swal({
-                    title: 'Error',
-                    text: 'El tour no pudo ser creado. Intente nuevamente más tarde.',
-                    icon: 'error',
-                    button: 'Aceptar',
-                });
+                console.log(error);
             });
     }
 

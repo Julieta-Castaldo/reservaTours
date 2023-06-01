@@ -63,12 +63,12 @@ const Login = () => {
         e.preventDefault()
         setError('');
 
-        if (!validateEmail()) {
+        if (!validateEmail(user.email)) {
             setError('El correo electrónico no tiene el formato correcto.');
             return;
         }
 
-        if (!validatePassword()) {
+        if (!validatePassword(user.password)) {
             setError('La contraseña es demasiado corta.');
             return;
         }
