@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Swal from 'sweetalert';
 
 const CreateProduct = () => {
     const token = sessionStorage.getItem('token')
@@ -28,8 +29,6 @@ const CreateProduct = () => {
 
     }
 
-    //const history = useHistory();
-    const [sucess, setSuccess] = useState(false)
     const postTour = (e) => {
         e.preventDefault()
         fetch('http://localhost:8080/Tour/agregar', {
@@ -41,13 +40,33 @@ const CreateProduct = () => {
             }
         })
             .then(response => {
-                // history.push('/admin')
-                setSuccess(true)
-                setProduct(initialValues)
+                if (response.status === 200) {
+                    Swal({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Tour creado correctamente',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                    setProduct(initialValues)
+                } else {
+                    Swal({
+                        title: 'Error',
+                        text: 'El tour no pudo ser creado. Intente nuevamente más tarde.',
+                        icon: 'error',
+                        button: 'Aceptar',
+                    });
+                }
+                return response.json()
             })
+            .then(data => console.log(data))
             .catch(error => {
-                // Handle any errors that occurred during the request
-                console.error(error);
+                Swal({
+                    title: 'Error',
+                    text: 'El tour no pudo ser creado. Intente nuevamente más tarde.',
+                    icon: 'error',
+                    button: 'Aceptar',
+                });
             });
     }
 
@@ -98,7 +117,6 @@ const CreateProduct = () => {
 
                     <button style={{ width: '200px', marginTop: '20px' }} className="submitButton">Guardar producto</button>
                 </form>
-                {sucess && <p>Producto creado correctamente</p>}
 
             </div>
         </div>
