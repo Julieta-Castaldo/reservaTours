@@ -21,9 +21,8 @@ const Home = () => {
             <MainSection/>
             <DividerSection padding={'20rem 20% 5rem 20%;'}/>
             <CategoriesSection/>
-            <FeatureBlock/>
             <DividerSection padding={'5rem 20% 5rem 20%;'}/>
-            <FeatureBlock/>
+
             <ToursSection products={products} title='Nuestros Productos'/>
         </main>
     )
