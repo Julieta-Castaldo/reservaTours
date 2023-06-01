@@ -5,10 +5,11 @@ import { useEffect } from "react";
 import { useGlobalState } from "../Context/Context.jsx";
 import { useNavigate } from "react-router-dom";
 const Admin = () => {
-    const { auth } = useGlobalState
+    const { auth } = useGlobalState();
     const navigate = useNavigate()
+    
     useEffect(() => {
-        if (!auth || auth && auth.rol !== 'ADMIN') navigate('/')
+        if(!auth || (auth && auth.rol !== 'ADMIN')) navigate('/')
     }, [auth])
     return (
         <main>

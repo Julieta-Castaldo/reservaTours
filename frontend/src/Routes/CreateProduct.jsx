@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 const CreateProduct = () => {
+    const token = sessionStorage.getItem('token')
     const [product, setProduct] = useState({
         nombre: '',
         descripcion: '',
@@ -35,7 +36,8 @@ const CreateProduct = () => {
             method: 'POST',
             body: JSON.stringify(product),
             headers: {
-                "Content-type": "application/json; charset=UTF-8"
+                "Content-type": "application/json; charset=UTF-8",
+                'Authorization': `Bearer ${token}`
             }
         })
             .then(response => {
