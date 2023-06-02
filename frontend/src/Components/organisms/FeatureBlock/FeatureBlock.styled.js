@@ -32,6 +32,9 @@ export const FeatureBlockTitle = styled.p`
   /* 3 */
   color: #58C1CE;
 
+  text-decoration: underline;
+  text-underline-offset: 1rem;
+
   @media (max-width: 990px) {
     font-style: normal;
     font-weight: 500;

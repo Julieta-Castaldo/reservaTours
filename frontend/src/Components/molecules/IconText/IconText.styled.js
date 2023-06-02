@@ -8,7 +8,7 @@ export const IconTextWrapper = styled.div`
   padding: 0;
   gap: 1rem;
 
-  width: 100%;
+  width: max-content;
   height: max-content;
 
   @media only screen and (max-width: 600px) {
