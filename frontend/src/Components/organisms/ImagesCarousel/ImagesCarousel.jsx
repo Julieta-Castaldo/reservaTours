@@ -7,9 +7,6 @@ export const ImagesCarousel = ({ isOpen, onClose, images }) => {
     if (!isOpen) return null;
     const [selectedImage, setSelectedImage] = useState(0)
     
-    useEffect(() => {
-        console.log(selectedImage)
-    }, [selectedImage])
     return (
         <div className="modal-overlay">
             <section className="modal">
