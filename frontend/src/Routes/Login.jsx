@@ -73,17 +73,9 @@ const Login = () => {
             return;
         }
 
-        if(user.password === '0000'){
-            Swal({
-                position: 'top-end',
-                icon: 'error',
-                title: 'Usuario o contraseña incorrectos',
-                showConfirmButton: false,
-                timer: 2000
-            });
-        } else {
-            postData();
-        }
+
+        postData();
+
 
     };
 
