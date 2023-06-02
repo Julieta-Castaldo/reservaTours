@@ -7,11 +7,13 @@ import {ButtonIcon} from '../Components/molecules/ButtonIcon/ButtonIcon';
 import {IconArrowRight2} from '../Components/svgs/IconArrowRight2';
 import {FeatureBlock} from '../Components/organisms/FeatureBlock/FeatureBlock';
 import {PicturesSection} from "../Components/sections/PicturesSection/PicturesSection.jsx";
+import { ImagesCarousel } from '../Components/organisms/ImagesCarousel/ImagesCarousel';
 
 const ProductDetail = () => {
     const {id} = useParams()
     const [productData, setProductData] = useState({})
     const url = `http://localhost:8080/Tour/porId/` + id.replace(':', '');
+    const [isOpenCarousel, setIsOpenCarousel] = useState(false)
 
     useEffect(() => {
         fetch(url)
@@ -33,27 +35,13 @@ const ProductDetail = () => {
                 <PicturesSection
                     mainImg={listaImagenes && listaImagenes[0] ? listaImagenes[0].url : 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/8e/0a/63/colombia-and-experience.jpg?w=600&h=400&s=1'}
                     imgList={listaImagenes}
+                    setIsOpenCarousel={setIsOpenCarousel}
                 />
-                {/*<article className='imagesSection'>*/}
-                {/*  <div>*/}
-                {/*    <img className='mainImage' src={listaImagenes && listaImagenes[0] ? listaImagenes[0].url : 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/8e/0a/63/colombia-and-experience.jpg?w=600&h=400&s=1'} />*/}
-                {/*    <div className='secondaryImagesSection'>*/}
-                {/*      {listaImagenes && listaImagenes.length !== 1 && listaImagenes.map((item, idx) => {*/}
-                {/*        if (idx !== 0) {*/}
-                {/*          return (*/}
-                {/*            <img className='secondaryImages' key={idx} src={`${item.url}`} />*/}
-                {/*          )*/}
-                {/*        }*/}
-                {/*      })}*/}
-                {/*    </div>*/}
-
-                {/*  </div>*/}
-                {/*</article>*/}
                 <article className='tourDescription'>
                     <p className='productName'>{nombre}</p>
                     <p className='productDescription'>{descripcion}</p>
                 </article>
-                <FeatureBlock/>
+                <FeatureBlock setIsOpenCarousel={setIsOpenCarousel}/>
             </section>
             <section>
                 <article className='productData'>
@@ -90,7 +78,7 @@ const ProductDetail = () => {
                     />
                 </article>
             </section>
-
+            <ImagesCarousel images={listaImagenes} isOpen={isOpenCarousel} onClose={() => setIsOpenCarousel(false)}/>
         </div>
     )
 }
