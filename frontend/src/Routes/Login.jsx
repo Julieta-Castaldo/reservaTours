@@ -81,9 +81,10 @@ const Login = () => {
                 showConfirmButton: false,
                 timer: 2000
             });
+        } else {
+            postData();
         }
 
-        postData();
     };
 
     useEffect(() => {
