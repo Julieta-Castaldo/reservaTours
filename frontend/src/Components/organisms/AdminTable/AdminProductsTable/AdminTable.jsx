@@ -14,18 +14,20 @@ import PropTypes from "prop-types";
 import DeleteHandle from "../../../../handles/DeleteHandle.jsx";
 import { MenuItem, FormControl, Select } from '@mui/material';
 import { useGlobalState } from "../../../../Context/Context.jsx";
+import { usePutTourCategory } from "../../../../Hooks/Tours/usePutTourCategory.jsx";
 
 
 export const AdminTable = ({ data }) => {
     const {auth} = useGlobalState()
     const {categories} = useGlobalState()
+    const {setReloadProductsFlag} = useGlobalState()
+    const [handlePutTourCategory] = usePutTourCategory()
     // function toggleAll(source) {
     //     const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
     //     checkboxes.forEach(checkbox => {
     //         checkbox.checked = source.checked;
     //     });
     // }
-    console.log(categories)
     return (
         <AdminTableWrapper>
             <div style={{ width: '100%', textAlign: 'end' }}>
@@ -120,10 +122,10 @@ export const AdminTable = ({ data }) => {
                                                 labelId="demo-simple-select-standard-label"
                                                 id="demo-simple-select-standard"
                                                 value={row.categoria && row.categoria.id}
-                                                /*onChange={() => {
-                                                    setReloadUsers(true)
-                                                    handlePutUserRol(row.id, setReloadUsers)
-                                                }}*/
+                                                onChange={(e) => {
+                                                    setReloadProductsFlag(true)
+                                                    handlePutTourCategory(row.id, e.target.value, setReloadProductsFlag)
+                                                }}
                                                 disabled={auth && row.id === auth.id || row.id === 1}
                                                 label="Categoría"
                                                 sx={{ fontSize: '14px' }}

@@ -17,7 +17,9 @@ const Context = ({ children }) => {
         let res = await fetch(urlProducts)
         let data = await res.json()
         setProducts(data)
-        setReloadProductsFlag(false)
+        setTimeout(() => {
+            setReloadProductsFlag(false)
+        }, 2000);
     }
 
     useEffect(() => {
@@ -25,7 +27,10 @@ const Context = ({ children }) => {
     }, [reloadProductsFlag])
 
     useEffect(() => {
-        if(reloadCategories) handleGetCategories()
+        if (reloadCategories) {
+            handleGetCategories()
+            setReloadCategories(false)
+        }
     }, [reloadCategories])
 
     useEffect(() => {
