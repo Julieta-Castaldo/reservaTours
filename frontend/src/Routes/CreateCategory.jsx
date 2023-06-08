@@ -46,7 +46,7 @@ const CreateCategory = () => {
                     <input style={{ marginBottom: '12px' }} type="text" value={category.url_imagen} onChange={(e) => setCategory({ ...category, url_imagen: e.target.value })} />
                     {error && <p style={{ color: 'red' }}>{error}</p>}
 
-                    <button style={{ width: '200px', marginTop: '20px' }} className="submitButton">Guardar producto</button>
+                    <button style={{ width: '200px', marginTop: '20px' }} className="submitButton">Guardar categoría</button>
                 </form>
 
             </div>

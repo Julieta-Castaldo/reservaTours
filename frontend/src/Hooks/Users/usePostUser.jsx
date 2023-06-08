@@ -36,7 +36,7 @@ export const usePostUser = () => {
                 return response.json()
             })
             .then(data => {
-                sessionStorage.setItem('token', data.response.jwt)
+                localStorage.setItem('token', data.response.jwt)
                 setAuth(data.usuarioDTO)
             })
             .catch(error => {

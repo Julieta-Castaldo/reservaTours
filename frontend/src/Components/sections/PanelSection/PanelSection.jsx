@@ -6,7 +6,7 @@ import Spinner from "../../../assets/Spinner/Spinner.jsx";
 import { AdminUsersTable } from '../../organisms/AdminTable/AdminUsersTable/AdminUsersTable.jsx'
 import { useGetUsers } from "../../../Hooks/Users/useGetUsers.jsx";
 
-export const PanelSection = () => {
+export const PanelSection = ({ selectedTab = 'products' }) => {
     const { products } = useGlobalState()
     const { reloadProductsFlag } = useGlobalState()
     const [users, handleGetUsers] = useGetUsers()
@@ -17,9 +17,9 @@ export const PanelSection = () => {
     }, [])
 
     useEffect(() => {
-       if(reloadUsers){
-           handleGetUsers(setReloadUsers)
-       }
+        if (reloadUsers) {
+            handleGetUsers(setReloadUsers)
+        }
     }, [reloadUsers])
 
     useEffect(() => {
@@ -28,8 +28,16 @@ export const PanelSection = () => {
 
     return (
         <PanelSectionWrapper>
-            {reloadProductsFlag ? <Spinner/> :<AdminTable data={products}/>}
-            {reloadUsers ? <Spinner/> : <AdminUsersTable data={users} setReloadUsers={setReloadUsers}/>}
+            {selectedTab === 'products' &&
+                <>
+                    {reloadProductsFlag ? <Spinner /> : <AdminTable data={products} />}
+                </>
+            }
+            {selectedTab === 'users' &&
+                <>
+                    {reloadUsers ? <Spinner /> : <AdminUsersTable data={users} setReloadUsers={setReloadUsers} />}
+                </>
+            }
         </PanelSectionWrapper>
     )
 }

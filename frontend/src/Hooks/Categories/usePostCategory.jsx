@@ -1,7 +1,9 @@
 import Swal from "sweetalert";
+import { useGlobalState } from "../../Context/Context";
 
 export const usePostCategory = () => {
-    const token = sessionStorage.getItem('token')
+    const token = localStorage.getItem('token')
+    const { setReloadCategories } = useGlobalState()
     const handlePostCategory = (category) => {
         fetch('http://localhost:8080/Categoria/agregar', {
             method: 'POST',
@@ -20,6 +22,7 @@ export const usePostCategory = () => {
                         showConfirmButton: false,
                         timer: 2000
                     });
+                    setReloadCategories(true)
                 } else {
                     Swal({
                         title: 'Error',
