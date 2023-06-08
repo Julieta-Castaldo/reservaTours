@@ -11,6 +11,7 @@ import org.springframework.boot.context.config.ConfigDataResourceNotFoundExcepti
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -77,7 +78,6 @@ public class TourController implements IController<TourDTO>{
     }
 
     @PostMapping("/agregar")
-
     public ResponseEntity<String> crearTour(@RequestBody TourDTO t){
         Duration duracion = Duration.between(t.getFechaSalida().atStartOfDay(), t.getFechaLlegada().atStartOfDay());
         long diferenciaDias = duracion.toDays();
@@ -129,6 +129,23 @@ public class TourController implements IController<TourDTO>{
             tourPage = tourService.buscarPorCategoriaPaginado(pageable,categoryId );
         }
         return tourPage;
+    }
+
+    @PutMapping("/update/categoria")
+    public ResponseEntity<String> actualizarCategoriaTour(
+            @RequestParam() int tourId,
+            @RequestParam() int categoriaId) {
+
+        ResponseEntity<String> response;
+
+        try {
+            response = tourService.actualizarCategoriaTour(tourId, categoriaId);
+        } catch (Exception e) {
+            response = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Ocurrió un error al actualizar la categoría del tour.");
+        }
+
+        return response;
     }
 
 }

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -211,7 +212,26 @@ public class TourService {
     }
 
 
-
+    public ResponseEntity<String> actualizarCategoriaTour(int tourId, int categoriaId) {
+        try {
+            TourEntity tour = repo.findTourById(tourId);
+            if (tour != null) {
+                CategoriaEntity categoria = repoCategoria.findById(categoriaId);
+                if (categoria != null) {
+                    tour.setCategoria(categoria);
+                    repo.save(tour);
+                    return ResponseEntity.ok("La categoría del tour ha sido actualizada exitosamente.");
+                } else {
+                    return ResponseEntity.badRequest().body("La categoría especificada no existe.");
+                }
+            } else {
+                return ResponseEntity.badRequest().body("El tour especificado no existe.");
+            }
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocurrió un error al actualizar la categoría del tour.");
+        }
+    }
 
 
 }
