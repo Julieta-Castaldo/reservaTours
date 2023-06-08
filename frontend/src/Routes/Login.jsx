@@ -51,7 +51,7 @@ const Login = () => {
                 const userData = data.usuarioDTO
                 setAuth(userData)
                 setUser(initialValues)
-                sessionStorage.setItem('token', jwtToken)
+                localStorage.setItem('token', jwtToken)
                 navigate('/')
             })
             .catch(error => {

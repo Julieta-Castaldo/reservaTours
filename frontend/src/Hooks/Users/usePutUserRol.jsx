@@ -1,7 +1,7 @@
 import Swal from "sweetalert";
 
 export const usePutUserRol = () => {
-    const token = sessionStorage.getItem('token')
+    const token = localStorage.getItem('token')
     const handlePutUserRol = (id, setReloadUsers) => {
         fetch(`http://localhost:8080/User/${id}/rol`, {
             method: 'PUT',
@@ -34,7 +34,6 @@ export const usePutUserRol = () => {
                 console.log(data)
             })
             .catch(error => {
-                console.log(error)
                 Swal({
                     title: 'Error',
                     text: 'El usuario no pudo ser actualizado. Intente nuevamente más tarde.',

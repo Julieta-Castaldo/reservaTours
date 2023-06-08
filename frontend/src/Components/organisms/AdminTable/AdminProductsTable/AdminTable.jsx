@@ -12,20 +12,23 @@ import { IconEdit } from "../../../svgs/IconEdit.jsx";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import DeleteHandle from "../../../../handles/DeleteHandle.jsx";
+import { MenuItem, FormControl, Select } from '@mui/material';
+import { useGlobalState } from "../../../../Context/Context.jsx";
 
 
 export const AdminTable = ({ data }) => {
-
+    const {auth} = useGlobalState()
+    const {categories} = useGlobalState()
     // function toggleAll(source) {
     //     const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
     //     checkboxes.forEach(checkbox => {
     //         checkbox.checked = source.checked;
     //     });
     // }
-
+    console.log(categories)
     return (
         <AdminTableWrapper>
-            <div style={{ width:'100%', textAlign: 'end'}}>
+            <div style={{ width: '100%', textAlign: 'end' }}>
                 <Link to='/newCategory' style={{ textDecoration: 'underline', color: 'grey' }}>
                     <p>Nueva categoría</p>
                 </Link>
@@ -53,10 +56,10 @@ export const AdminTable = ({ data }) => {
                         >Ciudad</AdminTableTh>
                         <AdminTableTh
                             width="13rem"
-                        >Fecha salida</AdminTableTh>
+                        >Categoría</AdminTableTh>
                         <AdminTableTh
                             width="13rem"
-                        >Fecha entrada</AdminTableTh>
+                        >Duración</AdminTableTh>
                         <AdminTableTh
                             width="8.9rem"
                         >Imagen</AdminTableTh>
@@ -112,12 +115,31 @@ export const AdminTable = ({ data }) => {
                                     <AdminTableTd
                                         width="13rem"
                                     >
-                                        {row.fechaEntrada}
+                                        <FormControl variant="standard">
+                                            <Select
+                                                labelId="demo-simple-select-standard-label"
+                                                id="demo-simple-select-standard"
+                                                value={row.categoria && row.categoria.id}
+                                                /*onChange={() => {
+                                                    setReloadUsers(true)
+                                                    handlePutUserRol(row.id, setReloadUsers)
+                                                }}*/
+                                                disabled={auth && row.id === auth.id || row.id === 1}
+                                                label="Categoría"
+                                                sx={{ fontSize: '14px' }}
+                                            >
+                                               {categories &&  categories.map(category => {
+                                                return (
+                                                    <MenuItem disabled={row.categoria && row.categoria.id === category.id} value={category.id} >{category.nombreCategoria}</MenuItem>
+                                                )
+                                               })}
+                                            </Select>
+                                        </FormControl>
                                     </AdminTableTd>
                                     <AdminTableTd
                                         width="13rem"
                                     >
-                                        {row.fechaSalida}
+                                        duración
                                     </AdminTableTd>
                                     <AdminTableTdImg
                                         width="8.9rem"
