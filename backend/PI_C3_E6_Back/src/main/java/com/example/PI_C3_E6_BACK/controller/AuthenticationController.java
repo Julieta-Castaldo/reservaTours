@@ -42,11 +42,19 @@ public class AuthenticationController {
     public ResponseEntity<UserLoguinResponse> login(@RequestBody @Valid @NonNull LoginRequest loginRequest) {
         logger.info(loginRequest.getPassword());
         logger.info(loginRequest.getEmail());
-        UserLoguinResponse response = authenticationService.login(loginRequest);
-        System.out.println("RESPONSE: " + response);
-        return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(response);
+
+        try {
+            UserLoguinResponse response = authenticationService.login(loginRequest);
+            System.out.println("RESPONSE: " + response);
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(response);
+        }catch (Exception ex){
+            UserLoguinResponse badResponse = new UserLoguinResponse("Mail o Contraseña incorrectos");
+            return ResponseEntity.badRequest()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(badResponse);
+        }
     }
     @PermitAll
     @Operation(summary = "Sign up and returns JWT token"

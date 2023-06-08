@@ -41,7 +41,7 @@ public class AuthenticationService {
         }catch (Exception ex){
             System.out.println(ex.getMessage());
         }
-        UserDetails userDetails = userService.loadUserByUsername(loginRequest.getEmail());
+        UserDetails userDetails = userService.loadUserByUsername(loginRequest);
         String token =jwtService.generateToken(userDetails);
         UsuarioDTO usuarioDTO  =  modelMapper.getModelMapper().map(usuarioRepository.findByEmail(loginRequest.getEmail()), UsuarioDTO.class);
         AuthenticationResponse authenticationResponse = new AuthenticationResponse(token);
