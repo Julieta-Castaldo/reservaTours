@@ -268,10 +268,7 @@ const Header = () => {
                 </div>
             </nav>
 
-            <SignInModal isOpen={openSignIn} onClose={() => setOpenSignIn(false)}>
-                <h2>Título del modal</h2>
-                <p>Contenido del modal</p>
-            </SignInModal>
+            <SignInModal isOpen={openSignIn} onClose={() => setOpenSignIn(false)}></SignInModal>
         </>
     )
 }
