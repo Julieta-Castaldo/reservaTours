@@ -36,7 +36,7 @@ const Header = () => {
 
     const handleCloseSession = () => {
         setAuth(false)
-        sessionStorage.removeItem('token')
+        localStorage.removeItem('token')
         navigate('/')
         
     }

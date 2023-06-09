@@ -1,9 +1,10 @@
 import Swal from "sweetalert";
 
-export const usePutUserRol = () => {
+export const usePutTourCategory = () => {
     const token = localStorage.getItem('token')
-    const handlePutUserRol = (id, setReloadUsers) => {
-        fetch(`http://localhost:8080/User/${id}/rol`, {
+    const handlePutTourCategory = (id, idCategory, setReloadProductsFlag) => {
+        console.log(id,idCategory)
+        fetch(`http://localhost:8080/Tour/update/categoria?tourId=${id}&categoriaId=${idCategory}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -12,38 +13,25 @@ export const usePutUserRol = () => {
         })
             .then(response => {
                 if (response.status === 200) {
-                    setReloadUsers(true)
                     Swal({
                         position: 'top-end',
                         icon: 'success',
-                        title: 'Rol de usuario actualizado',
+                        title: 'Tour actualizado',
                         showConfirmButton: false,
                         timer: 2000
                     });
                 } else {
                     Swal({
                         title: 'Error',
-                        text: 'El usuario no pudo ser actualizado. Intente nuevamente más tarde.',
+                        text: 'El tour no pudo ser actualizado. Intente nuevamente más tarde.',
                         icon: 'error',
                         button: 'Aceptar',
                     });
                 }
+                setReloadProductsFlag(true)
                 return response.json()
             })
-            .then(data => {
-                console.log(data)
-            })
-            .catch(error => {
-                Swal({
-                    title: 'Error',
-                    text: 'El usuario no pudo ser actualizado. Intente nuevamente más tarde.',
-                    icon: 'error',
-                    button: 'Aceptar',
-                });
-            });
-
-
     }
 
-    return [handlePutUserRol]
+    return [handlePutTourCategory]
 }

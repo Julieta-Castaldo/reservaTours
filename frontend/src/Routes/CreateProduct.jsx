@@ -3,7 +3,7 @@ import Swal from 'sweetalert';
 import { useGlobalState } from "../Context/Context";
 import { useNavigate } from "react-router-dom";
 const CreateProduct = () => {
-    const token = sessionStorage.getItem('token')
+    const token = localStorage.getItem('token')
     const {setReloadProductsFlag} = useGlobalState();
     const navigate = useNavigate()
     const [product, setProduct] = useState({
