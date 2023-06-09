@@ -16,12 +16,6 @@ public class TourEntity {
     private String nombre;
     @Column(name = "descripcion")
     private String descripcion;
-    @Column(name = "fechaSalida")
-    @Temporal(TemporalType.DATE)
-    private LocalDate fechaSalida;
-    @Column(name = "fechaLlegada")
-    @Temporal(TemporalType.DATE)
-    private LocalDate fechaLlegada;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="Categoria_id", nullable = false)
@@ -34,24 +28,34 @@ public class TourEntity {
     @Column(name = "precio")
     private double precio;
 
+    @Column(name = "duracion")
+    private int duracion;
+
 
     //constructors
 
 
-    public TourEntity(String nombre, String descripcion, LocalDate fechaSalida, LocalDate fechaLlegada, CategoriaEntity categoria, CiudadEntity ciudad, double precio, CaracteristicaEntity caracteristica) {
+    public TourEntity(String nombre, String descripcion, CategoriaEntity categoria, CiudadEntity ciudad, double precio, int duracion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.fechaSalida = fechaSalida;
-        this.fechaLlegada = fechaLlegada;
         this.categoria = categoria;
         this.ciudad = ciudad;
         this.precio = precio;
+        this.duracion = duracion;
     }
 
     public TourEntity() {
     }
 
     //getters y setters
+
+    public int getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(int duracion) {
+        this.duracion = duracion;
+    }
 
     public double getPrecio() {
         return precio;
@@ -85,21 +89,6 @@ public class TourEntity {
         this.descripcion = descripcion;
     }
 
-    public LocalDate getFechaSalida() {
-        return fechaSalida;
-    }
-
-    public void setFechaSalida(LocalDate fechaSalida) {
-        this.fechaSalida = fechaSalida;
-    }
-
-    public LocalDate getFechaLlegada() {
-        return fechaLlegada;
-    }
-
-    public void setFechaLlegada(LocalDate fechaLlegada) {
-        this.fechaLlegada = fechaLlegada;
-    }
 
     public CategoriaEntity getCategoria() {
         return categoria;

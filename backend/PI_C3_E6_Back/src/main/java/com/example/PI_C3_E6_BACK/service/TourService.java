@@ -159,7 +159,6 @@ public class TourService {
         TourEntity tour = modelMapper.getModelMapper().map(t, TourEntity.class);
         CiudadEntity ciudad = modelMapper.getModelMapper().map(t.getCiudad(), CiudadEntity.class);
 
-        if (t.getFechaSalida().isAfter(LocalDate.now())){
             if( repo.findTourByName(t.getNombre()) == null) {
                 try {
                     CategoriaEntity categoria = repoCategoria
@@ -187,11 +186,6 @@ public class TourService {
                 log.error(error);
                 return ResponseEntity.badRequest().body(error);
             }
-        }else{
-            String error = "No se pudo crear el tour. Verificar que la fecha de salida sea posterior a la fecha de hoy";
-            log.error(error);
-            return ResponseEntity.badRequest().body(error);
-        }
     }
 
     public void borrarPorId(int id){

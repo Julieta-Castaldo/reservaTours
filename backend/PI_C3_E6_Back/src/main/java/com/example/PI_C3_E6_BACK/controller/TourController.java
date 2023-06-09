@@ -79,24 +79,16 @@ public class TourController implements IController<TourDTO>{
 
     @PostMapping("/agregar")
     public ResponseEntity<String> crearTour(@RequestBody TourDTO t){
-        Duration duracion = Duration.between(t.getFechaSalida().atStartOfDay(), t.getFechaLlegada().atStartOfDay());
-        long diferenciaDias = duracion.toDays();
+        int duracion = t.getDuracion();
+
         if(t.getNombre() != null) {
-            if (diferenciaDias >= 2) {
-                if (t.getFechaLlegada() != null) {
-                    if (t.getFechaSalida() != null) {
+            if (duracion >= 2) {
                         try {
                             ResponseEntity response = tourService.agregarTour(t);
                             return response;
                         } catch (Exception ex) {
                             return ResponseEntity.badRequest().body(ex.getMessage());
                         }
-                    } else {
-                        return ResponseEntity.badRequest().body("No se pudo crear el tour ya que falta ingresar fecha de salida");
-                    }
-                } else {
-                    return ResponseEntity.badRequest().body("No se pudo crear el tour ya que falta ingresar fecha de llegada");
-                }
             } else {
                 return ResponseEntity.badRequest().body("No se pudo crear el tour ya que tiene que haber una diferencia de al menos dos días entre la fecha de salida y la de entrada");
             }
