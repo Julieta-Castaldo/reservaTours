@@ -141,7 +141,7 @@ export const AdminTable = ({ data }) => {
                                     <AdminTableTd
                                         width="13rem"
                                     >
-                                        duración
+                                        {`${row.duracion} días`}
                                     </AdminTableTd>
                                     <AdminTableTdImg
                                         width="8.9rem"

@@ -11,8 +11,7 @@ const CreateProduct = () => {
         descripcion: '',
         ciudad: { nombreCiudad: '' },
         categoria: { nombreCategoria: '' },
-        fechaSalida: '',
-        fechaLlegada: '',
+        duracion: '',
         listaImagenes: [
             { url: '' }
         ]
@@ -24,8 +23,7 @@ const CreateProduct = () => {
         descripcion: '',
         ciudad: { nombreCiudad: '' },
         categoria: { nombreCategoria: '' },
-        fechaSalida: '',
-        fechaLlegada: '',
+        duracion: '',
         listaImagenes: [
             { url: '' }
         ]
@@ -92,12 +90,8 @@ const CreateProduct = () => {
                             <input type="text" value={product.categoria.nombreCategoria} onChange={(e) => setProduct({ ...product, categoria: { nombreCategoria: e.target.value } })} />
                         </div>
                         <div>
-                            <label>Fecha inicio*</label>
-                            <input type="text" value={product.fechaSalida} onChange={(e) => setProduct({ ...product, fechaSalida: e.target.value })} />
-                        </div>
-                        <div>
-                            <label>Fecha salida *</label>
-                            <input type="text" value={product.fechaLlegada} onChange={(e) => setProduct({ ...product, fechaLlegada: e.target.value })} />
+                            <label>Duración (días)*</label>
+                            <input type="number" value={product.duracion} onChange={(e) => setProduct({ ...product, duracion: e.target.value })} />
                         </div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
