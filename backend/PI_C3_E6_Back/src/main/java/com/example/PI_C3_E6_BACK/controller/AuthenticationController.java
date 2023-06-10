@@ -70,7 +70,7 @@ public class AuthenticationController {
     @ResponseBody
     public ResponseEntity<UserLoguinResponse> signUp(@RequestBody @Valid @NonNull SignUpRequest signUpRequest) {
         UserLoguinResponse response = authenticationService.signUp(signUpRequest);
-        emailService.sendMail(signUpRequest.getEmail(), "LO LOGRAMOS", "Haz clic en este enlace: http://127.0.0.1:5173/");
+        emailService.sendMail(signUpRequest.getEmail(), "Valida tu cuenta", "Haz clic en este enlace: http://127.0.0.1:5173/");
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(response);
