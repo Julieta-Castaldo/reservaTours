@@ -156,6 +156,21 @@ public class TourService {
         return listaDTO;
     }
 
+    public List<TourDTO> buscarTourPorCiudad(int idCiudad){
+        List<TourDTO> listaDTO =new ArrayList<>();
+        for(TourEntity tour : repo.findToursByCiudad(idCiudad)){
+            TourDTO tourDTO = modelMapper.getModelMapper().map(tour, TourDTO.class);
+            List<ImagenesEntity> imagenesEntities = repoImagenes.findImgById(tour.getId());
+            List<ImagenesDTO> imagenesDTOS = new ArrayList<>();
+            for (ImagenesEntity img : imagenesEntities){
+                imagenesDTOS.add(modelMapper.getModelMapper().map(img, ImagenesDTO.class));
+            }
+            tourDTO.setListaImagenes(imagenesDTOS);
+            listaDTO.add(tourDTO);
+        }
+        return listaDTO;
+    }
+
     public ResponseEntity<String> agregarTour(RequestTourDTO t) throws Exception{
         TourEntity tour = modelMapper.getModelMapper().map(t, TourEntity.class);
         CiudadEntity ciudad = modelMapper.getModelMapper().map(

@@ -5,6 +5,7 @@ import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.LoginRequest;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.SignUpRequest;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.UserLoguinResponse;
 import com.example.PI_C3_E6_BACK.service.AuthenticationService;
+import com.example.PI_C3_E6_BACK.service.EmailService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,6 +29,10 @@ public class AuthenticationController {
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 
     private final AuthenticationService authenticationService;
+
+    @Autowired
+    private EmailService emailService;
+
     @Autowired
     public AuthenticationController(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
@@ -65,6 +70,7 @@ public class AuthenticationController {
     @ResponseBody
     public ResponseEntity<UserLoguinResponse> signUp(@RequestBody @Valid @NonNull SignUpRequest signUpRequest) {
         UserLoguinResponse response = authenticationService.signUp(signUpRequest);
+        emailService.sendMail(signUpRequest.getEmail(), "LO LOGRAMOS", "Haz clic en este enlace: http://127.0.0.1:5173/");
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(response);

@@ -52,6 +52,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/Ciudades/todos").permitAll()
                         .requestMatchers(HttpMethod.GET, "/Tour/todosAleatorio").permitAll()
                         .requestMatchers(HttpMethod.GET, "/Tour/porCategoria/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/Tour/porCiudad/**").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/Tour/**").hasAuthority(ADMIN.name())
                         .requestMatchers(HttpMethod.POST, "/Tour/agregar").hasAuthority(ADMIN.name())
                         .requestMatchers(HttpMethod.PUT, "/Tour/update/categoria").hasAuthority(ADMIN.name())

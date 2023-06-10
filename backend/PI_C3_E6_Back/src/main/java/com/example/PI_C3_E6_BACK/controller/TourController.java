@@ -62,6 +62,17 @@ public class TourController implements IController<TourDTO>{
         }
     }
 
+    @GetMapping("/porCiudad/{ciudadId}")
+    @ResponseBody
+    public  ResponseEntity<List<TourDTO>> buscarPorCiudad (@PathVariable int ciudadId) throws ResourceNotFoundException {
+        try {
+            List<TourDTO> ListaTourDTO = tourService.buscarTourPorCiudad(ciudadId);
+            return ResponseEntity.ok(ListaTourDTO);
+        }catch (Exception ex){
+            throw new ResourceNotFoundException(ex.getMessage());
+        }
+    }
+
     @GetMapping("/todosAleatorio")
     @ResponseBody
     public ResponseEntity<List<TourDTO>> buscarTodosAleatorio() throws ResourceNotFoundException {
