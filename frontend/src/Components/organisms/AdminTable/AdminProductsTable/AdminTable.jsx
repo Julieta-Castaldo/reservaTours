@@ -22,19 +22,9 @@ export const AdminTable = ({ data }) => {
     const {categories} = useGlobalState()
     const {setReloadProductsFlag} = useGlobalState()
     const [handlePutTourCategory] = usePutTourCategory()
-    // function toggleAll(source) {
-    //     const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
-    //     checkboxes.forEach(checkbox => {
-    //         checkbox.checked = source.checked;
-    //     });
-    // }
+
     return (
         <AdminTableWrapper>
-            <div style={{ width: '100%', textAlign: 'end' }}>
-                <Link to='/newCategory' style={{ textDecoration: 'underline', color: 'grey' }}>
-                    <p>Nueva categoría</p>
-                </Link>
-            </div>
             <table>
                 <AdminTabletTHead>
                     <AdminTableTr
