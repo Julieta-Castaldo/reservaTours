@@ -6,6 +6,7 @@ import { useNavigate, Link } from "react-router-dom"
 import PropTypes from "prop-types";
 import { IconEdit } from "../../../svgs/IconEdit.jsx";
 import { IconTrash } from "../../../svgs/IconTrash.jsx";
+import Swal from 'sweetalert2';
 
 export const AdminCategoriesTable = ({ data, setReloadUsers }) => {
     const { auth } = useGlobalState()
@@ -14,6 +15,27 @@ export const AdminCategoriesTable = ({ data, setReloadUsers }) => {
     useEffect(() => {
         if (!auth) navigate('/')
     }, [])
+
+    const handleDeleteCategory = () => {
+        Swal.fire({
+            title: 'Confirmar delete',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Eliminar',
+            width: '40em',
+            
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+            }
+        })
+    }
 
     return (
         <AdminUsersTableWrapper>
@@ -93,13 +115,11 @@ export const AdminCategoriesTable = ({ data, setReloadUsers }) => {
                                                 color={"#F2A63B"}
                                             />
                                         </Link>
-                                        <Link
-                                            to='/admin/'
-                                        >
+                                        <button onClick={() => handleDeleteCategory()} style={{ border: 'none', backgroundColor: 'transparent' }}>
                                             <IconTrash
                                                 color={"#E72328"}
                                             />
-                                        </Link>
+                                        </button>
                                     </AdminUsersTableTd>
                                 </AdminUsersTableTr>
                             )
