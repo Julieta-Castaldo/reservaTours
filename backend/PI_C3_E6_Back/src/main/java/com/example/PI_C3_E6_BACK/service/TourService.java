@@ -4,6 +4,7 @@ import com.example.PI_C3_E6_BACK.configuration.MapperConfig;
 import com.example.PI_C3_E6_BACK.exceptions.ResourceNotFoundException;
 import com.example.PI_C3_E6_BACK.model.CaracteristicaDTO;
 import com.example.PI_C3_E6_BACK.model.ImagenesDTO;
+import com.example.PI_C3_E6_BACK.model.RequestTourDTO;
 import com.example.PI_C3_E6_BACK.model.TourDTO;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.PageResponseDTO;
 import com.example.PI_C3_E6_BACK.persistence.entities.*;
@@ -155,18 +156,18 @@ public class TourService {
         return listaDTO;
     }
 
-    public ResponseEntity<String> agregarTour(TourDTO t) throws Exception{
+    public ResponseEntity<String> agregarTour(RequestTourDTO t) throws Exception{
         TourEntity tour = modelMapper.getModelMapper().map(t, TourEntity.class);
-        CiudadEntity ciudad = modelMapper.getModelMapper().map(t.getCiudad(), CiudadEntity.class);
+        CiudadEntity ciudad = modelMapper.getModelMapper().map(
+                repoCiudad.findById(t.getCiudadId()), CiudadEntity.class);
 
             if( repo.findTourByName(t.getNombre()) == null) {
                 try {
                     CategoriaEntity categoria = repoCategoria
-                            .findCategoriaByName(
-                                    t.getCategoria().getNombreCategoria());
+                            .findById(
+                                    t.getCategoriaId());
                     tour.setCiudad(ciudad);
                     tour.setCategoria(categoria);
-                    repoCiudad.save(ciudad);
                     repo.save(tour);
                     caracteristicaService
                             .convertCaracteristicaEntity(

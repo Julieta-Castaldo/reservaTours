@@ -2,6 +2,7 @@ package com.example.PI_C3_E6_BACK.controller;
 
 
 import com.example.PI_C3_E6_BACK.exceptions.ResourceNotFoundException;
+import com.example.PI_C3_E6_BACK.model.RequestTourDTO;
 import com.example.PI_C3_E6_BACK.model.TourDTO;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.PageResponseDTO;
 import com.example.PI_C3_E6_BACK.service.TourService;
@@ -78,7 +79,7 @@ public class TourController implements IController<TourDTO>{
     }
 
     @PostMapping("/agregar")
-    public ResponseEntity<String> crearTour(@RequestBody TourDTO t){
+    public ResponseEntity<String> crearTour(@RequestBody RequestTourDTO t){
         int duracion = t.getDuracion();
 
         if(t.getNombre() != null) {
