@@ -39,7 +39,8 @@ export const usePostCity = () => {
                     });
                 }
                 return response.json()
-            }).catch(error => console.log(error))
+            }).then(data => console.log(data))
+            .catch(error => console.log(error))
 
     }
 
