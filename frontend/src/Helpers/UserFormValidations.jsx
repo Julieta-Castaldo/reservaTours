@@ -10,3 +10,7 @@ export const validatePassword = (password) => {
 export const validateTextFields = (value) => {
     return value !== ''
 }
+
+export const validateNumberFields = (value) => {
+    return value !== null
+}
