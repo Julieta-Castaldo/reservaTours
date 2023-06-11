@@ -2,6 +2,7 @@ package com.example.PI_C3_E6_BACK.controller;
 
 
 import com.example.PI_C3_E6_BACK.exceptions.ResourceNotFoundException;
+import com.example.PI_C3_E6_BACK.model.FechaOcupadaDTO;
 import com.example.PI_C3_E6_BACK.model.RequestTourDTO;
 import com.example.PI_C3_E6_BACK.model.TourDTO;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.PageResponseDTO;
@@ -12,12 +13,14 @@ import org.springframework.boot.context.config.ConfigDataResourceNotFoundExcepti
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
@@ -150,6 +153,30 @@ public class TourController implements IController<TourDTO>{
         }
 
         return response;
+    }
+
+    //Get para traer los tours con determinada fecha disponible
+    @GetMapping("/fechas-disponibles")
+    public ResponseEntity<List<TourDTO>> buscarToursPorFechaDisponible(@RequestParam("fecha") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
+        List<TourDTO> toursDisponibles = tourService.buscarToursPorFechaDisponible(fecha);
+
+        if (toursDisponibles.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(toursDisponibles);
+    }
+
+    //Get para traer todas las fechas ocupadas que tenga un Tour
+    @GetMapping("/fechas-ocupadas-por-tour/{tourId}")
+    @ResponseBody
+    public ResponseEntity<List<FechaOcupadaDTO>> buscarFechasOcupadasPorTour (@PathVariable int tourId) throws ResourceNotFoundException {
+        try {
+            List<FechaOcupadaDTO> ListaFechaOcupadaDTO = tourService.buscarFechasOcupadasPorTour(tourId);
+            return ResponseEntity.ok(ListaFechaOcupadaDTO);
+        }catch (Exception ex){
+            throw new ResourceNotFoundException(ex.getMessage());
+        }
     }
 
 }
