@@ -5,9 +5,11 @@ import { useEffect, useState } from "react";
 import Spinner from "../../../assets/Spinner/Spinner.jsx";
 import { AdminUsersTable } from '../../organisms/AdminTable/AdminUsersTable/AdminUsersTable.jsx'
 import { AdminCategoriesTable } from '../../organisms/AdminTable/AdminCategoriesTable/AdminCategoriesTable'
+import { AdminCitiesTable } from "../../organisms/AdminTable/AdminCitiesTable/AdminCitiesTable.jsx";
 //Hooks
 import { useGetUsers } from "../../../Hooks/Users/useGetUsers.jsx";
 import { useGetCategories } from "../../../Hooks/Categories/useGetCategories";
+import { useGetCities } from "../../../Hooks/Cities/useGetCities.jsx";
 
 export const PanelSection = ({ selectedTab = 'products' }) => {
     const { products } = useGlobalState()
@@ -15,7 +17,9 @@ export const PanelSection = ({ selectedTab = 'products' }) => {
     const [users, handleGetUsers] = useGetUsers()
     const [reloadUsers, setReloadUsers] = useState(false)
     const [reloadCategories, setReloadCategories] = useState(false)
+    const [reloadCities, setReloadCities] = useState(false)
     const [categories, handleGetCategories] = useGetCategories()
+    const [cities, handleGetCities] = useGetCities()
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -27,6 +31,10 @@ export const PanelSection = ({ selectedTab = 'products' }) => {
         }
     }, [reloadUsers])
 
+    useEffect(() =>{
+        if(reloadCities) handleGetCities(setReloadCities)
+    }, [reloadCities])
+
     useEffect(() => {
         if(reloadCategories){
             handleGetCategories(setReloadCategories)
@@ -36,6 +44,7 @@ export const PanelSection = ({ selectedTab = 'products' }) => {
     useEffect(() => {
         handleGetUsers()
         handleGetCategories()
+        handleGetCities(setReloadCities)
     }, [])
 
     return (
@@ -53,6 +62,11 @@ export const PanelSection = ({ selectedTab = 'products' }) => {
             {selectedTab === 'categories' &&
                 <>
                     {reloadCategories ? <Spinner /> : <AdminCategoriesTable data={categories} setReloadCategories={setReloadCategories} />}
+                </>
+            }
+            {selectedTab === 'cities' &&
+                <>
+                    {reloadCities ? <Spinner /> : <AdminCitiesTable data={cities} setReloadCategories={setReloadCategories} />}
                 </>
             }
         </PanelSectionWrapper>
