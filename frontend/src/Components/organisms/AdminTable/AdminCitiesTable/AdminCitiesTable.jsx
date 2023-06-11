@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 import { IconArrowRight2 } from "../../../svgs/IconArrowRight2"
 import NewCityModal from "../../../molecules/Modal/NewCityModal"
 
-export const AdminCitiesTable = ({ data, setReloadUsers }) => {
+export const AdminCitiesTable = ({ data, setReloadCities }) => {
     const { auth } = useGlobalState()
     const navigate = useNavigate()
     const [openNewCity, setOpenNewCity] = useState(false)
@@ -110,22 +110,22 @@ export const AdminCitiesTable = ({ data, setReloadUsers }) => {
                                         <AdminUsersTableTd
                                             width="8rem"
                                         >
-                                            {row.nombreCategoria}
+                                            {row.nombreCiudad}
                                         </AdminUsersTableTd>
                                         <AdminUsersTableTd
                                             width="30rem"
                                         >
-                                            {row.descripcionCategoria}
+                                            {row.descripcionCiudad}
                                         </AdminUsersTableTd>
                                         <AdminUsersTableTd
                                             width="10rem"
                                         >
-                                            {row.descripcionCategoria}
+                                            {row.latitud}
                                         </AdminUsersTableTd>
                                         <AdminUsersTableTd
                                             width="10rem"
                                         >
-                                            {row.descripcionCategoria}
+                                            {row.longitud}
                                         </AdminUsersTableTd>
                                         <AdminUsersTableTd
                                             width="12.4rem"
