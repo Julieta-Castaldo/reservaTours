@@ -10,6 +10,7 @@ import com.example.PI_C3_E6_BACK.service.CiudadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,13 +24,16 @@ public class CiudadController {
     @Autowired
     private CiudadService ciudadService;
     @PostMapping("/agregar")
+    @ResponseBody
     public ResponseEntity<String> crearCiudad(@RequestBody CiudadDTO c){
         if(c.getNombreCiudad() != null && ciudadService.buscarPorCoordenadas(c.getLatitud(), c.getLongitud()) == null) {
             try {
                 ResponseEntity response = ciudadService.agregarCiudad(c);
                 return response;
             } catch (Exception ex) {
-                return ResponseEntity.badRequest().body(ex.getMessage());
+                return ResponseEntity.badRequest()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(ex.getMessage());
             }
         }else{
             return ResponseEntity.badRequest().body("No se pudo crear la ciudad");
