@@ -30,4 +30,6 @@ public interface TourRepository extends JpaRepository<TourEntity, Integer> {
     Page<TourEntity> findByCategoria_id(int Categoria_id, Pageable pageable);
 
 
+
+
 }

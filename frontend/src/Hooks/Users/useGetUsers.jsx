@@ -15,7 +15,7 @@ export const useGetUsers = () => {
             .then(res => res.json())
             .then(data => {
                 setUsers(data.content)
-                setReloadUsers(false)
+                setReloadUsers && setReloadUsers(false)
             })
     }, []);
 
