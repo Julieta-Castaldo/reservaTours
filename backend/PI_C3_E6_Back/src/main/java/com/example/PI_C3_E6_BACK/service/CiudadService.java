@@ -14,6 +14,7 @@ import com.example.PI_C3_E6_BACK.persistence.repository.CiudadRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -47,12 +48,16 @@ public class CiudadService {
                 return ResponseEntity.ok("La ciudad fue agregada con éxito");
             } catch (Exception ex) {
                 log.error(ex.getMessage());
-                return ResponseEntity.badRequest().body(ex.getMessage());
+                return ResponseEntity.badRequest()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(ex.getMessage());
             }
         }else{
             String error = "No se pudo agregar la ciudad porque ya existe esa ubicación";
             log.error(error);
-            return ResponseEntity.badRequest().body(error);
+            return ResponseEntity.badRequest()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(error);
         }
     }
 
