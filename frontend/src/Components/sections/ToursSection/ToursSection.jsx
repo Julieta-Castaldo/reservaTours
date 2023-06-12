@@ -5,7 +5,7 @@ export const ToursSection = ({ products, title, filteredTours }) => {
 
     return (
         <ToursSectionWrapper>
-            {!filteredTours && <ToursSectionTitle>{title}</ToursSectionTitle>}
+            <ToursSectionTitle>{!filteredTours ? title : 'Resultados de tu búsqueda'}</ToursSectionTitle>
             <div style={{ marginTop: filteredTours ? '60px' : 0 }}>
                 <ToursSectionCards>
                     {products && products.map(product =>
