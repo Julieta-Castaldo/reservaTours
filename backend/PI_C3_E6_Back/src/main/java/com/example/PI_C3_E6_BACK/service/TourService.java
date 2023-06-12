@@ -2,10 +2,7 @@ package com.example.PI_C3_E6_BACK.service;
 
 import com.example.PI_C3_E6_BACK.configuration.MapperConfig;
 import com.example.PI_C3_E6_BACK.exceptions.ResourceNotFoundException;
-import com.example.PI_C3_E6_BACK.model.CaracteristicaDTO;
-import com.example.PI_C3_E6_BACK.model.ImagenesDTO;
-import com.example.PI_C3_E6_BACK.model.RequestTourDTO;
-import com.example.PI_C3_E6_BACK.model.TourDTO;
+import com.example.PI_C3_E6_BACK.model.*;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.PageResponseDTO;
 import com.example.PI_C3_E6_BACK.persistence.entities.*;
 import com.example.PI_C3_E6_BACK.persistence.repository.*;
@@ -38,6 +35,8 @@ public class TourService {
     CiudadRepository repoCiudad;
     @Autowired
     CaracteristicaRepository repoCaracteristicas;
+    @Autowired
+    FechaOcupadaRepository repoFechaOcupada;
     @Autowired
     CaracteristicaService caracteristicaService;
     @Autowired
@@ -242,6 +241,37 @@ public class TourService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocurrió un error al actualizar la categoría del tour.");
         }
     }
+
+    //Método para buscar Tours que tengan determinada fecha disponible
+    public List<TourDTO> buscarToursPorFechaDisponible(LocalDate fecha){
+        List<TourDTO> toursDisponibles = new ArrayList<>();
+        List<TourEntity> tours = repo.findAll(); // Obtener todos los tours
+
+        for (TourEntity tour : tours) {
+            // Verificar si la fecha está ocupada para el tour actual
+            if (!repoFechaOcupada.existsByTourIdAndFechaOcupada(tour.getId(), fecha)) {
+                TourDTO tourDTO = modelMapper.getModelMapper().map(tour, TourDTO.class);
+                toursDisponibles.add(tourDTO);
+            }
+        }
+        return toursDisponibles;
+    }
+
+    //Método para traer todas las fechas ocupadas que tenga un Tour
+    public List<FechaOcupadaDTO> buscarFechasOcupadasPorTour(int idTour){
+        List<FechaOcupadaDTO> fechasOcupadas = new ArrayList<>();
+        List<FechaOcupadaEntity> fechas = repoFechaOcupada.findAll(); // Obtener todas las fechas ocupadas
+
+        for (FechaOcupadaEntity fecha : fechas) {
+            // Verificar si el registro de fecha coincide con el tour que estoy buscando
+            if (fecha.getTour().getId() == idTour) {
+                FechaOcupadaDTO fechaOcupadaDTO = modelMapper.getModelMapper().map(fecha, FechaOcupadaDTO.class);
+                fechasOcupadas.add(fechaOcupadaDTO);
+            }
+        }
+        return fechasOcupadas;
+    }
+
 
 
 }
