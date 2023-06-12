@@ -9,6 +9,7 @@ import { FeatureBlock } from '../Components/organisms/FeatureBlock/FeatureBlock'
 import { PicturesSection } from "../Components/sections/PicturesSection/PicturesSection.jsx";
 import { ImagesCarousel } from '../Components/organisms/ImagesCarousel/ImagesCarousel';
 import MapUbication from '../Components/molecules/LeafletUbication/MapUbication';
+import PoliticaBlock from '../Components/organisms/PoliticaBlock/PoliticaBlock';
 
 const ProductDetail = () => {
     const { id } = useParams()
@@ -84,6 +85,7 @@ const ProductDetail = () => {
             <MapUbication />
 
             <ImagesCarousel images={listaImagenes} isOpen={isOpenCarousel} onClose={() => setIsOpenCarousel(false)} />
+            <PoliticaBlock /> 
         </div>
     )
 }

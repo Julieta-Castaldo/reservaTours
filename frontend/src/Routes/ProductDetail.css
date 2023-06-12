@@ -64,6 +64,11 @@
     align-items: center;
 }
 
+.prueba{
+    margin-top: 1000px;
+    text-align: center;
+}
+
 @media (max-width: 900px) {
     .detailView{
         flex-direction: column;
