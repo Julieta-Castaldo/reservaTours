@@ -14,7 +14,7 @@ export const useGetCities = () => {
             .then(res => res.json())
             .then(data => {
                 setCities(data)
-                setCategories && setReloadCities(false)
+                setReloadCities && setReloadCities(false)
             })
     }, []);
 

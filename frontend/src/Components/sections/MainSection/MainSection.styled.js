@@ -20,7 +20,7 @@ export const MainSectionSearchBar = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   padding: 0 5.9rem;
 
 
