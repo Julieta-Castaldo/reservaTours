@@ -1,6 +1,11 @@
 import { MainSectionSearchBar, MainSectionWrapper } from "./MainSection.styled.js";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import { Dayjs } from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 //Hooks
 import { useGetCities } from '../../../Hooks/Cities/useGetCities.jsx'
 import { useGetCategories } from "../../../Hooks/Categories/useGetCategories.jsx";
@@ -9,7 +14,7 @@ import { useEffect, useState } from "react";
 export const MainSection = ({ products, setFiltersApplied, filtersApplied }) => {
     const [cities, handleGetCities] = useGetCities()
     const [selectedCity, setSelectedCity] = useState('')
-    const [selectedDate, setSelectedDate] = useState('')
+    const [selectedDate, setSelectedDate] = useState(null)
     const [selectedCategory, setSelectedCategory] = useState('')
     const [categories, handleGetCategories] = useGetCategories()
 
@@ -32,7 +37,7 @@ export const MainSection = ({ products, setFiltersApplied, filtersApplied }) => 
                             options={cities}
                             id="disable-close-on-select"
                             getOptionLabel={option => option && option.nombreCiudad ? option.nombreCiudad : ''}
-                            sx={{ width: 250 }}
+                            sx={{ width: 220 }}
                             renderOption={(props, option) => (
                                 <li {...props} style={{ fontSize: '16px' }}>
                                     {option.nombreCiudad}
@@ -60,7 +65,7 @@ export const MainSection = ({ products, setFiltersApplied, filtersApplied }) => 
                             options={categories}
                             id="disable-close-on-select"
                             getOptionLabel={option => option && option.nombreCategoria ? option.nombreCategoria : ''}
-                            sx={{ width: 250 }}
+                            sx={{ width: 220 }}
                             renderOption={(props, option) => (
                                 <li {...props} style={{ fontSize: '16px' }}>
                                     {option.nombreCategoria}
@@ -80,34 +85,30 @@ export const MainSection = ({ products, setFiltersApplied, filtersApplied }) => 
                         />
                     </div>
                     <div>
-                        <p>Busca por fecha</p>
-                        <Autocomplete
-                            disablePortal
-                            options={products}
-                            id="disable-close-on-select"
-                            getOptionLabel={option => option && option.nombre ? option.nombre : ''}
-                            sx={{ width: 250 }}
-                            renderOption={(props, option) => (
-                                <li {...props} style={{ fontSize: '16px' }}>
-                                    {option.nombre}
-                                </li>
-                            )}
-                            renderInput={(params) => <TextField variant="standard" {...params} InputProps={{
-                                ...params.InputProps,
-                                style: { fontSize: '16px' }
-                            }} />}
-                            value={selectedDate}
-                            onChange={(e, newValue) => {
-                                setFiltersApplied({ type: 'fecha', value: newValue })
-                                setSelectedCity('')
-                                setSelectedCategory('')
-                                setSelectedDate(newValue ? newValue : '')
-                            }}
-                        />
+
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DatePicker
+                                sx={{ width: 220, fontSize: '20px' }}
+                                value={selectedDate}
+                                onChange={(newValue) => {
+                                    if (newValue === 'Invalid Date') {
+                                        setFiltersApplied({ type: 'fecha', value: null })
+                                    } else {
+                                        const date = new Date(newValue);
+                                        const year = date.getFullYear();
+                                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                                        const day = String(date.getDate()).padStart(2, '0');
+                                        const formattedDate = `${year}/${month}/${day}`
+                                        setFiltersApplied({ type: 'fecha', value: formattedDate })
+                                    }
+                                }}
+                            />
+                        </LocalizationProvider>
+
                     </div>
                 </div>
             </MainSectionSearchBar>
 
-        </MainSectionWrapper>
+        </MainSectionWrapper >
     )
 }

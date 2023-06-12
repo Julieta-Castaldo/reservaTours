@@ -21,14 +21,16 @@ export const useGetTourByFilter = () => {
             default:
                 break;
         }
-        console.log(filter)
         fetch(urlProducts, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             },
         })
-            .then(res => res.json())
+            .then(res => {
+                console.log(res)
+                return res.json()
+            })
             .then(data => {
                 setProducts(data)
                 setReloadProductsFlag(false)
