@@ -29,11 +29,11 @@ const Home = () => {
     return (
         <main>
             <MainSection products={products} filtersApplied={filtersApplied} setFiltersApplied={setFiltersApplied} />
-            {filtersApplied.type === '' && <>
+            <>
                 <DividerSection padding={'20rem 20% 5rem 20%;'} />
                 <CategoriesSection />
                 <DividerSection padding={'5rem 20% 5rem 20%;'} />
-            </>}
+            </>
 
             <ToursSection products={filtersApplied.value === '' ? products : filteredProducts} title='Nuestros Productos' filteredTours={filtersApplied.type !== ''} />
         </main>
