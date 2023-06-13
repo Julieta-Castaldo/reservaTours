@@ -100,4 +100,31 @@ public class CiudadService {
 
             return ciudadDTO;
     }
+
+    public void borrarPorId(int id) {
+
+        if (id >= 0) {
+            try {
+                repoCiudad.deleteById(id);
+                log.info("Ciudad eliminada");
+            } catch (Exception ex) {
+                log.error(ex.getMessage());
+            }
+        } else {
+            log.error("id inválido");
+        }
+    }
+
+    public ResponseEntity<String> guardar(CiudadDTO c) {
+        CiudadEntity ciudad = modelMapper.getModelMapper().map(c, CiudadEntity.class);
+        CiudadEntity ciudadExistente = repoCiudad.findByNombreCiudad(c.getNombreCiudad());
+        if (ciudadExistente == null || ciudadExistente.getId() == ciudad.getId()) {
+            repoCiudad.save(ciudad);
+            return ResponseEntity.ok("La ciudad se actualizó con éxito");
+        } else {
+            String error = "No se pudo guardar la ciudad porque ya existe otra con el mismo nombre";
+            log.error(error);
+            return ResponseEntity.badRequest().body(error);
+        }
+    }
 }

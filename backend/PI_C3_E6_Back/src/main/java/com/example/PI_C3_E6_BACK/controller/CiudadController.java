@@ -84,4 +84,38 @@ public class CiudadController {
             return ResponseEntity.badRequest().body(ciudadDTO);
         }
     }
+
+    //Eliminar ciudad
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> borrarPorId(@PathVariable int id) {
+        CiudadDTO ciudadExistente = ciudadService.buscarPorId(id);
+        if (ciudadExistente == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            try {
+                ciudadService.borrarPorId(id);
+            } catch (Exception ex) {
+                return ResponseEntity.badRequest().body(ex.getMessage());
+            }
+            return ResponseEntity.ok("Se borró la ciudad con éxito");
+        }
+    }
+
+    //Actualizar ciudad
+    @PutMapping("/{id}")
+    public ResponseEntity<String> actualizarCiudad(@PathVariable("id") int id, @RequestBody CiudadDTO ciudad) {
+        CiudadDTO ciudadExistente = ciudadService.buscarPorId(id);
+        if (ciudadExistente == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            ciudadExistente.setNombreCiudad(ciudad.getNombreCiudad());
+            ciudadExistente.setLatitud(ciudad.getLatitud());
+            ciudadExistente.setLongitud(ciudad.getLongitud());
+            ciudadExistente.setDescripcionCiudad(ciudad.getDescripcionCiudad());
+
+            ResponseEntity<String> response = ciudadService.guardar(ciudadExistente);
+
+            return response;
+        }
+    }
 }
