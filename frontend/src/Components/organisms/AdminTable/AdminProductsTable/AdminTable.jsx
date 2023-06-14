@@ -6,18 +6,18 @@ import {
     AdminTabletTHead,
     AdminTableWrapper
 } from "./AdminTable.styled.js";
-import { IconArrowRight2 } from "../../../svgs/IconArrowRight2.jsx";
-import { ButtonIcon } from "../../../molecules/ButtonIcon/ButtonIcon.jsx";
-import { IconEdit } from "../../../svgs/IconEdit.jsx";
-import { Link } from "react-router-dom";
+import {IconArrowRight2} from "../../../svgs/IconArrowRight2.jsx";
+import {ButtonIcon} from "../../../molecules/ButtonIcon/ButtonIcon.jsx";
+import {IconEdit} from "../../../svgs/IconEdit.jsx";
+import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import DeleteHandle from "../../../../handles/DeleteHandle.jsx";
-import { MenuItem, FormControl, Select } from '@mui/material';
-import { useGlobalState } from "../../../../Context/Context.jsx";
-import { usePutTourCategory } from "../../../../Hooks/Tours/usePutTourCategory.jsx";
+import {MenuItem, FormControl, Select} from '@mui/material';
+import {useGlobalState} from "../../../../Context/Context.jsx";
+import {usePutTourCategory} from "../../../../Hooks/Tours/usePutTourCategory.jsx";
 
 
-export const AdminTable = ({ data }) => {
+export const AdminTable = ({data}) => {
     const {auth} = useGlobalState()
     const {categories} = useGlobalState()
     const {setReloadProductsFlag} = useGlobalState()
@@ -30,8 +30,8 @@ export const AdminTable = ({ data }) => {
     // }
     return (
         <AdminTableWrapper>
-            <div style={{ width: '100%', textAlign: 'end' }}>
-                <Link to='/newCategory' style={{ textDecoration: 'underline', color: 'grey' }}>
+            <div style={{width: '100%', textAlign: 'end'}}>
+                <Link to='/newCategory' style={{textDecoration: 'underline', color: 'grey'}}>
                     <p>Nueva categoría</p>
                 </Link>
             </div>
@@ -97,7 +97,7 @@ export const AdminTable = ({ data }) => {
                                     <AdminTableTd
                                         width="max-content"
                                         justify='center'
-                                    ><input type="checkbox" />
+                                    ><input type="checkbox"/>
                                     </AdminTableTd>
                                     <AdminTableTd
                                         width="10.8rem"
@@ -128,13 +128,15 @@ export const AdminTable = ({ data }) => {
                                                 }}
                                                 disabled={auth && row.id === auth.id || row.id === 1}
                                                 label="Categoría"
-                                                sx={{ fontSize: '14px' }}
+                                                sx={{fontSize: '14px'}}
                                             >
-                                               {categories &&  categories.map(category => {
-                                                return (
-                                                    <MenuItem disabled={row.categoria && row.categoria.id === category.id} value={category.id} >{category.nombreCategoria}</MenuItem>
-                                                )
-                                               })}
+                                                {categories && categories.map(category => {
+                                                    return (
+                                                        <MenuItem
+                                                            disabled={row.categoria && row.categoria.id === category.id}
+                                                            value={category.id}>{category.nombreCategoria}</MenuItem>
+                                                    )
+                                                })}
                                             </Select>
                                         </FormControl>
                                     </AdminTableTd>

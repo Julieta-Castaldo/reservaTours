@@ -35,5 +35,26 @@ export const InputLabel = styled.label`
 `;
 
 export const InputTag = styled.input`
+  color: #717B8A;
+  padding: 5px;
+  border: 0.1rem solid #F2A63B;
+  transition: border-color 0.3s;
+  background: transparent;
+  width: 100%;
 
+  :focus {
+    border: 0.1rem solid red;
+  }
+
+  :focus-visible {
+    border: 0.1rem solid red;
+  }
+
+  :placeholder-shown {
+    border-color: #ff0000;
+  }
+
+  :not(:placeholder-shown):not(:focus) {
+    color: red; /* Text color when typing */
+  }
 `;
