@@ -66,7 +66,7 @@ export const PanelSection = ({ selectedTab = 'products' }) => {
             }
             {selectedTab === 'cities' &&
                 <>
-                    {reloadCities ? <Spinner /> : <AdminCitiesTable data={cities} setReloadCategories={setReloadCategories} />}
+                    {reloadCities ? <Spinner /> : <AdminCitiesTable data={cities} setReloadCities={setReloadCities} />}
                 </>
             }
         </PanelSectionWrapper>

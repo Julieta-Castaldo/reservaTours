@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import './SignInForm.css'
 import { usePostCity } from '../../../Hooks/Cities/usePostCity';
 import { validateTextFields, validateNumberFields } from '../../../Helpers/UserFormValidations';
+import { usePutCity } from '../../../Hooks/Cities/usePutCity';
 
-const NewCityForm = ({ onClose }) => {
+const NewCityForm = ({ onClose, isNewCity, initialValue, setReloadCities }) => {
     const [error, setError] = useState(false)
     const [newCity, setNewCity] = useState({
         nombreCiudad: '',
@@ -12,6 +13,7 @@ const NewCityForm = ({ onClose }) => {
         longitud: null
     })
     const [handlePostCity] = usePostCity()
+    const [handlePutCity] = usePutCity()
 
     const validateForm = (e) => {
         e.preventDefault()
@@ -20,12 +22,26 @@ const NewCityForm = ({ onClose }) => {
         if (!validateNumberFields(newCity.latitud)) return setError('Ingrese la latitud o corrija su formato')
         if (!validateNumberFields(newCity.longitud)) return setError('Ingrese la longitud o corrija su formato')
         else setError(false)
-        handlePostCity(newCity, onClose)
+
+        if(isNewCity) handlePostCity(newCity, onClose)
+        else handlePutCity(newCity.id, newCity, onClose, setReloadCities)
     }
-    
+
     useEffect(() => {
         setError(false)
     }, [newCity])
+
+    useEffect(() => {
+        if (!isNewCity && initialValue) {
+            setNewCity({
+                id: initialValue.id,
+                nombreCiudad: initialValue.nombreCiudad,
+                descripcionCiudad: initialValue.descripcionCiudad,
+                latitud: initialValue.latitud,
+                longitud: initialValue.longitud
+            })
+        }
+    }, [isNewCity, initialValue])
     return (
         <form className='create-form'>
             <div>
@@ -71,7 +87,7 @@ const NewCityForm = ({ onClose }) => {
                 </div>
             </section>
             {error && <p style={{ marginTop: '8px' }}>{error}</p>}
-            <button type="submit" onClick={validateForm} style={{ padding: '4px 8px' }}>Crear ciudad</button>
+            <button type="submit" onClick={validateForm} style={{ padding: '4px 8px' }}>{isNewCity ? 'Crear ciudad' : 'Editar ciudad'}</button>
         </form>
     )
 }

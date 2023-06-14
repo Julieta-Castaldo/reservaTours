@@ -9,35 +9,37 @@ import { IconTrash } from "../../../svgs/IconTrash.jsx";
 import Swal from 'sweetalert2';
 import { IconArrowRight2 } from "../../../svgs/IconArrowRight2"
 import NewCityModal from "../../../molecules/Modal/NewCityModal"
+//Hooks
+import { useDeleteCity } from "../../../../Hooks/Cities/useDeleteCity"
 
 export const AdminCitiesTable = ({ data, setReloadCities }) => {
     const { auth } = useGlobalState()
     const navigate = useNavigate()
     const [openNewCity, setOpenNewCity] = useState(false)
+    const [handleDeleteCity] = useDeleteCity()
+    const [openEditCity, setOpenEditCity] = useState(false)
+    const [editInitialValues, setEditInitialValues] = useState(false)
 
     useEffect(() => {
         if (!auth) navigate('/')
     }, [])
 
-    const handleDeleteCategory = () => {
+    const deleteCity = (id) => {
         Swal.fire({
-            title: 'Confirmar delete',
-            icon: 'warning',
+            title: '¿Estás seguro de eliminar esta ciudad?',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
             confirmButtonText: 'Eliminar',
-            width: '40em',
-
+            cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                )
+                handleDeleteCity(id, setReloadCities)
             }
         })
+    }
+
+    const handleEdit = (values) => {
+        setEditInitialValues(values)
+        setOpenEditCity(true)
     }
 
     return (
@@ -56,7 +58,7 @@ export const AdminCitiesTable = ({ data, setReloadCities }) => {
                                 <span className="selectAllLabel"></span>
                             </AdminUsersTableTh>
                             <AdminUsersTableTh
-                                width="8rem"
+                                width="10rem"
                             >
                                 Ciudad
                             </AdminUsersTableTh>
@@ -108,7 +110,7 @@ export const AdminCitiesTable = ({ data, setReloadCities }) => {
                                         ><input type="checkbox" />
                                         </AdminUsersTableTd>
                                         <AdminUsersTableTd
-                                            width="8rem"
+                                            width="10rem"
                                         >
                                             {row.nombreCiudad}
                                         </AdminUsersTableTd>
@@ -131,14 +133,12 @@ export const AdminCitiesTable = ({ data, setReloadCities }) => {
                                             width="12.4rem"
                                             justify='center'
                                         >
-                                            <Link
-                                                to='/admin/'
-                                            >
+                                            <button onClick={() => handleEdit(row)} style={{ border:'none', backgroundColor: 'transparent'}}>
                                                 <IconEdit
                                                     color={"#F2A63B"}
                                                 />
-                                            </Link>
-                                            <button onClick={() => handleDeleteCategory()} style={{ border: 'none', backgroundColor: 'transparent' }}>
+                                            </button>
+                                            <button onClick={() => deleteCity(row.id)} style={{ border: 'none', backgroundColor: 'transparent' }}>
                                                 <IconTrash
                                                     color={"#E72328"}
                                                 />
@@ -152,7 +152,10 @@ export const AdminCitiesTable = ({ data, setReloadCities }) => {
                 </table>
             </AdminUsersTableWrapper>
             {openNewCity &&
-                <NewCityModal isOpen={openNewCity} onClose={() => setOpenNewCity(false)}/>
+                <NewCityModal isOpen={openNewCity} onClose={() => setOpenNewCity(false)} />
+            }
+            {openEditCity && editInitialValues &&
+                <NewCityModal isOpen={openEditCity} onClose={() => setOpenEditCity(false)} initialValue={editInitialValues} isNewCity={false} setReloadCities={setReloadCities} />
             }
         </>
     )
