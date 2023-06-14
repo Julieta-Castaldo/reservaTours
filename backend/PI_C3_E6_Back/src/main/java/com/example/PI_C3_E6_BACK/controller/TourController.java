@@ -2,6 +2,8 @@ package com.example.PI_C3_E6_BACK.controller;
 
 
 import com.example.PI_C3_E6_BACK.exceptions.ResourceNotFoundException;
+import com.example.PI_C3_E6_BACK.model.FechaOcupadaDTO;
+import com.example.PI_C3_E6_BACK.model.RequestTourDTO;
 import com.example.PI_C3_E6_BACK.model.TourDTO;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.PageResponseDTO;
 import com.example.PI_C3_E6_BACK.service.TourService;
@@ -11,12 +13,14 @@ import org.springframework.boot.context.config.ConfigDataResourceNotFoundExcepti
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
@@ -61,6 +65,17 @@ public class TourController implements IController<TourDTO>{
         }
     }
 
+    @GetMapping("/porCiudad/{ciudadId}")
+    @ResponseBody
+    public  ResponseEntity<List<TourDTO>> buscarPorCiudad (@PathVariable int ciudadId) throws ResourceNotFoundException {
+        try {
+            List<TourDTO> ListaTourDTO = tourService.buscarTourPorCiudad(ciudadId);
+            return ResponseEntity.ok(ListaTourDTO);
+        }catch (Exception ex){
+            throw new ResourceNotFoundException(ex.getMessage());
+        }
+    }
+
     @GetMapping("/todosAleatorio")
     @ResponseBody
     public ResponseEntity<List<TourDTO>> buscarTodosAleatorio() throws ResourceNotFoundException {
@@ -78,25 +93,17 @@ public class TourController implements IController<TourDTO>{
     }
 
     @PostMapping("/agregar")
-    public ResponseEntity<String> crearTour(@RequestBody TourDTO t){
-        Duration duracion = Duration.between(t.getFechaSalida().atStartOfDay(), t.getFechaLlegada().atStartOfDay());
-        long diferenciaDias = duracion.toDays();
+    public ResponseEntity<String> crearTour(@RequestBody RequestTourDTO t){
+        int duracion = t.getDuracion();
+
         if(t.getNombre() != null) {
-            if (diferenciaDias >= 2) {
-                if (t.getFechaLlegada() != null) {
-                    if (t.getFechaSalida() != null) {
+            if (duracion >= 2) {
                         try {
                             ResponseEntity response = tourService.agregarTour(t);
                             return response;
                         } catch (Exception ex) {
                             return ResponseEntity.badRequest().body(ex.getMessage());
                         }
-                    } else {
-                        return ResponseEntity.badRequest().body("No se pudo crear el tour ya que falta ingresar fecha de salida");
-                    }
-                } else {
-                    return ResponseEntity.badRequest().body("No se pudo crear el tour ya que falta ingresar fecha de llegada");
-                }
             } else {
                 return ResponseEntity.badRequest().body("No se pudo crear el tour ya que tiene que haber una diferencia de al menos dos días entre la fecha de salida y la de entrada");
             }
@@ -147,5 +154,30 @@ public class TourController implements IController<TourDTO>{
 
         return response;
     }
+
+    //Get para traer los tours con determinada fecha disponible
+    @GetMapping("/fechas-disponibles")
+    public ResponseEntity<List<TourDTO>> buscarToursPorFechaDisponible(@RequestParam("fecha") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
+        List<TourDTO> toursDisponibles = tourService.buscarToursPorFechaDisponible(fecha);
+
+        if (toursDisponibles.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(toursDisponibles);
+    }
+
+    //Get para traer todas las fechas ocupadas que tenga un Tour
+    @GetMapping("/fechas-ocupadas-por-tour/{tourId}")
+    @ResponseBody
+    public ResponseEntity<List<FechaOcupadaDTO>> buscarFechasOcupadasPorTour (@PathVariable int tourId) throws ResourceNotFoundException {
+        try {
+            List<FechaOcupadaDTO> ListaFechaOcupadaDTO = tourService.buscarFechasOcupadasPorTour(tourId);
+            return ResponseEntity.ok(ListaFechaOcupadaDTO);
+        }catch (Exception ex){
+            throw new ResourceNotFoundException(ex.getMessage());
+        }
+    }
+
 
 }

@@ -10,6 +10,7 @@ const Context = ({ children }) => {
     const [categories, handleGetCategories] = useGetCategories();
     const [reloadCategories, setReloadCategories] = useState(false)
     const urlProducts = `http://localhost:8080/Tour/todos`;
+    const [userLocation, setUserLocation] = useState(false)
 
     let token = localStorage.getItem('token')
 
@@ -38,8 +39,25 @@ const Context = ({ children }) => {
         handleGetCategories()
     }, [])
 
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+                    setUserLocation([latitude, longitude])
+                },
+                (error) => {
+                    console.log('Error getting location:', error);
+                    setUserLocation(false)
+                }
+            );
+        } else {
+            setUserLocation(false)
+        }
+    }, [])
+
     return (
-        <GlobalState.Provider value={{ products, setProducts, token, auth, setAuth, setReloadProductsFlag, reloadProductsFlag, categories, setReloadCategories }}>
+        <GlobalState.Provider value={{ products, setProducts, token, auth, setAuth, setReloadProductsFlag, reloadProductsFlag, categories, setReloadCategories, userLocation }}>
             {children}
         </GlobalState.Provider>
     )

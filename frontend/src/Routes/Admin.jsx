@@ -24,6 +24,9 @@ const Admin = () => {
         </ToggleButton>,
         <ToggleButton selected={selectedTab === 'categories'} onClick={()=> setSelectedTab('categories')} value="categories" key="categories">
             Categorías
+        </ToggleButton>,
+        <ToggleButton selected={selectedTab === 'cities'} onClick={()=> setSelectedTab('cities')} value="cities" key="cities">
+            Ciudades
         </ToggleButton>
     ];
 

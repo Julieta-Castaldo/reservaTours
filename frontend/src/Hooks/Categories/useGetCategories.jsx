@@ -4,7 +4,7 @@ export const useGetCategories = () => {
     const [categories, setCategories] = useState([]);
     const url = 'http://localhost:8080/Categoria/todos'
     
-    const handleGetCategories = useCallback(() => {
+    const handleGetCategories = useCallback((setReloadCategories) => {
         fetch(url, {
             method: 'GET',
             headers: {
@@ -14,6 +14,7 @@ export const useGetCategories = () => {
             .then(res => res.json())
             .then(data => {
                 setCategories(data)
+                setCategories && setReloadCategories(false)
             })
     }, []);
 

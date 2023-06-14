@@ -25,10 +25,9 @@ const CreateProduct = () => {
     const [product, setProduct] = useState({
         nombre: '',
         descripcion: '',
-        ciudad: {nombreCiudad: ''},
-        categoria: {nombreCategoria: ''},
-        fechaSalida: '',
-        fechaLlegada: '',
+        ciudad: { nombreCiudad: '' },
+        categoria: { nombreCategoria: '' },
+        duracion: '',
         listaImagenes: [
             {url: ''}
         ]
@@ -44,10 +43,9 @@ const CreateProduct = () => {
     let initialValues = {
         nombre: '',
         descripcion: '',
-        ciudad: {nombreCiudad: ''},
-        categoria: {nombreCategoria: ''},
-        fechaSalida: '',
-        fechaLlegada: '',
+        ciudad: { nombreCiudad: '' },
+        categoria: { nombreCategoria: '' },
+        duracion: '',
         listaImagenes: [
             {url: ''}
         ]

@@ -24,6 +24,9 @@ public interface TourRepository extends JpaRepository<TourEntity, Integer> {
     @Query("SELECT t FROM TourEntity t JOIN t.categoria c WHERE c.id = :idCategoria")
     List<TourEntity> findToursByCategoria(@Param("idCategoria") int idCategoria);
 
+    @Query("SELECT t FROM TourEntity t JOIN t.ciudad c WHERE c.id = :idCiudad")
+    List<TourEntity> findToursByCiudad(@Param("idCiudad") int idCiudad);
+
     Page<TourEntity> findByCategoria_id(int Categoria_id, Pageable pageable);
 
 
