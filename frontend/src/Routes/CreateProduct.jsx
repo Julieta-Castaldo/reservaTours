@@ -1,7 +1,23 @@
-import React, { useState } from "react";
+import {useEffect, useState} from "react";
 import Swal from 'sweetalert';
-import { useGlobalState } from "../Context/Context";
-import { useNavigate } from "react-router-dom";
+import {useGlobalState} from "../Context/Context";
+import {useNavigate} from "react-router-dom";
+import {SiteMapSection} from "../Components/sections/SiteMapSection/SiteMapSection.jsx";
+import {NameSection} from "../Components/sections/NameSection/NameSection.jsx";
+import {NewTourSiteMap} from "../Components/sections/SiteMapSection/NewTourSiteMap.jsx";
+import {Input} from "../Components/molecules/Input/Input.jsx";
+import {
+    CreateProductForm,
+    CreateProductFormImages,
+    CreateProductFormSection,
+    CreateProductFormSubWrapper
+} from "./CreateProduct.styled.js";
+import {ButtonIcon} from "../Components/molecules/ButtonIcon/ButtonIcon.jsx";
+import {IconArrowRight2} from "../Components/svgs/IconArrowRight2.jsx";
+import {AddImage} from "../Components/molecules/AddImage/AddImage.jsx";
+import {useGetCategories} from "../Hooks/Categories/useGetCategories.jsx";
+import {Select} from "../Components/molecules/Select/Select.jsx";
+
 const CreateProduct = () => {
     const token = localStorage.getItem('token')
     const {setReloadProductsFlag} = useGlobalState();
@@ -13,10 +29,16 @@ const CreateProduct = () => {
         categoria: { nombreCategoria: '' },
         duracion: '',
         listaImagenes: [
-            { url: '' }
+            {url: ''}
         ]
 
     })
+
+    const [categories, handleGetCategories] = useGetCategories();
+    useEffect(() => {
+        handleGetCategories()
+    }, []);
+
 
     let initialValues = {
         nombre: '',
@@ -25,7 +47,7 @@ const CreateProduct = () => {
         categoria: { nombreCategoria: '' },
         duracion: '',
         listaImagenes: [
-            { url: '' }
+            {url: ''}
         ]
 
     }
@@ -68,52 +90,146 @@ const CreateProduct = () => {
             });
     }
 
+
+    const handleAddImage = (e) => {
+        e.preventDefault();
+        setProduct({
+            ...product,
+            listaImagenes: [...product.listaImagenes, {url: ''}]
+        })
+    }
+
     return (
-        <div style={{ padding: '20px 50px', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', height: '100%' }}>
-            <div className="breadCrumbSection">
+        <>
+            <NameSection/>
+            <SiteMapSection>
+                <NewTourSiteMap/>
+            </SiteMapSection>
+            <CreateProductFormSection>
+                <CreateProductForm
+                    onSubmit={postTour}
+                    style={{display: 'flex', flexDirection: 'column', width: '60vw'}}
+                >
+                    <Input
+                        label="Nombre *"
+                        onChange={(e) => setProduct({...product, nombre: e.target.value})}
+                        type="text"
+                        value={product.nombre}
+                    />
+                    <Input
+                        label="Descripción *"
+                        onChange={(e) => setProduct({...product, descripcion: e.target.value})}
+                        type="text"
+                        value={product.descripcion}
+                    />
+                    <CreateProductFormSubWrapper>
+                        <Select
+                            htmlFor="category"
+                            label="Categoría: *"
+                            onChange={(e) => setProduct({
+                                ...product,
+                                categoria: {nombreCategoria: e.target.value}
+                            })}
+                            value={product.categoria.nombreCategoria}
+                        >
+                            {categories.map((category) => (
+                                <option key={category.id} value={category.id}>
+                                    {category.nombreCategoria}
+                                </option>
+                            ))}
+                        </Select>
+                        {/*<div>*/}
+                        {/*    <label htmlFor="category">Categoría:</label>*/}
+                        {/*    <select*/}
+                        {/*        id="category"*/}
+                        {/*        value={product.categoria.nombreCategoria}*/}
+                        {/*        onChange={(e) => setProduct({*/}
+                        {/*            ...product,*/}
+                        {/*            categoria: {nombreCategoria: e.target.value}*/}
+                        {/*        })}*/}
+                        {/*    >*/}
+                        {/*        <option value="">Seleccione una categoría</option>*/}
+                        {/*        {categories.map((category) => (*/}
+                        {/*            <option key={category.id} value={category.id}>*/}
+                        {/*                {category.nombreCategoria}*/}
+                        {/*            </option>*/}
+                        {/*        ))}*/}
+                        {/*    </select>*/}
+                        {/*</div>*/}
 
-            </div>
-            <div>
-                <form onSubmit={postTour} style={{ display: 'flex', flexDirection: 'column', width: '60vw' }}>
-                    <label>Nombre*</label>
-                    <input style={{ marginBottom: '12px' }} type="text" value={product.nombre} onChange={(e) => setProduct({ ...product, nombre: e.target.value })} />
-                    <label>Descripción*</label>
-                    <input style={{ marginBottom: '12px' }} type="text" value={product.descripcion} onChange={(e) => setProduct({ ...product, descripcion: e.target.value })} />
+                        {/*<div>*/}
+                        {/*    <label htmlFor="ciudad">Ciudad:</label>*/}
+                        {/*    <select*/}
+                        {/*        id="ciudad"*/}
+                        {/*        value={product.ciudad.nombreCiudad}*/}
+                        {/*        onChange={(e) => setProduct({*/}
+                        {/*            ...product,*/}
+                        {/*            ciudad: {nombreCiudad: e.target.value}*/}
+                        {/*        })}*/}
+                        {/*    >*/}
+                        {/*        <option value="">Seleccione una categoría</option>*/}
+                        {/*        {ciudades.map((ciudad) => (*/}
+                        {/*            <option key={ciudad.id} value={ciudad.id}>*/}
+                        {/*                {ciudad.nombreCiudad}*/}
+                        {/*            </option>*/}
+                        {/*        ))}*/}
+                        {/*    </select>*/}
+                        {/*</div>*/}
 
-                    <div style={{ display: 'flex', marginBottom: '12px' }}>
-                        <div>
-                            <label>Ciudad*</label>
-                            <input type="text" value={product.ciudad.nombreCiudad} onChange={(e) => setProduct({ ...product, ciudad: { nombreCiudad: e.target.value } })} />
-                        </div>
-                        <div>
-                            <label>Categoría*</label>
-                            <input type="text" value={product.categoria.nombreCategoria} onChange={(e) => setProduct({ ...product, categoria: { nombreCategoria: e.target.value } })} />
-                        </div>
-                        <div>
-                            <label>Duración (días)*</label>
-                            <input type="number" value={product.duracion} onChange={(e) => setProduct({ ...product, duracion: e.target.value })} />
-                        </div>
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <label>Imagenes*</label>
-                        {product.listaImagenes && product.listaImagenes.map((img, idx) => {
+                        <Input
+                            label="Duracion: *"
+                            onChange={(e) => setProduct({...product, duracion: e.target.value})}
+                            type="text"
+                            value={product.duracion}
+                        />
+                    </CreateProductFormSubWrapper>
+                    <label>Imagenes: *</label>
+                    <CreateProductFormImages>
+                        {/*<ImageBox*/}
+                        {/*    src={"https://assets-news.housing.com/news/wp-content/uploads/2022/06/28101013/15-worlds-best-places-to-visit-18.jpg"}*/}
+                        {/*/>*/}
+
+                        {product.listaImagenes && product?.listaImagenes.map((img, idx) => {
                             return (
-                                <input style={{ marginBottom: '12px' }} type="text" value={product.listaImagenes[idx].url} onChange={(e) => {
-                                    const imgArray = [...product.listaImagenes]
-                                    imgArray[idx] = { url: e.target.value }
-                                    setProduct({ ...product, listaImagenes: imgArray })
-                                }} />
+                                <input
+                                    key={idx}
+                                    style={{marginBottom: '12px'}}
+                                    type="text"
+                                    value={product.listaImagenes[idx].url}
+                                    onChange={(e) => {
+                                        const imgArray = [...product.listaImagenes]
+                                        imgArray[idx] = {url: e.target.value}
+                                        setProduct({...product, listaImagenes: imgArray})
+                                    }}
+                                />
                             )
                         })}
+                        <AddImage
+                            onClick={(e) => handleAddImage(e)}
+                            disabled={product.listaImagenes.length === 5}
+                        />
+                    </CreateProductFormImages>
 
-                        <button style={{ width: '200px' }} disabled={product.listaImagenes.length === 5} onClick={() => setProduct({ ...product, listaImagenes: [...product.listaImagenes, { url: '' }] })} >+ Add Image</button>
-                    </div>
+                    <ButtonIcon
+                        type='submit'
+                        text='Guardar producto'
+                        src={
+                            <IconArrowRight2
+                                size='18'
+                                className='ico nSVG'
+                            />
+                        }
+                        color={'white'}
+                        hoverColor={'white'}
+                        bgColor={'#58C1CE'}
+                        hoverBgColor={'#F2A63B'}
+                    />
 
-                    <button style={{ width: '200px', marginTop: '20px' }} className="submitButton">Guardar producto</button>
-                </form>
+                </CreateProductForm>
+            </CreateProductFormSection>
 
-            </div>
-        </div>
+
+        </>
     )
 }
 

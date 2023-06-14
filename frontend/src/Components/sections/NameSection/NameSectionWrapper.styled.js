@@ -12,6 +12,9 @@ export const NameSectionWrapper = styled.section`
   height: 6.2rem;
 
   background: #F2A63B;
+  @media (max-width: 710px) {
+    padding: 0 5%;
+  }
 `;
 
 export const NameSectionContainer = styled.div`
