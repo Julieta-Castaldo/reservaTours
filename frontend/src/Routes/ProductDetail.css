@@ -1,60 +1,67 @@
-.detailView{
+.detailView {
     padding: 20px 50px;
     display: flex;
     justify-content: space-evenly;
 }
 
-.breadcrumSection{
-   display: flex;
-   margin-bottom: 24px;
+.distanceAndPointsBanner {
+    background-color: #F7F5EF;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between
 }
 
-.mainImage{
+.breadcrumSection {
+    display: flex;
+    margin-bottom: 24px;
+}
+
+.mainImage {
     width: 500px;
     border-radius: 25px;
 }
 
-.secondaryImagesSection{
-   display: flex;
-   margin-top: 24px;
+.secondaryImagesSection {
+    display: flex;
+    margin-top: 24px;
 }
 
-.secondaryImages{
+.secondaryImages {
     width: 110px;
     margin-right: 10px;
 }
 
-.productName{
+.productName {
     font-size: 38px;
     color: #58C1CE;
     font-weight: 700;
 }
 
-.productDescription{
+.productDescription {
     font-weight: 300;
     color: #717B8A;
     font-size: 16px;
 }
 
-.productData{
+.productData {
     background-color: #F9F9F9;
     height: 440px;
     width: 330px;
     padding: 24px;
 }
 
-.priceSection{
+.priceSection {
     display: flex;
     align-items: start;
 }
 
-.categoriesText{
+.categoriesText {
     font-weight: 600;
     color: #717B8A;
     margin-top: 10px;
 }
 
-.inputBox{
+.inputBox {
     height: 50px;
     border: 1px solid #DDE3EB;
     border-radius: 5px;
@@ -64,17 +71,32 @@
     align-items: center;
 }
 
-.prueba{
+.prueba {
     margin-top: 1000px;
     text-align: center;
 }
 
+.pointsLogo{
+    display: none;
+}
+
 @media (max-width: 900px) {
-    .detailView{
+    .detailView {
         flex-direction: column;
     }
 
-    .productName{
+    .productName {
         font-size: 24px;
+    }
+
+    .distanceAndPointsBanner{
+        display: flex;
+        flex-direction: column;
+        height: 120px;
+    }
+
+    .pointsLogo{
+        display: flex;
+        margin-right: 16px;
     }
 }

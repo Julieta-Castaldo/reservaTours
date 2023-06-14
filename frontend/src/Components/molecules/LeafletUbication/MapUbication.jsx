@@ -1,25 +1,28 @@
-import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import './MapUbication.css'
 
-const MapUbication = () => {
-    const data = {
-        longitud: 51.5007292,
-        latitud: -0.1246254,
-        nombre: 'Londres',
-        descripcion: 'Hermosa ciudad'
-    }
+const MapUbication = ({ ciudad, userLocation }) => {
+    let longitud = ciudad && ciudad.longitud ? ciudad.longitud.toString() : 0;
+    let latitud = ciudad && ciudad.latitud ? ciudad.latitud.toString() : 0;
+    
     return (
-        <MapContainer center={[data.longitud, data.latitud]} zoom={13} scrollWheelZoom={true}>
-            <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <Marker position={[data.longitud, data.latitud]}>
-                <Popup>
-                    {data.nombre} <br /> {data.descripcion}
-                </Popup>
-            </Marker>
-        </MapContainer>
+        <>
+            {ciudad && longitud !== 0 && latitud !== 0 ?
+                <MapContainer center={[latitud, longitud]} zoom={15} scrollWheelZoom={true}>
+                    <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <Marker position={[latitud, longitud]}>
+                        <Popup>
+                            {ciudad?.nombreCiudad} <br /> {ciudad?.descripcionCiudad}
+                        </Popup>
+                    </Marker>
+                    {userLocation && <Polyline positions={[[latitud,longitud], userLocation]} />}
+                </MapContainer> :
+                <p style={{ marginLeft: '50px', color: '#58C1CE' }}>Lo sentimos. Actualmente no podemos mostrarte la ubicación de este tour en el mapa.</p>
+            }
+        </>
     )
 }
 
