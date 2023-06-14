@@ -1,0 +1,125 @@
+.politicalMain {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
+.politicaBlock {
+  display: flex;
+  justify-content: space-around;
+}
+
+ul li {
+  list-style-type: circle;
+  color: #717B8A;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.politicaBlockMain {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  background-color: #F9F9F9;
+  border-top: solid #58C1CE 2px;
+  width: 92%;
+
+  
+}
+
+h2 {
+  margin-left: 90px;
+  margin-bottom: 10px;
+  color: #58C1CE;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 42px;
+  padding-top: 30px;
+
+}
+
+h3 {
+  margin-bottom: 40px;
+  color: #05848A;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 25px;
+}
+
+.column {
+  width: 27%;
+  padding: 30px;
+  
+}
+
+.line {
+  border-left: solid #DDE3EB 1px;
+
+}
+
+@media only screen and (max-width: 400px) {
+.politicaBlock {
+  display: block;
+}
+
+.column {
+  width: 100%;
+  padding: 20px;
+  
+}
+
+h2 {
+  margin-left: 20px;
+  font-size: 25px;
+
+}
+
+h3 {
+  font-size: 16px;
+}
+
+.line {
+  border: none;
+
+}
+}
+
+@media (min-width: 400px) and (max-width: 1280px) {
+.politicaBlockMain {
+  width: 80%;
+
+}
+
+.politicaBlock {
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+}
+
+.column {
+  width: 50%;
+  padding: 20px;
+  
+}
+
+.line {
+  border: none;
+
+}
+
+h2 {
+  margin-left: 18px;
+  font-size: 25px;
+
+}
+}

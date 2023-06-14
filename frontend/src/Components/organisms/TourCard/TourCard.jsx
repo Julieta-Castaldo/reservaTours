@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 
 export const TourCard = ({product}) => {
     const { listaImagenes, nombre, duracion, ciudad, id } = product
+    console.log(product)
     return (
         <TourCardWrapper>
             <TourCardImgWrapper
@@ -33,7 +34,7 @@ export const TourCard = ({product}) => {
                     }
                 />
                 <IconText
-                    text={ciudad.nombreCiudad ?? ''}
+                    text={ciudad && ciudad.nombreCiudad ? ciudad.nombreCiudad : ''}
                     src={
                         <IconLocation
                             size='16'
