@@ -17,6 +17,8 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 //Helper
 import { calculateDistance } from '../Helpers/DistanceCalculator';
+import DatePicker from "react-multi-date-picker"
+
 
 const ProductDetail = () => {
     const { id } = useParams()
@@ -25,7 +27,7 @@ const ProductDetail = () => {
     const [isOpenCarousel, setIsOpenCarousel] = useState(false)
     const { userLocation } = useGlobalState();
     const [tourDistance, setTourDistance] = useState(null)
-
+    
     useEffect(() => {
         fetch(url)
             .then(res => res.json())
@@ -97,7 +99,21 @@ const ProductDetail = () => {
                             </div>
                             <p className='categoriesText'>Fecha</p>
                             <div className='inputBox'>
-                                <IconCalendar1 color='#58C1CE' size='20' />
+                                <DatePicker
+                                    multiple
+                                    numberOfMonths={2}
+                                    style={{
+                                        color: '#05848A',
+                                        fontFamily: 'Roboto',                                    
+                                        fontSize: '16px',
+                                        alignItems: 'flexStart',
+                                        width: '240px',
+                                        backgroundColor: 'transparent',
+                                        border: 'none',
+                                        // Agrega más estilos según sea necesario
+                                    }}
+                                />
+                                <IconCalendar1 color='#58C1CE' size='24' />
                             </div>
                             <p className='categoriesText'>Viajeros</p>
                             <div className='inputBox'>
