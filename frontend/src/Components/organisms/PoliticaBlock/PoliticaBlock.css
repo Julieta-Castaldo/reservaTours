@@ -29,7 +29,7 @@ ul li {
   border-top: solid #58C1CE 2px;
   width: 92%;
 
-  
+
 }
 
 h2 {
@@ -58,7 +58,7 @@ h3 {
 .column {
   width: 27%;
   padding: 30px;
-  
+
 }
 
 .line {
@@ -67,59 +67,59 @@ h3 {
 }
 
 @media only screen and (max-width: 400px) {
-.politicaBlock {
-  display: block;
-}
+  .politicaBlock {
+    display: block;
+  }
 
-.column {
-  width: 100%;
-  padding: 20px;
-  
-}
+  .column {
+    width: 100%;
+    padding: 20px;
 
-h2 {
-  margin-left: 20px;
-  font-size: 25px;
+  }
 
-}
+  h2 {
+    margin-left: 20px;
+    font-size: 25px;
 
-h3 {
-  font-size: 16px;
-}
+  }
 
-.line {
-  border: none;
+  h3 {
+    font-size: 16px;
+  }
 
-}
+  .line {
+    border: none;
+
+  }
 }
 
 @media (min-width: 400px) and (max-width: 1280px) {
-.politicaBlockMain {
-  width: 80%;
+  .politicaBlockMain {
+    width: 80%;
 
-}
+  }
 
-.politicaBlock {
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: flex-start;
+  .politicaBlock {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+  }
 
-}
+  .column {
+    width: 100%;
+    padding: 20px;
 
-.column {
-  width: 50%;
-  padding: 20px;
-  
-}
+  }
 
-.line {
-  border: none;
+  .line {
+    border: none;
 
-}
+  }
 
-h2 {
-  margin-left: 18px;
-  font-size: 25px;
+  h2 {
+    margin-left: 18px;
+    font-size: 25px;
 
-}
+  }
 }
