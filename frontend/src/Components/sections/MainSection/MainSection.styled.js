@@ -22,6 +22,12 @@ export const MainSectionSearchBar = styled.div`
   justify-content: center;
   align-items: center;
   padding: 0 5.9rem;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 24px;
+  color: #58C1CE;
 
 
   position: absolute;
@@ -70,3 +76,4 @@ export const MainSectionSearch = styled.div`
     transform: translate(-50%, -25%);
   }
 `;
+

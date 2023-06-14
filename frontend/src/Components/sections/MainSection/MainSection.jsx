@@ -10,6 +10,14 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useGetCities } from '../../../Hooks/Cities/useGetCities.jsx'
 import { useGetCategories } from "../../../Hooks/Categories/useGetCategories.jsx";
 import { useEffect, useState } from "react";
+import locationPng from './Icons/IconLocation.svg';
+import categoryPng from './Icons/IconCategory.svg';
+
+
+const divStyle = {
+    display: 'flex',
+    justifyContent: 'space-between'
+  };
 
 export const MainSection = ({ products, setFiltersApplied, filtersApplied }) => {
     const [cities, handleGetCities] = useGetCities()
@@ -30,7 +38,10 @@ export const MainSection = ({ products, setFiltersApplied, filtersApplied }) => 
             <MainSectionSearchBar>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '100%' }}>
                     <div>
-                        <p>Busca por ciudad</p>
+                        <div style={divStyle}>
+                            <p>Ciudad</p>
+                            <img src={locationPng} alt="Icono"/>
+                        </div>   
                         <Autocomplete
                             disablePortal
                             inputValue={selectedCity && selectedCity.nombreCiudad}
@@ -42,11 +53,14 @@ export const MainSection = ({ products, setFiltersApplied, filtersApplied }) => 
                                 <li {...props} style={{ fontSize: '16px' }}>
                                     {option.nombreCiudad}
                                 </li>
+
                             )}
                             value={selectedCity}
                             renderInput={(params) => <TextField variant="standard" {...params} InputProps={{
                                 ...params.InputProps,
+                                placeholder: 'Ingresa el destino',
                                 style: { fontSize: '16px' }
+                               
                             }} />}
                             onChange={(e, newValue) => {
                                 setSelectedCity(newValue ? newValue : '')
@@ -58,7 +72,10 @@ export const MainSection = ({ products, setFiltersApplied, filtersApplied }) => 
                         />
                     </div>
                     <div>
-                        <p>Busca por categoría</p>
+                        <div style={divStyle}>
+                            <p>Categoría</p>
+                            <img src={categoryPng} alt="Icono"/>
+                        </div>    
                         <Autocomplete
                             disablePortal
                             inputValue={selectedCategory && selectedCategory.nombreCategoria}
@@ -74,7 +91,9 @@ export const MainSection = ({ products, setFiltersApplied, filtersApplied }) => 
                             value={selectedCategory}
                             renderInput={(params) => <TextField variant="standard" {...params} InputProps={{
                                 ...params.InputProps,
+                                placeholder: 'Elige tu favorita',
                                 style: { fontSize: '16px' }
+
                             }} />}
                             onChange={(e, newValue) => {
                                 setSelectedCity('')
