@@ -16,13 +16,11 @@ export const ButtonIcon = (props) => {
         margin,
         startPosition,
         onClick,
-        disabled,
-        borderRadius
+        disabled
     } = props;
 
     return (
         <ButtonIconWrapper
-            borderRadius={borderRadius}
             onClick={onClick}
             bgColor={bgColor}
             borderColor={borderColor}
@@ -54,6 +52,5 @@ ButtonIcon.propTypes = {
     hoverColor: PropTypes.string,
     hoverBgColor: PropTypes.string,
     width: PropTypes.string,
-    margin: PropTypes.string,
-    borderRadius: PropTypes.string,
+    margin: PropTypes.string
 };
