@@ -71,12 +71,19 @@
     align-items: center;
 }
 
+div.reserved {
+    background-color: #8fb4f9;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
 .prueba {
     margin-top: 1000px;
     text-align: center;
 }
 
-.pointsLogo{
+.pointsLogo {
     display: none;
 }
 
@@ -89,13 +96,13 @@
         font-size: 24px;
     }
 
-    .distanceAndPointsBanner{
+    .distanceAndPointsBanner {
         display: flex;
         flex-direction: column;
         height: 120px;
     }
 
-    .pointsLogo{
+    .pointsLogo {
         display: flex;
         margin-right: 16px;
     }

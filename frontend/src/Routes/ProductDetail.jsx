@@ -18,7 +18,7 @@ import StarIcon from '@mui/icons-material/Star';
 //Helper
 import { calculateDistance } from '../Helpers/DistanceCalculator';
 import DatePicker from "react-multi-date-picker"
-
+import { DateObject } from "react-multi-date-picker";
 
 const ProductDetail = () => {
     const { id } = useParams()
@@ -27,7 +27,7 @@ const ProductDetail = () => {
     const [isOpenCarousel, setIsOpenCarousel] = useState(false)
     const { userLocation } = useGlobalState();
     const [tourDistance, setTourDistance] = useState(null)
-    
+
     useEffect(() => {
         fetch(url)
             .then(res => res.json())
@@ -48,6 +48,9 @@ const ProductDetail = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
+
+    const [selectedDates, setSelectedDates] = useState([])
+
 
     return (
         <div>
@@ -101,11 +104,33 @@ const ProductDetail = () => {
                             <div className='inputBox'>
                                 <DatePicker
                                     multiple
+                                    value={selectedDates}
                                     numberOfMonths={2}
                                     minDate={new Date()}
+                                    mapDays={({ date }) => {
+                                        let props = {}
+                                        const newDate = new Date(date)
+                                        if (newDate.getDate() > 20 && newDate.getDate() < 26) {
+                                            props.style = { backgroundColor: "#DFDFDF" }
+                                        } else return ''
+
+                                        return props
+                                    }}
+                                    onChange={(values) => {
+                                        let validSelectedDates = []
+                                        values.forEach(value => {
+                                            let dateValue = new Date(value)
+                                            if (dateValue.getDate() > 20 && dateValue.getDate() < 26) {
+
+                                            } else {
+                                                validSelectedDates.push(value)
+                                            }
+                                        })
+                                        setSelectedDates(validSelectedDates)
+                                    }}
                                     style={{
                                         color: '#05848A',
-                                        fontFamily: 'Roboto',                                    
+                                        fontFamily: 'Roboto',
                                         fontSize: '16px',
                                         alignItems: 'flexStart',
                                         width: '240px',
