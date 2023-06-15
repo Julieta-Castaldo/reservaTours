@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import {SelectLabel, SelectTag, SelectWrapper} from "./Select.styled.js";
 
-export const Select = ({label, onChange, value, children, htmlFor, selectText}) => {
+export const Select = ({label, onChange, value, children, htmlFor}) => {
     return (
         <SelectWrapper>
             <SelectLabel htmlFor={htmlFor}>{label}</SelectLabel>
@@ -10,7 +10,7 @@ export const Select = ({label, onChange, value, children, htmlFor, selectText}) 
                 value={value}
                 onChange={onChange}
             >
-                <option value="">{selectText}</option>
+                <option value="">Seleccione una categoría</option>
                 {children}
             </SelectTag>
         </SelectWrapper>
@@ -23,5 +23,4 @@ Select.propTypes = {
     value: PropTypes.string.isRequired,
     htmlFor: PropTypes.string.isRequired,
     children: PropTypes.arrayOf(PropTypes.element).isRequired,
-    selectText: PropTypes.string.isRequired
 }

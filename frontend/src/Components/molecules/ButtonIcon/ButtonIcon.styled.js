@@ -10,9 +10,8 @@ export const ButtonIconWrapper = styled.button`
   align-items: center;
   justify-content: center;
   color: ${({color}) => (color ? color : 'white')};
-  width: ${({width}) => (width ? width : '100%')}; // auto
+  width: ${({width}) => (width ? width : '95%')}; // auto
   margin: ${({margin}) => (margin ? margin : '0')};
-  border-radius: ${({borderRadius}) => borderRadius};;
 
   :hover {
     cursor: pointer;
