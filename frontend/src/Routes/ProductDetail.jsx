@@ -102,6 +102,7 @@ const ProductDetail = () => {
                                 <DatePicker
                                     multiple
                                     numberOfMonths={2}
+                                    minDate={new Date()}
                                     style={{
                                         color: '#05848A',
                                         fontFamily: 'Roboto',                                    
