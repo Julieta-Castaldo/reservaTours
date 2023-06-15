@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useGlobalState } from "../Context/Context.jsx";
 import { useNavigate } from "react-router-dom";
 import { Stack, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import {PanelSiteMap} from "../Components/sections/SiteMapSection/PanelSiteMap.jsx";
 
 const Admin = () => {
     const { auth } = useGlobalState();
@@ -37,8 +38,11 @@ const Admin = () => {
     return (
         <main>
             {auth && <>
-                <NameSection />
-                <SiteMapSection />
+                <NameSection>
+                </NameSection>
+                <SiteMapSection>
+                    <PanelSiteMap />
+                </SiteMapSection>
                 <Stack spacing={2} alignItems="center">
                     <ToggleButtonGroup {...control} aria-label="Medium sizes">
                         {children}
