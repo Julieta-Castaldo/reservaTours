@@ -108,6 +108,10 @@ const ProductDetail = () => {
                         {/*    features={productData.caracteristicasSi}*/}
                         {/*    setIsOpenCarousel={setIsOpenCarousel}*/}
                         {/*/>*/}
+                        {/*<FeatureBlock*/}
+                        {/*    features={productData.caracteristicasSi}*/}
+                        {/*    setIsOpenCarousel={setIsOpenCarousel}*/}
+                        {/*/>*/}
                     </section>
                     <section>
                         <article className='productData'>
