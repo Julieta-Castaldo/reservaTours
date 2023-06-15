@@ -42,19 +42,19 @@ export const InputTag = styled.input`
   background: transparent;
   width: 100%;
 
-  :focus {
-    border: 0.1rem solid red;
-  }
-
-  :focus-visible {
-    border: 0.1rem solid red;
-  }
-
-  :placeholder-shown {
-    border-color: #ff0000;
-  }
-
-  :not(:placeholder-shown):not(:focus) {
-    color: red; /* Text color when typing */
-  }
+  //:focus {
+  //  border: 0.1rem solid red;
+  //}
+  //
+  //:focus-visible {
+  //  border: 0.1rem solid red;
+  //}
+  //
+  //:placeholder-shown {
+  //  border-color: #ff0000;
+  //}
+  //
+  //:not(:placeholder-shown):not(:focus) {
+  //  color: red; /* Text color when typing */
+  //}
 `;
