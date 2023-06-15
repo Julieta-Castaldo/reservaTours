@@ -26,9 +26,9 @@ const CreateProduct = () => {
     const [product, setProduct] = useState({
         nombre: '',
         descripcion: '',
-        categoriaId: 0,
-        ciudadId: 0,
-        duracion: 0,
+        categoriaId: null,
+        ciudadId: null,
+        duracion: null,
         listaImagenes: [
             {url: ''}
         ],
@@ -43,15 +43,13 @@ const CreateProduct = () => {
         handleGetCities()
     }, []);
 
-    console.log(cities)
-
 
     let initialValues = {
         nombre: '',
         descripcion: '',
-        categoriaId: 0,
-        ciudadId: 0,
-        duracion: 0,
+        categoriaId: null,
+        ciudadId: null,
+        duracion: null,
         listaImagenes: [
             {url: ''}
         ],
@@ -153,9 +151,9 @@ const CreateProduct = () => {
                             selectText={'Seleccione una categoría'}
                             onChange={(e) => setProduct({
                                 ...product,
-                                categoria: {nombreCategoria: e.target.value}
+                                categoriaId: e.target.value
                             })}
-                            value={product.nombreCategoria}
+                            value={product.categoriaId}
                         >
                             {categories.map((category) => (
                                 <option key={category.id} value={category.id}>
@@ -169,9 +167,9 @@ const CreateProduct = () => {
                             selectText={'Seleccione una ciudad'}
                             onChange={(e) => setProduct({
                                 ...product,
-                                ciudad: {nombreCiudad: e.target.value}
+                                ciudadId: e.target.value
                             })}
-                            value={product.nombreCiudad}
+                            value={product.idCiudad}
                         >
                             {cities.map((ciudad) => (
                                 <option key={ciudad.id} value={ciudad.id}>
