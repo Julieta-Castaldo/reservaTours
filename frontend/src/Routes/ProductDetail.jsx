@@ -111,7 +111,7 @@ const ProductDetail = () => {
                                         let props = {}
                                         const newDate = new Date(date)
                                         if (newDate.getDate() > 20 && newDate.getDate() < 26) {
-                                            props.style = { backgroundColor: "#DFDFDF" }
+                                            props.style = { color: "#8798AD" }
                                         } else return ''
 
                                         return props
