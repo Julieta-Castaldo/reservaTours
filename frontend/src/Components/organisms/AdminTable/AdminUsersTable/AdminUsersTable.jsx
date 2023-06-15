@@ -10,7 +10,7 @@ import { IconEdit } from "../../../svgs/IconEdit.jsx";
 import { Link } from "react-router-dom";
 import { IconTrash } from "../../../svgs/IconTrash.jsx";
 import PropTypes from "prop-types";
-import { InputLabel, MenuItem, FormControl, Select } from '@mui/material';
+import { MenuItem, FormControl, Select } from '@mui/material';
 import { usePutUserRol } from "../../../../Hooks/Users/usePutUserRol.jsx";
 import { useGlobalState } from "../../../../Context/Context.jsx";
 
@@ -116,7 +116,7 @@ export const AdminUsersTable = ({ data, setReloadUsers }) => {
                                                     setReloadUsers(true)
                                                     handlePutUserRol(row.id, setReloadUsers)
                                                 }}
-                                                disabled={row.id === auth.id || row.id === 1}
+                                                disabled={auth && row.id === auth.id || row.id === 1}
                                                 label="Rol"
                                                 sx={{fontSize:'14px'}}
                                             >

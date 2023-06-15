@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 export const useGetUsers = () => {
     const [users, setUsers] = useState([]);
     const url = 'http://localhost:8080/User/api/users?page=1&size=150'
-    const token = sessionStorage.getItem('token')
+    const token = localStorage.getItem('token')
     const handleGetUsers = useCallback((setReloadUsers) => {
         fetch(url, {
             method: 'GET',
@@ -15,7 +15,7 @@ export const useGetUsers = () => {
             .then(res => res.json())
             .then(data => {
                 setUsers(data.content)
-                setReloadUsers(false)
+                setReloadUsers && setReloadUsers(false)
             })
     }, []);
 

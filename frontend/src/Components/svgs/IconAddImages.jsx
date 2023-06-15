@@ -1,0 +1,74 @@
+import PropTypes from "prop-types";
+
+export const IconAddImages = (props) => {
+    const {color = "white", size = "30", className} = props;
+
+    const height = String(Number(size) + 1);
+
+    return (
+        <svg
+            className={className}
+            width={size}
+            height={height}
+            // width="30"
+            // height="31"
+            viewBox="0 0 30 31"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M12.0274 22.728H3.05138C1.66628 22.728 0.542969 21.6047 0.542969 20.2206V3.5504C0.542969 2.1653 1.66628 1.04199 3.05138 1.04199H23.3356C24.7207 1.04199 25.8429 2.1653 25.8429 3.5504V12.8998"
+                stroke={color}
+                strokeWidth="0.962766"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+            <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M29.4569 22.728C29.4569 26.7206 26.2205 29.957 22.2289 29.957C18.2364 29.957 15.001 26.7206 15.001 22.728C15.001 18.7354 18.2364 15.499 22.2289 15.499C26.2205 15.499 29.4569 18.7354 29.4569 22.728Z"
+                stroke={color}
+                strokeWidth="0.962766"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+            <path
+                d="M22.229 19.1133V26.3423"
+                stroke={color}
+                strokeWidth="0.962766"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+            <path
+                d="M18.6143 22.7276H25.8433"
+                stroke={color}
+                strokeWidth="0.962766"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+            <path
+                d="M0.542969 15.4995L7.77198 8.27148L14.9999 15.4995"
+                stroke={color}
+                strokeWidth="0.962766"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+            <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M22.2295 8.27121C22.2295 10.2675 20.6108 11.8852 18.6145 11.8852C16.6192 11.8852 15.0005 10.2675 15.0005 8.27121C15.0005 6.27491 16.6192 4.65723 18.6145 4.65723C20.6108 4.65723 22.2295 6.27491 22.2295 8.27121Z"
+                stroke={color}
+                strokeWidth="0.962766"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </svg>
+
+    );
+};
+
+IconAddImages.propTypes = {
+    color: PropTypes.string,
+    size: PropTypes.string,
+    className: PropTypes.string,
+};

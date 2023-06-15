@@ -13,7 +13,8 @@ import { IconLocation } from "../../svgs/IconLocation.jsx";
 import { Link } from "react-router-dom";
 
 export const TourCard = ({product}) => {
-    const { listaImagenes, nombre, fechaLlegada, ciudad, id } = product
+    const { listaImagenes, nombre, duracion, ciudad, id } = product
+    console.log(product)
     return (
         <TourCardWrapper>
             <TourCardImgWrapper
@@ -24,7 +25,7 @@ export const TourCard = ({product}) => {
                     {nombre}
                 </TourCardTitle>
                 <IconText
-                    text={fechaLlegada}
+                    text={`${duracion} días`}
                     src={
                         <IconCalendar1
                             size='16'
@@ -33,7 +34,7 @@ export const TourCard = ({product}) => {
                     }
                 />
                 <IconText
-                    text={ciudad.nombreCiudad ?? ''}
+                    text={ciudad && ciudad.nombreCiudad ? ciudad.nombreCiudad : ''}
                     src={
                         <IconLocation
                             size='16'

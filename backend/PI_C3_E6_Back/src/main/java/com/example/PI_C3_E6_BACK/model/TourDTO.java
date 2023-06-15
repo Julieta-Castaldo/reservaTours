@@ -9,33 +9,39 @@ public class TourDTO implements Serializable {
     private int id;
     private String nombre;
     private String descripcion;
-    private LocalDate fechaSalida;
-    private LocalDate fechaLlegada;
     private CategoriaDTO categoria;
     private CiudadDTO ciudad;
     private List<ImagenesDTO> listaImagenes;
     private double precio;
     private List<String> caracteristicasSi;
+    private int duracion;
 
     //constructors
 
 
-    public TourDTO(String nombre, String descripcion, LocalDate fechaSalida, LocalDate fechaLlegada, CategoriaDTO categoria, CiudadDTO ciudad, List<ImagenesDTO> listaImagenes, double precio, List<String> caracteristicasSi) {
+    public TourDTO(String nombre, String descripcion, CategoriaDTO categoria, CiudadDTO ciudad, List<ImagenesDTO> listaImagenes, double precio, List<String> caracteristicasSi, int duracion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.fechaSalida = fechaSalida;
-        this.fechaLlegada = fechaLlegada;
         this.categoria = categoria;
         this.ciudad = ciudad;
         this.listaImagenes = listaImagenes;
         this.precio = precio;
         this.caracteristicasSi = caracteristicasSi;
+        this.duracion = duracion;
     }
 
     public TourDTO() {
     }
 
     //getters y setters
+
+    public int getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(int duracion) {
+        this.duracion = duracion;
+    }
 
     public List<String> getCaracteristicasSi() {
         return caracteristicasSi;
@@ -77,21 +83,6 @@ public class TourDTO implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public LocalDate getFechaSalida() {
-        return fechaSalida;
-    }
-
-    public void setFechaSalida(LocalDate fechaSalida) {
-        this.fechaSalida = fechaSalida;
-    }
-
-    public LocalDate getFechaLlegada() {
-        return fechaLlegada;
-    }
-
-    public void setFechaLlegada(LocalDate fechaLlegada) {
-        this.fechaLlegada = fechaLlegada;
-    }
 
     public CategoriaDTO getCategoria() {
         return categoria;

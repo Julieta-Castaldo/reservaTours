@@ -9,11 +9,24 @@ import java.io.Serializable;
 public class UserLoguinResponse implements Serializable {
     private AuthenticationResponse response;
     private UsuarioDTO usuarioDTO;
+    private String mensaje;
 
     @Autowired
     public UserLoguinResponse(AuthenticationResponse response, UsuarioDTO usuarioDTO) {
         this.response = response;
         this.usuarioDTO = usuarioDTO;
+    }
+
+    public UserLoguinResponse(String mensaje) {
+        this.mensaje = mensaje;
+    }
+
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
     }
 
     public AuthenticationResponse getResponse() {

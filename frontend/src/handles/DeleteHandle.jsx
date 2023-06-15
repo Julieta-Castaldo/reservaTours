@@ -5,7 +5,7 @@ import Swal from 'sweetalert';
 import { useGlobalState } from "../Context/Context.jsx";
 
 const DeleteHandle = ({ tourId }) => {
-    const token = sessionStorage.getItem('token')
+    const token = localStorage.getItem('token')
     const {setReloadProductsFlag} = useGlobalState()
     const {setProducts} = useGlobalState()
 

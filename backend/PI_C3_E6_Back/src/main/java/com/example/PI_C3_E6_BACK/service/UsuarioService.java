@@ -2,6 +2,7 @@ package com.example.PI_C3_E6_BACK.service;
 
 import com.example.PI_C3_E6_BACK.configuration.MapperConfig;
 import com.example.PI_C3_E6_BACK.exceptions.ResourceNotFoundException;
+import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.LoginRequest;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.PageResponseDTO;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.SignUpRequest;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.UsuarioDTO;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -44,9 +46,18 @@ public class UsuarioService implements UserDetailsService {
         this.conversionService = conversionService;
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return usuarioRepository.findByEmail(email);
+    //@Override
+    public UserDetails loadUserByUsername(LoginRequest loginRequest) throws UsernameNotFoundException {
+        UsuarioEntity usuario = usuarioRepository.findByEmail(loginRequest.getEmail());
+        if (usuario == null) {
+            throw new UsernameNotFoundException("Usuario no encontrado");
+        }
+        String rawPassword = loginRequest.getPassword();
+        if (!passwordEncoder.matches(rawPassword, usuario.getPassword())) {
+            throw new BadCredentialsException("Credenciales inválidas");
+        }
+
+        return usuario;
     }
 
     public UserDetails createUser(SignUpRequest signUpRequest) {
@@ -101,5 +112,10 @@ public class UsuarioService implements UserDetailsService {
             return ResponseEntity.badRequest().body(null);
         }
 
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return usuarioRepository.findByEmail(email);
     }
 }

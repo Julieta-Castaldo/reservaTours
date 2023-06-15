@@ -5,6 +5,7 @@ import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.LoginRequest;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.SignUpRequest;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.UserLoguinResponse;
 import com.example.PI_C3_E6_BACK.service.AuthenticationService;
+import com.example.PI_C3_E6_BACK.service.EmailService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,6 +29,10 @@ public class AuthenticationController {
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 
     private final AuthenticationService authenticationService;
+
+    @Autowired
+    private EmailService emailService;
+
     @Autowired
     public AuthenticationController(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
@@ -42,11 +47,19 @@ public class AuthenticationController {
     public ResponseEntity<UserLoguinResponse> login(@RequestBody @Valid @NonNull LoginRequest loginRequest) {
         logger.info(loginRequest.getPassword());
         logger.info(loginRequest.getEmail());
-        UserLoguinResponse response = authenticationService.login(loginRequest);
-        System.out.println("RESPONSE: " + response);
-        return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(response);
+
+        try {
+            UserLoguinResponse response = authenticationService.login(loginRequest);
+            System.out.println("RESPONSE: " + response);
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(response);
+        }catch (Exception ex){
+            UserLoguinResponse badResponse = new UserLoguinResponse("Mail o Contraseña incorrectos");
+            return ResponseEntity.badRequest()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(badResponse);
+        }
     }
     @PermitAll
     @Operation(summary = "Sign up and returns JWT token"
@@ -57,6 +70,7 @@ public class AuthenticationController {
     @ResponseBody
     public ResponseEntity<UserLoguinResponse> signUp(@RequestBody @Valid @NonNull SignUpRequest signUpRequest) {
         UserLoguinResponse response = authenticationService.signUp(signUpRequest);
+        emailService.sendMail(signUpRequest.getEmail(), "Valida tu cuenta", "Haz clic en este enlace: http://127.0.0.1:5173/");
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(response);
