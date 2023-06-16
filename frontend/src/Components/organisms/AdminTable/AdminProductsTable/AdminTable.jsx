@@ -113,7 +113,6 @@ export const AdminTable = ({data}) => {
                                                 id="demo-simple-select-standard"
                                                 value={row.categoria && row.categoria.id}
                                                 onChange={(e) => {
-                                                    setReloadProductsFlag(true)
                                                     handlePutTourCategory(row.id, e.target.value, setReloadProductsFlag)
                                                 }}
                                                 disabled={auth && row.id === auth.id || row.id === 1}
