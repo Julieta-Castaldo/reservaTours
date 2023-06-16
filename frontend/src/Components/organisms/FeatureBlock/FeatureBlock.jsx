@@ -1,4 +1,4 @@
-atureBlockItems, FeatureBlockTitle, FeatureBlockWrapper} from "./FeatureBlock.styled.js";
+import { FeatureBlockWrapper, FeatureBlockTitle, FeatureBlockItems } from "./FeatureBlock.styled.js";
 import PropTypes from "prop-types";
 import {IconText} from "../../molecules/IconText/IconText.jsx";
 import {IconBus} from "../../svgs/IconBus.jsx";
