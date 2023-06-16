@@ -10,6 +10,7 @@ import Admin from "./Routes/Admin.jsx";
 import CreateProduct from './Routes/CreateProduct';
 import CategorySection from './Routes/CategorySection';
 import CreateCategory from './Routes/CreateCategory';
+import './App.css'
 
 function App() {
 

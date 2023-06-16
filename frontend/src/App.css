@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('./Util/Roboto/Roboto-Regular.ttf') format('truetype');
+    /* Ajusta la ruta de la fuente según la ubicación del archivo CSS */
+  }
+  
+  body {
+    font-family: 'Roboto', sans-serif;
+  }
