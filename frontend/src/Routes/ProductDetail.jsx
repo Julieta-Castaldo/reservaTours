@@ -39,7 +39,7 @@ const ProductDetail = () => {
 
     useEffect(() => {
         if (ciudad && ciudad.latitud && ciudad.longitud && userLocation) {
-            setTourDistance(calculateDistance(ciudad.latitud, userLocation[0], ciudad.longitud, userLocation[1]))
+            setTourDistance(calculateDistance(ciudad.latitud, ciudad.longitud, userLocation[0], userLocation[1]))
         } else {
             setTourDistance(false)
         }
