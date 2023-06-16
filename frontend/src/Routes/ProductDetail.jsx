@@ -35,7 +35,7 @@ const ProductDetail = () => {
 
     }, [url])
 
-    const { listaImagenes, nombre, descripcion, ciudad } = productData
+    const { listaImagenes, nombre, descripcion, ciudad, caracteristicasSi } = productData
 
     useEffect(() => {
         if (ciudad && ciudad.latitud && ciudad.longitud && userLocation) {
@@ -91,7 +91,7 @@ const ProductDetail = () => {
                             <p className='productName'>{nombre}</p>
                             <p className='productDescription'>{descripcion}</p>
                         </article>
-                        <FeatureBlock setIsOpenCarousel={setIsOpenCarousel} />
+                        <FeatureBlock setIsOpenCarousel={setIsOpenCarousel} features={caracteristicasSi} />
                     </section>
                     <section>
                         <article className='productData'>
