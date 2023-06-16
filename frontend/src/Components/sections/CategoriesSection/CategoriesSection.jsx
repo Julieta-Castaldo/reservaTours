@@ -89,7 +89,6 @@ export const CategoriesSection = ({ filter }) => {
                 />
         }
     }
-    console.log(categories)
 
     return (
         <CategoriesSectionWrapper>

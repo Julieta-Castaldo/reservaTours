@@ -56,7 +56,7 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
                         </div>
                         <Autocomplete
                             disablePortal
-                            inputValue={selectedCity && selectedCity.nombreCiudad}
+                            inputValue={inputValueCity}
                             options={cities}
                             id="disable-close-on-select"
                             getOptionLabel={option => option && option.nombreCiudad ? option.nombreCiudad : ''}
@@ -83,6 +83,7 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
                                 else setFiltersApplied({ type: '', value: '' })
                                 setSelectedCategory('')
                                 setSelectedDate('')
+                                setInputValueCategory('')
                             }}
                         />
                     </div>
@@ -93,7 +94,7 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
                         </div>
                         <Autocomplete
                             disablePortal
-                            inputValue={selectedCategory && selectedCategory.nombreCategoria}
+                            inputValue={inputValueCategoy}
                             options={categories}
                             id="disable-close-on-select"
                             getOptionLabel={option => option && option.nombreCategoria ? option.nombreCategoria : ''}
@@ -118,6 +119,7 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
                                 setFiltersApplied({ type: 'categoria', value: newValue.id })
                                 setSelectedCategory(newValue ? newValue : '')
                                 setSelectedDate('')
+                                setInputValueCity('')
                             }}
                         />
                     </div>
