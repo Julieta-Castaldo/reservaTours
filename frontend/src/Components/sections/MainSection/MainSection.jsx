@@ -1,4 +1,8 @@
-import { MainSectionSearchBar, MainSectionWrapper } from "./MainSection.styled.js";
+import {
+    MainSectionSearchBar,
+    MainSectionSearchWrapper,
+    MainSectionWrapper
+} from "./MainSection.styled.js";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { Dayjs } from 'dayjs';
@@ -39,10 +43,12 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
 
     return (
         <MainSectionWrapper
-            bgImg={'https://images.unsplash.com/photo-1471922694854-ff1b63b20054?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2372&q=80'}
+            bgImg={'https://dh-g6-assets.s3.amazonaws.com/Banner_home_tablet.png'}
         >
             <MainSectionSearchBar>
-                <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '100%' }}>
+                <MainSectionSearchWrapper
+                    // style={{ display: 'flex', justifyContent: 'space-evenly', width: '100%' }}
+                >
                     <div>
                         <div style={divStyle}>
                             <p>Ciudad</p>
@@ -151,7 +157,7 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
                             <SearchIcon sx={{ fontSize: 34, color: 'white' }} />
                         </button>
                     </div>
-                </div>
+                </MainSectionSearchWrapper>
             </MainSectionSearchBar>
 
         </MainSectionWrapper >

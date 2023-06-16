@@ -1,4 +1,5 @@
 import {
+    AdminTableTag,
     AdminTableTBody,
     AdminTableTd, AdminTableTdImg,
     AdminTableTh,
@@ -25,7 +26,7 @@ export const AdminTable = ({data}) => {
 
     return (
         <AdminTableWrapper>
-            <table>
+            <AdminTableTag>
                 <AdminTabletTHead>
                     <AdminTableTr
                         background={'#EBDECA'}
@@ -158,7 +159,7 @@ export const AdminTable = ({data}) => {
                         })
                     }
                 </AdminTableTBody>
-            </table>
+            </AdminTableTag>
         </AdminTableWrapper>
     )
 }
