@@ -17,7 +17,6 @@ import {IconArrowRight2} from "../Components/svgs/IconArrowRight2.jsx";
 import {AddImage} from "../Components/molecules/AddImage/AddImage.jsx";
 import {useGetCategories} from "../Hooks/Categories/useGetCategories.jsx";
 import {Select} from "../Components/molecules/Select/Select.jsx";
-import {useGetCities} from "../Hooks/Cities/useGetCities.jsx";
 
 const CreateProduct = () => {
     const token = localStorage.getItem('token')
@@ -26,34 +25,31 @@ const CreateProduct = () => {
     const [product, setProduct] = useState({
         nombre: '',
         descripcion: '',
-        categoriaId: null,
-        ciudadId: null,
-        duracion: null,
+        ciudad: { nombreCiudad: '' },
+        categoria: { nombreCategoria: '' },
+        duracion: '',
         listaImagenes: [
             {url: ''}
-        ],
-        caracteristicasSi: [""],
+        ]
 
     })
 
     const [categories, handleGetCategories] = useGetCategories();
-    const [cities, handleGetCities] = useGetCities();
     useEffect(() => {
         handleGetCategories()
-        handleGetCities()
     }, []);
 
 
     let initialValues = {
         nombre: '',
         descripcion: '',
-        categoriaId: null,
-        ciudadId: null,
-        duracion: null,
+        ciudad: { nombreCiudad: '' },
+        categoria: { nombreCategoria: '' },
+        duracion: '',
         listaImagenes: [
             {url: ''}
-        ],
-        caracteristicasSi: [""],
+        ]
+
     }
 
     const postTour = (e) => {
@@ -103,14 +99,6 @@ const CreateProduct = () => {
         })
     }
 
-    console.log(postTour)
-
-    // const handleSubmit = (e) => {
-    //     console.log("PostTour", postTour)
-    //     postTour()
-    //     console.log("PostTour", postTour)
-    // }
-
     return (
         <>
             <NameSection/>
@@ -120,7 +108,6 @@ const CreateProduct = () => {
             <CreateProductFormSection>
                 <CreateProductForm
                     onSubmit={postTour}
-                    // onSubmit={(e) => handleSubmit(e)}
                     style={{display: 'flex', flexDirection: 'column', width: '60vw'}}
                 >
                     <Input
@@ -135,25 +122,15 @@ const CreateProduct = () => {
                         type="text"
                         value={product.descripcion}
                     />
-                    <Input
-                        id="caracteristicasSi"
-                        label="Caracteristicas *"
-                        onChange={(e) =>
-                            setProduct({...product, caracteristicasSi: [e.target.value]}) // Cambio aquí
-                        }
-                        type="text"
-                        value={product.caracteristicasSi[0]} // Cambio aquí
-                    />
                     <CreateProductFormSubWrapper>
                         <Select
                             htmlFor="category"
                             label="Categoría: *"
-                            selectText={'Seleccione una categoría'}
                             onChange={(e) => setProduct({
                                 ...product,
-                                categoriaId: e.target.value
+                                categoria: {nombreCategoria: e.target.value}
                             })}
-                            value={product.categoriaId}
+                            value={product.categoria.nombreCategoria}
                         >
                             {categories.map((category) => (
                                 <option key={category.id} value={category.id}>
@@ -161,22 +138,43 @@ const CreateProduct = () => {
                                 </option>
                             ))}
                         </Select>
-                        <Select
-                            htmlFor="ciudad"
-                            label="Ciudad: *"
-                            selectText={'Seleccione una ciudad'}
-                            onChange={(e) => setProduct({
-                                ...product,
-                                ciudadId: e.target.value
-                            })}
-                            value={product.idCiudad}
-                        >
-                            {cities.map((ciudad) => (
-                                <option key={ciudad.id} value={ciudad.id}>
-                                    {ciudad.nombreCiudad}
-                                </option>
-                            ))}
-                        </Select>
+                        {/*<div>*/}
+                        {/*    <label htmlFor="category">Categoría:</label>*/}
+                        {/*    <select*/}
+                        {/*        id="category"*/}
+                        {/*        value={product.categoria.nombreCategoria}*/}
+                        {/*        onChange={(e) => setProduct({*/}
+                        {/*            ...product,*/}
+                        {/*            categoria: {nombreCategoria: e.target.value}*/}
+                        {/*        })}*/}
+                        {/*    >*/}
+                        {/*        <option value="">Seleccione una categoría</option>*/}
+                        {/*        {categories.map((category) => (*/}
+                        {/*            <option key={category.id} value={category.id}>*/}
+                        {/*                {category.nombreCategoria}*/}
+                        {/*            </option>*/}
+                        {/*        ))}*/}
+                        {/*    </select>*/}
+                        {/*</div>*/}
+
+                        {/*<div>*/}
+                        {/*    <label htmlFor="ciudad">Ciudad:</label>*/}
+                        {/*    <select*/}
+                        {/*        id="ciudad"*/}
+                        {/*        value={product.ciudad.nombreCiudad}*/}
+                        {/*        onChange={(e) => setProduct({*/}
+                        {/*            ...product,*/}
+                        {/*            ciudad: {nombreCiudad: e.target.value}*/}
+                        {/*        })}*/}
+                        {/*    >*/}
+                        {/*        <option value="">Seleccione una categoría</option>*/}
+                        {/*        {ciudades.map((ciudad) => (*/}
+                        {/*            <option key={ciudad.id} value={ciudad.id}>*/}
+                        {/*                {ciudad.nombreCiudad}*/}
+                        {/*            </option>*/}
+                        {/*        ))}*/}
+                        {/*    </select>*/}
+                        {/*</div>*/}
 
                         <Input
                             label="Duracion: *"
@@ -225,11 +223,12 @@ const CreateProduct = () => {
                         hoverColor={'white'}
                         bgColor={'#58C1CE'}
                         hoverBgColor={'#F2A63B'}
-                        borderRadius={'0.8rem'}
                     />
 
                 </CreateProductForm>
             </CreateProductFormSection>
+
+
         </>
     )
 }
