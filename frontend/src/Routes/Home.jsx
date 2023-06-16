@@ -14,7 +14,7 @@ const Home = () => {
         value: ''
     })
     const url = `http://localhost:8080/Tour/todosAleatorio`;
-
+    const [reloadProducts, setReloadProducts] = useState(false)
     useEffect(() => {
         fetch(url)
             .then(res => res.json())
@@ -23,12 +23,15 @@ const Home = () => {
     }, [url])
 
     useEffect(() => {
-        filtersApplied.value !== '' && handleGetFilteredProducts(filtersApplied)
-    }, [filtersApplied])
+        if(reloadProducts && filtersApplied.value !== ''){
+            handleGetFilteredProducts(filtersApplied)
+            setReloadProducts(false)
+        }
+    }, [reloadProducts, filtersApplied])
 
     return (
         <main>
-            <MainSection products={products} filtersApplied={filtersApplied} setFiltersApplied={setFiltersApplied} />
+            <MainSection products={products} setFilters={setFiltersApplied} setReloadProducts={setReloadProducts} />
             <>
                 <DividerSection padding={'20rem 20% 5rem 20%;'} />
                 <CategoriesSection />
