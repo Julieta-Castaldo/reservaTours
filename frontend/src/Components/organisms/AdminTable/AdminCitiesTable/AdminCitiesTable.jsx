@@ -27,6 +27,7 @@ export const AdminCitiesTable = ({ data, setReloadCities }) => {
     const deleteCity = (id) => {
         Swal.fire({
             title: '¿Estás seguro de eliminar esta ciudad?',
+            text: 'Al eliminarla, se eliminarán también los tours de esta ciudad.',
             showCancelButton: true,
             confirmButtonText: 'Eliminar',
             cancelButtonText: 'Cancelar'
@@ -152,7 +153,7 @@ export const AdminCitiesTable = ({ data, setReloadCities }) => {
                 </table>
             </AdminUsersTableWrapper>
             {openNewCity &&
-                <NewCityModal isOpen={openNewCity} onClose={() => setOpenNewCity(false)} />
+                <NewCityModal isOpen={openNewCity} onClose={() => setOpenNewCity(false)} setReloadCities={setReloadCities}/>
             }
             {openEditCity && editInitialValues &&
                 <NewCityModal isOpen={openEditCity} onClose={() => setOpenEditCity(false)} initialValue={editInitialValues} isNewCity={false} setReloadCities={setReloadCities} />

@@ -1,7 +1,7 @@
 import Swal from "sweetalert";
 
 export const usePostCity = () => {
-    const handlePostCity = (cityData, onClose) => {
+    const handlePostCity = (cityData, onClose, setReloadCities) => {
         const token = localStorage.getItem('token')
         let cityToPost = {
             nombreCiudad: cityData.nombreCiudad,
@@ -18,7 +18,6 @@ export const usePostCity = () => {
             }
         })
             .then(response => {
-                console.log(response)
                 if (response.status === 200) {
                     Swal({
                         position: 'top-end',
@@ -27,7 +26,8 @@ export const usePostCity = () => {
                         showConfirmButton: false,
                         timer: 2000
                     });
-                    onClose()
+                    setReloadCities(true)
+                    onClose()           
                     return ''
                 } else {
                     Swal({

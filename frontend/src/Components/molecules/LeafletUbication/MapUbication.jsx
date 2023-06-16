@@ -4,7 +4,7 @@ import './MapUbication.css'
 const MapUbication = ({ ciudad, userLocation }) => {
     let longitud = ciudad && ciudad.longitud ? ciudad.longitud.toString() : 0;
     let latitud = ciudad && ciudad.latitud ? ciudad.latitud.toString() : 0;
-    
+
     return (
         <>
             {ciudad && longitud !== 0 && latitud !== 0 ?
@@ -15,10 +15,13 @@ const MapUbication = ({ ciudad, userLocation }) => {
                     />
                     <Marker position={[latitud, longitud]}>
                         <Popup>
-                            {ciudad?.nombreCiudad} <br /> {ciudad?.descripcionCiudad}
+                            <p style={{ fontSize: '16px', fontWeight: 'bold' }}>
+                                {ciudad?.nombreCiudad} <br/>
+                                <span style={{ fontSize: '14px', fontWeight: 400 }}> {ciudad?.descripcionCiudad} </span>
+                            </p>
                         </Popup>
                     </Marker>
-                    {userLocation && <Polyline positions={[[latitud,longitud], userLocation]} />}
+                    {userLocation && <Polyline positions={[[latitud, longitud], userLocation]} />}
                 </MapContainer> :
                 <p style={{ marginLeft: '50px', color: '#58C1CE' }}>Lo sentimos. Actualmente no podemos mostrarte la ubicación de este tour en el mapa.</p>
             }

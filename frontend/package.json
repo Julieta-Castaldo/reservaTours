@@ -26,6 +26,7 @@
     "react-big-calendar": "^1.8.1",
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.2.1",
+    "react-multi-date-picker": "^4.1.1",
     "react-paginate": "^8.2.0",
     "react-router-dom": "^6.11.1",
     "sweetalert": "^2.1.2",

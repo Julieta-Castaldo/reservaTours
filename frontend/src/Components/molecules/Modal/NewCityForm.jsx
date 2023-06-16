@@ -23,7 +23,7 @@ const NewCityForm = ({ onClose, isNewCity, initialValue, setReloadCities }) => {
         if (!validateNumberFields(newCity.longitud)) return setError('Ingrese la longitud o corrija su formato')
         else setError(false)
 
-        if(isNewCity) handlePostCity(newCity, onClose)
+        if(isNewCity) handlePostCity(newCity, onClose, setReloadCities)
         else handlePutCity(newCity.id, newCity, onClose, setReloadCities)
     }
 
