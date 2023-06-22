@@ -179,5 +179,16 @@ public class TourController implements IController<TourDTO>{
         }
     }
 
+    @GetMapping("/buscador")
+    public ResponseEntity<List<TourDTO>> buscarTours(@RequestParam(required = false) Integer ciudadId,
+                                                     @RequestParam(required = false) LocalDate fechaDisponible,
+                                                     @RequestParam(required = false) Integer categoriaId) throws ResourceNotFoundException {
+        try {
+            List<TourDTO> tours = tourService.buscarToursDinamicamente(ciudadId, fechaDisponible, categoriaId);
+            return ResponseEntity.ok(tours);
+        } catch (Exception ex) {
+            throw new ResourceNotFoundException(ex.getMessage());
+        }
+    }
 
 }

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -28,6 +29,27 @@ public interface TourRepository extends JpaRepository<TourEntity, Integer> {
     List<TourEntity> findToursByCiudad(@Param("idCiudad") int idCiudad);
 
     Page<TourEntity> findByCategoria_id(int Categoria_id, Pageable pageable);
+
+    @Query("SELECT t FROM TourEntity t LEFT JOIN FechaOcupadaEntity f on f.tour.id = t.id WHERE f.fechaOcupada <> :fechaDisponible OR f.fechaOcupada IS NULL")
+    List<TourEntity> findToursByFecha(@Param("fechaDisponible") LocalDate fechaDisponible);
+
+
+/*
+    @Query("SELECT t FROM TourEntity t " +
+            "WHERE (:ciudadId IS NULL OR t.ciudad.id = :ciudadId) " +
+            "AND (:fechaDisponible IS NULL OR EXISTS (SELECT fechas FROM FechaOcupadaEntity fechas " +
+            "WHERE fechas.tour = t " +
+            "AND fechas.fechaOcupada = :fechaDisponible)) " +
+            "AND (:categoriaId IS NULL OR t.categoria.id = :categoriaId) " +
+            "AND EXISTS (SELECT fechas FROM FechaOcupadaEntity fechas " +
+            "WHERE fechas.tour = t " +
+            "AND fechas.fechaOcupada >= :fechaDesde " +
+            "AND fechas.fechaOcupada <= :fechaHasta)")
+    List<TourEntity> buscarToursDinamicamente(@Param("ciudadId") Integer ciudadId,
+                                 @Param("fechaDisponible") LocalDate fechaDisponible,
+                                 @Param("categoriaId") Integer categoriaId,
+                                 @Param("fechaDesde") LocalDate fechaDesde,
+                                 @Param("fechaHasta") LocalDate fechaHasta);*/
 
 
 }

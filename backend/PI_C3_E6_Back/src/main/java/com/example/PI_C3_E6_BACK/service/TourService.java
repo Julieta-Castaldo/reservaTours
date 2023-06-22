@@ -6,12 +6,16 @@ import com.example.PI_C3_E6_BACK.model.*;
 import com.example.PI_C3_E6_BACK.model.UsuarioValidacion.PageResponseDTO;
 import com.example.PI_C3_E6_BACK.persistence.entities.*;
 import com.example.PI_C3_E6_BACK.persistence.repository.*;
+import jakarta.persistence.criteria.Expression;
+import jakarta.persistence.criteria.Subquery;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Service
 public class TourService {
@@ -271,7 +277,49 @@ public class TourService {
         }
         return fechasOcupadas;
     }
+    //buscador de tours dinámico (por 3 parámetros)
+    public List<TourDTO> buscarToursDinamicamente(Integer ciudadId, LocalDate fechaDisponible, Integer categoriaId) {
+        //List<TourEntity> tours = repo.buscarToursDinamicamente(ciudadId, fechaDisponible, categoriaId, fechaDisponible, fechaDisponible);
+        List<TourEntity> tours = new ArrayList<>();
+        List<TourEntity> toursFiltrados = new ArrayList<>();
+        List<TourDTO> listaDTO =new ArrayList<>();
+        if(fechaDisponible != null){
+            tours = repo.findToursByFecha(fechaDisponible);
+            for (TourEntity tour : tours) {
+                LocalDate fechaHasta = fechaDisponible.plusDays(tour.getDuracion());
+                if (!repoFechaOcupada.existsByTourIdAndFechaOcupada(tour.getId(), fechaHasta)) {
+                    toursFiltrados.add(tour);
+                }
+            }
+            tours = toursFiltrados;
+        }else{
+            tours = repo.findAll();
+        }
+        if (categoriaId != null){
+            toursFiltrados = tours.stream()
+                    .filter(tour -> Integer.valueOf(categoriaId).equals(tour.getCategoria().getId()))
+                    .collect(Collectors.toList());
+            tours = toursFiltrados;
+        }
+        if (ciudadId != null){
+            toursFiltrados = tours.stream()
+                    .filter(tour -> Integer.valueOf(ciudadId).equals(tour.getCiudad().getId()))
+                    .collect(Collectors.toList());
+            tours = toursFiltrados;
+        }
 
-
+        //se pasa a dto
+        for(TourEntity tour : tours){
+            TourDTO tourDTO = modelMapper.getModelMapper().map(tour, TourDTO.class);
+            List<ImagenesEntity> imagenesEntities = repoImagenes.findImgById(tour.getId());
+            List<ImagenesDTO> imagenesDTOS = new ArrayList<>();
+            for (ImagenesEntity img : imagenesEntities){
+                imagenesDTOS.add(modelMapper.getModelMapper().map(img, ImagenesDTO.class));
+            }
+            tourDTO.setListaImagenes(imagenesDTOS);
+            listaDTO.add(tourDTO);
+        }
+        return listaDTO;
+    }
 
 }

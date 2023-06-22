@@ -44,6 +44,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/api/sign-up").permitAll()
                         .requestMatchers(HttpMethod.GET, "/Categoria/todos").permitAll()
                         .requestMatchers(HttpMethod.GET, "/Tour/porId/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/Tour/buscador").permitAll()
                         .requestMatchers(HttpMethod.GET, "/Ciudades/porId/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/Tour/pages**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/Ciudades/porNombre**").permitAll()
