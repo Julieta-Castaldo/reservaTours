@@ -1,24 +1,18 @@
 import styled from "@emotion/styled";
 
 export const AdminTableWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 2rem;
+`;
 
-  width: max-content;
-  height: max-content;
-  
-  border-radius: 1rem;
-
-  @media (max-width: 1266px) {
-    width: 100%;
-    height: 70rem;
-    //overflow-x: auto;
-    overflow: auto;
-  }
-
+export const AdminTableSubWrapper = styled.div`
+  vertical-align: middle;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  min-width: 100%;
+  display: inline-block;
+  overflow: hidden;
 `;
 
 export const AdminTableTag = styled.table`
@@ -27,11 +21,8 @@ export const AdminTableTag = styled.table`
   justify-content: center;
   align-items: center;
   padding: 0;
-
-  //width: 100%;
-  width: max-content;
+  min-width: 100%;
   height: 100%;
-  overflow: auto;
   border-collapse: collapse;
 `;
 
@@ -44,7 +35,6 @@ export const AdminTabletTHead = styled.thead`
   gap: 2rem;
 
   width: max-content;
-  //width: inherit;
   height: max-content;
 
   background: #EBDECA;
@@ -62,13 +52,18 @@ export const AdminTableTr = styled.tr`
   padding: 1.5rem 4rem;
   gap: 2rem;
 
-  //width: 100%;
   width: inherit;
-  //width: max-content;
   height: max-content;
+  overflow: hidden;
 
   background: ${({background}) => background ? background : 'transparent'};
   border-radius: 1rem 1rem 0 0;
+
+  //:nth-child(2n) {
+  //  width: 100%;
+  //  overflow: hidden;
+  //  background: #F2F2F2;
+  //}
 `;
 
 export const AdminTableTh = styled.th`
@@ -93,13 +88,12 @@ export const AdminTableTBody = styled.tbody`
   gap: 1.2rem;
 
   width: 100%;
-  //width: max-content;
   height: max-content;
 
   background: #FFFFFF;
-  box-shadow: 0 .4rem .4rem rgba(0, 0, 0, 0.25);
+  //box-shadow: 0 .4rem .4rem rgba(0, 0, 0, 0.25);
   border-radius: 0 0 1rem 1rem;
-  
+
   overflow: auto;
 `;
 
