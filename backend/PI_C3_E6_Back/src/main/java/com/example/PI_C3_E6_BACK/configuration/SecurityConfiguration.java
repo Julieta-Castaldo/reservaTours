@@ -63,6 +63,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.PUT, "/Tour/update/categoria").hasAuthority(ADMIN.name())
                         .requestMatchers(HttpMethod.POST, "/Categoria/agregar").hasAuthority(ADMIN.name())
                         .requestMatchers(HttpMethod.POST, "/Ciudades/agregar").hasAuthority(ADMIN.name())
+                        .requestMatchers(HttpMethod.POST, "/Reserva/crear").permitAll()
                         .requestMatchers(HttpMethod.GET, "/User/api/users").hasAuthority(ADMIN.name())
                         .requestMatchers(HttpMethod.PUT, "/User/**").hasAuthority(ADMIN.name())
                         .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**").permitAll()
