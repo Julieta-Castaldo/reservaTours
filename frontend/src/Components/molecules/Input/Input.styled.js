@@ -54,7 +54,4 @@ export const InputTag = styled.input`
     border-color: #ff0000;
   }
 
-  :not(:placeholder-shown):not(:focus) {
-    color: red; /* Text color when typing */
-  }
 `;
