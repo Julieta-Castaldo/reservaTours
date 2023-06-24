@@ -153,7 +153,7 @@ const Header = () => {
                                     onClose={handleClose}
                                 >
 
-                                    <MenuItem sx={{ fontSize: '16px' }} /*onClick={() => handleOptionClick(option)}*/>
+                                    <MenuItem sx={{ fontSize: '16px' }} onClick={() => navigate('/myProfile')}>
                                         Mi perfil
                                     </MenuItem>
                                     <MenuItem sx={{ fontSize: '16px' }} onClick={handleCloseSession} >
@@ -254,7 +254,7 @@ const Header = () => {
                                     onClose={handleClose}
                                 >
 
-                                    <MenuItem sx={{ fontSize: '16px' }} /*onClick={() => handleOptionClick(option)}*/>
+                                    <MenuItem sx={{ fontSize: '16px' }} onClick={() => navigate('/myProfile')}>
                                         Mi perfil
                                     </MenuItem>
                                     <MenuItem sx={{ fontSize: '16px' }} onClick={handleCloseSession} >
