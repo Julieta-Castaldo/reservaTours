@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import './ProductDetail.css'
 import { IconCalendar1 } from '../Components/svgs/IconCalendar1';
-import { IconUser } from '../Components/svgs/IconUser';
 import { ButtonIcon } from '../Components/molecules/ButtonIcon/ButtonIcon';
 import { IconArrowRight2 } from '../Components/svgs/IconArrowRight2';
 import { FeatureBlock } from '../Components/organisms/FeatureBlock/FeatureBlock';
@@ -22,6 +21,9 @@ import { useNavigate } from 'react-router-dom';
 import { calculateDistance } from '../Helpers/DistanceCalculator';
 import DatePicker from "react-multi-date-picker"
 
+//Hooks
+import { useGetTourBussyDates } from '../Hooks/Tours/useGetTourBussyDates';
+
 const ProductDetail = () => {
     const { id } = useParams()
     const { auth } = useGlobalState()
@@ -30,6 +32,7 @@ const ProductDetail = () => {
     const [isOpenCarousel, setIsOpenCarousel] = useState(false)
     const { userLocation } = useGlobalState();
     const [tourDistance, setTourDistance] = useState(null)
+    const [selectedDates, setSelectedDates] = useState([])
     const [reservaValues, setReservaValues] = useState({
         tourId: null,
         usuarioId: null,
@@ -38,6 +41,7 @@ const ProductDetail = () => {
     })
     const { listaImagenes, nombre, descripcion, ciudad, caracteristicasSi, precio, duracion } = productData
     const navigate = useNavigate();
+    const [bussyDates, handleGetBussyDates] = useGetTourBussyDates()
 
     useEffect(() => {
         fetch(url)
@@ -45,6 +49,10 @@ const ProductDetail = () => {
             .then(data => setProductData(data))
 
     }, [url])
+
+    useEffect(() => {
+        if (id) handleGetBussyDates(id.replace(':', ''))
+    }, [id])
 
     useEffect(() => {
         if (ciudad && ciudad.latitud && ciudad.longitud && userLocation) {
@@ -57,10 +65,10 @@ const ProductDetail = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
 
-        if(auth && auth.id){
-            setReservaValues({...reservaValues, usuarioId: auth.id})
+        if (auth && auth.id) {
+            setReservaValues({ ...reservaValues, usuarioId: auth.id })
         }
-        setReservaValues({...reservaValues, tourId: id, duracion: duracion})
+        setReservaValues({ ...reservaValues, tourId: id, duracion: duracion })
     }, [])
 
     const handleReserva = () => {
@@ -75,8 +83,7 @@ const ProductDetail = () => {
             navigate('/login')
         }
     }
-    
-    console.log(productData)
+
     return (
         <div>
             <div>
@@ -125,33 +132,42 @@ const ProductDetail = () => {
                                 <p style={{ color: '#717B8A' }}>USD</p>
                                 <p style={{ color: '#F2A63B', fontSize: '32px' }}>${precio}</p>
                             </div>
-                            <p className='categoriesText'>Fecha</p>
+                            <p className='categoriesText'>Fechas disponibles</p>
                             <div className='inputBox'>
                                 <DatePicker
                                     multiple
-                                    value={reservaValues.fechaInicio}
+                                    value={selectedDates}
                                     numberOfMonths={2}
                                     minDate={new Date()}
                                     mapDays={({ date }) => {
                                         let props = {}
                                         const newDate = new Date(date)
-                                        if (newDate.getDate() > 20 && newDate.getDate() < 26) {
+                                        if (selectedDates.length !== 0) {
+                                            if (newDate > selectedDates[0] && newDate < selectedDates[1]) {
+                                                props.style = { backgroundColor: "#0074D9", color: 'white' }
+                                            }
+                                        }
+                                        /*if (newDate.getDate() > 20 && newDate.getDate() < 26) {
                                             props.style = { color: "#8798AD" }
-                                        } else return ''
+                                        } else return ''*/
 
                                         return props
                                     }}
                                     onChange={(values) => {
-                                        let validSelectedDates = null
+                                        let validSelectedDates = []
                                         values.forEach(value => {
                                             let dateValue = new Date(value)
-                                            if (dateValue.getDate() > 20 && dateValue.getDate() < 26) {
-
+                                            if (selectedDates.length === 0 && !bussyDates.includes(dateValue)) {
+                                                validSelectedDates.push(value)
+                                                let endDate = new Date(value)
+                                                endDate.setDate(endDate.getDate() + duracion)
+                                                validSelectedDates.push(endDate)
                                             } else {
-                                                validSelectedDates = value
+                                                return ''
                                             }
                                         })
-                                        setReservaValues({...reservaValues, fechaInicio: validSelectedDates})
+                                        setSelectedDates(validSelectedDates)
+                                        setReservaValues({ ...reservaValues, fechaInicio: validSelectedDates })
                                     }}
                                     style={{
                                         color: '#05848A',
@@ -166,10 +182,17 @@ const ProductDetail = () => {
                                 />
                                 <IconCalendar1 color='#58C1CE' size='24' />
                             </div>
+                            {selectedDates.length !== 0 && <button onClick={() => {
+                               setSelectedDates([])
+                               setProductData({...productData, fechaInicio: null})
+                            }}>
+                                Limpiar fechas seleccionadas
+                            </button>}
                             <div style={{ margin: '16px 0px' }}>
-                                <p style={{ color: '#717B8A' }}>10:00 AM</p>
-                                <p style={{ color: '#717B8A' }}>Hora de inicio</p>
+                                <p style={{ color: '#717B8A', fontWeight: 700 }}>Duración del tour:</p>
+                                <p style={{ color: '#717B8A' }}>{duracion} días</p>
                             </div>
+
                             <ButtonIcon
                                 text='Reservar tour'
                                 src={
