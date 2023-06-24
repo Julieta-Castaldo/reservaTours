@@ -43,7 +43,9 @@ public class AuthenticationService {
         }
         UserDetails userDetails = userService.loadUserByUsername(loginRequest);
         String token =jwtService.generateToken(userDetails);
-        UsuarioDTO usuarioDTO  =  modelMapper.getModelMapper().map(usuarioRepository.findByEmail(loginRequest.getEmail()), UsuarioDTO.class);
+        UsuarioEntity usuarioEntity = usuarioRepository.findByEmail(loginRequest.getEmail());
+        UsuarioDTO usuarioDTO  =  modelMapper.getModelMapper().map(usuarioEntity, UsuarioDTO.class);
+        usuarioDTO.setLastname(usuarioEntity.getApellido());
         AuthenticationResponse authenticationResponse = new AuthenticationResponse(token);
         return new UserLoguinResponse(authenticationResponse, usuarioDTO);
     }

@@ -1,11 +1,10 @@
-import { NameSection } from "../Components/sections/NameSection/NameSection.jsx";
-import { SiteMapSection } from "../Components/sections/SiteMapSection/SiteMapSection.jsx";
-import { PanelSection } from "../Components/sections/PanelSection/PanelSection.jsx";
 import { useEffect, useState } from "react";
 import { useGlobalState } from "../Context/Context.jsx";
 import { useNavigate } from "react-router-dom";
 import { Stack, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { validateEmail, validateTextFields } from "../Helpers/UserFormValidations.jsx";
+//Hooks
+import { usePutUser } from "../Hooks/Users/usePutUser.jsx";
 
 const UserProfile = () => {
     const { auth } = useGlobalState();
@@ -13,8 +12,9 @@ const UserProfile = () => {
     const [selectedTab, setSelectedTab] = useState('profile');
     const [error, setError] = useState(false)
     const { id, username, lastname, email } = auth;
-
+    const [handlePutUser] = usePutUser()
     const [userValues, setUserValues] = useState({
+        idUsuario: null,
         username: '',
         lastname: '',
         email: ''
@@ -26,7 +26,7 @@ const UserProfile = () => {
         if (!validateTextFields(userValues.lastname)) return setError('Ingrese su apellido')
         if (!validateEmail(userValues.email)) return setError('El email no es válido')
         else setError(false)
-        //handlePostUser(newUser, onClose)
+        handlePutUser(userValues)
     }
 
     const children = [
@@ -49,7 +49,7 @@ const UserProfile = () => {
     useEffect(() => {
         if (!auth) navigate('/')
 
-        if (auth) setUserValues({ username: username, lastname: lastname, email: email })
+        if (auth) setUserValues({ username: username, lastname: lastname, email: email, idUsuario: id })
     }, [])
 
     return (

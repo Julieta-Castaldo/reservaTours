@@ -113,6 +113,21 @@ public class UsuarioService implements UserDetailsService {
         }
 
     }
+    public ResponseEntity<UsuarioDTO> updateUsuario(int id, String userName, String lastName, String email) {
+        UsuarioEntity usuarioEntity = usuarioRepository.findById(id);
+        if (userName != null) {
+            usuarioEntity.setNombre(userName);
+        }
+        if (lastName != null) {
+            usuarioEntity.setApellido(lastName);
+        }
+        if (email != null) {
+            usuarioEntity.setEmail(email);
+        }
+        usuarioRepository.save(usuarioEntity);
+        UsuarioDTO usuarioDTO = convertToUsuarioDTO(usuarioEntity);
+        return ResponseEntity.ok(usuarioDTO);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
