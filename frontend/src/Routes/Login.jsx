@@ -20,7 +20,7 @@ const Login = () => {
     }
     const navigate = useNavigate()
     const [error, setError] = useState('');
-
+    const interestingTour = localStorage.getItem('tourDeInteres')
     const showErrorAlert = () => {
         Swal({
             title: 'Error',
@@ -52,7 +52,9 @@ const Login = () => {
                 setAuth(userData)
                 setUser(initialValues)
                 localStorage.setItem('token', jwtToken)
-                navigate('/')
+
+                if(interestingTour) navigate(`/tour/${interestingTour}`)
+                else navigate('/')
             })
             .catch(error => {
                 console.error("Error:", error);

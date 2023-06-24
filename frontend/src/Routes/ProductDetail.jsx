@@ -73,6 +73,7 @@ const ProductDetail = () => {
 
     const handleReserva = () => {
         if (!auth) {
+            localStorage.setItem('tourDeInteres', id)
             Swal({
                 position: 'top-end',
                 icon: 'info',
