@@ -11,6 +11,7 @@ import CreateProduct from './Routes/CreateProduct';
 import CategorySection from './Routes/CategorySection';
 import CreateCategory from './Routes/CreateCategory';
 import UserProfile from './Routes/UserProfile';
+import MakeReservation from './Routes/MakeReservation';
 import './App.css'
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
                 <Route path='/category/:id' element={<CategorySection/>}/>
                 <Route path='/newCategory' element={<CreateCategory/>} />
                 <Route path='/myProfile' element={<UserProfile/>} />
+                <Route path='/reservation' element={<MakeReservation/>} />
             </Routes>
             <Footer/>
         </div>

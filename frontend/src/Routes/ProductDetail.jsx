@@ -82,7 +82,7 @@ const ProductDetail = () => {
                 timer: 2000
             });
             navigate('/login')
-        }
+        } else navigate('/reservation')
     }
 
     return (
@@ -183,12 +183,7 @@ const ProductDetail = () => {
                                 />
                                 <IconCalendar1 color='#58C1CE' size='24' />
                             </div>
-                            {selectedDates.length !== 0 && <button onClick={() => {
-                               setSelectedDates([])
-                               setProductData({...productData, fechaInicio: null})
-                            }}>
-                                Limpiar fechas seleccionadas
-                            </button>}
+                    
                             <div style={{ margin: '16px 0px' }}>
                                 <p style={{ color: '#717B8A', fontWeight: 700 }}>Duración del tour:</p>
                                 <p style={{ color: '#717B8A' }}>{duracion} días</p>
