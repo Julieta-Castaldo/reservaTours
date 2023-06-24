@@ -12,16 +12,18 @@ import {
     CreateProductFormSection,
     CreateProductFormSubWrapper
 } from "./CreateProduct.styled.js";
-import {ButtonIcon} from "../Components/molecules/ButtonIcon/ButtonIcon.jsx";
-import {IconArrowRight2} from "../Components/svgs/IconArrowRight2.jsx";
-import {AddImage} from "../Components/molecules/AddImage/AddImage.jsx";
-import {useGetCategories} from "../Hooks/Categories/useGetCategories.jsx";
-import {Select} from "../Components/molecules/Select/Select.jsx";
-import {useGetCities} from "../Hooks/Cities/useGetCities.jsx";
+import { ButtonIcon } from "../Components/molecules/ButtonIcon/ButtonIcon.jsx";
+import { IconArrowRight2 } from "../Components/svgs/IconArrowRight2.jsx";
+import { AddImage } from "../Components/molecules/AddImage/AddImage.jsx";
+import { useGetCategories } from "../Hooks/Categories/useGetCategories.jsx";
+import { Select } from "../Components/molecules/Select/Select.jsx";
+import { useGetCities } from "../Hooks/Cities/useGetCities.jsx";
+import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 
 const CreateProduct = () => {
     const token = localStorage.getItem('token')
-    const {setReloadProductsFlag} = useGlobalState();
+    const { auth } = useGlobalState()
+    const { setReloadProductsFlag } = useGlobalState();
     const navigate = useNavigate()
     const [product, setProduct] = useState({
         nombre: '',
@@ -30,18 +32,33 @@ const CreateProduct = () => {
         ciudadId: null,
         duracion: null,
         listaImagenes: [
-            {url: ''}
+            { url: '' }
         ],
         caracteristicasSi: [""],
-
+        precio: null
     })
 
     const [categories, handleGetCategories] = useGetCategories();
     const [cities, handleGetCities] = useGetCities();
+
+    const [caracteristicas, setCaracteristicas] = useState({
+        desayuno: false,
+        cena: false,
+        transporte: false,
+        almuerzo: false,
+        guia: false
+    })
+
+    const { desayuno, cena, almuerzo, transporte, guia } = caracteristicas
+
     useEffect(() => {
         handleGetCategories()
         handleGetCities()
     }, []);
+
+    useEffect(() => {
+        if (!auth) navigate('/')
+    }, [])
 
 
     let initialValues = {
@@ -51,9 +68,10 @@ const CreateProduct = () => {
         ciudadId: null,
         duracion: null,
         listaImagenes: [
-            {url: ''}
+            { url: '' }
         ],
         caracteristicasSi: [""],
+        precio: null
     }
 
     const postTour = (e) => {
@@ -94,48 +112,146 @@ const CreateProduct = () => {
             });
     }
 
-
     const handleAddImage = (e) => {
         e.preventDefault();
         setProduct({
             ...product,
-            listaImagenes: [...product.listaImagenes, {url: ''}]
+            listaImagenes: [...product.listaImagenes, { url: '' }]
         })
     }
-    
+
+    const handleChangeCheck = (event) => {
+        setCaracteristicas({
+            ...caracteristicas,
+            [event.target.name]: event.target.checked,
+        });
+
+        console.log(caracteristicas)
+    };
+
+    useEffect(() => {
+        const caracts = Object.keys(caracteristicas)
+        let trueCaracteristicas = []
+        caracts.forEach(item => {
+            if (caracteristicas[item] === true) {
+                switch (item) {
+                    case 'guia':
+                        trueCaracteristicas.push('Guía Turístico')
+                        break;
+                    default:
+                        const value = item.charAt(0).toUpperCase() + item.slice(1)
+                        trueCaracteristicas.push(value)
+                        break;
+                }
+            }
+            setProduct({...product, caracteristicasSi: trueCaracteristicas})
+        })
+    }, [caracteristicas])
+
     return (
         <>
-            <NameSection/>
+            <NameSection />
             <SiteMapSection>
-                <NewTourSiteMap/>
+                <NewTourSiteMap />
             </SiteMapSection>
             <CreateProductFormSection>
                 <CreateProductForm
                     onSubmit={postTour}
                     // onSubmit={(e) => handleSubmit(e)}
-                    style={{display: 'flex', flexDirection: 'column', width: '60vw'}}
+                    style={{ display: 'flex', flexDirection: 'column', width: '60vw' }}
                 >
                     <Input
-                        label="Nombre *"
-                        onChange={(e) => setProduct({...product, nombre: e.target.value})}
+                        label="Nombre: *"
+                        onChange={(e) => setProduct({ ...product, nombre: e.target.value })}
                         type="text"
                         value={product.nombre}
                     />
                     <Input
-                        label="Descripción *"
-                        onChange={(e) => setProduct({...product, descripcion: e.target.value})}
+                        label="Descripción: *"
+                        onChange={(e) => setProduct({ ...product, descripcion: e.target.value })}
                         type="text"
                         value={product.descripcion}
                     />
-                    <Input
-                        id="caracteristicasSi"
-                        label="Caracteristicas *"
-                        onChange={(e) =>
-                            setProduct({...product, caracteristicasSi: [e.target.value]}) // Cambio aquí
-                        }
-                        type="text"
-                        value={product.caracteristicasSi[0]} // Cambio aquí
-                    />
+                    <div>
+                        <p style={{ color: '#F2A32B' }}>Características y servicios incluídos: *</p>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        onChange={handleChangeCheck}
+                                        name="desayuno"
+                                        sx={{
+                                            '& .MuiSvgIcon-root': { fontSize: 24 },
+                                            '&.Mui-checked': {
+                                                color: '#F2A63B',
+                                            }
+                                        }} />
+                                }
+                                label="Desayuno"
+                                sx={{ '.MuiFormControlLabel-label': { fontSize: '16px' } }}
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        onChange={handleChangeCheck}
+                                        name="almuerzo"
+                                        sx={{
+                                            '& .MuiSvgIcon-root': { fontSize: 24 },
+                                            '&.Mui-checked': {
+                                                color: '#F2A63B',
+                                            }
+                                        }} />
+                                }
+                                label="Almuerzo"
+                                sx={{ '.MuiFormControlLabel-label': { fontSize: '16px' } }}
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        onChange={handleChangeCheck}
+                                        name="cena"
+                                        sx={{
+                                            '& .MuiSvgIcon-root': { fontSize: 24 },
+                                            '&.Mui-checked': {
+                                                color: '#F2A63B',
+                                            }
+                                        }} />
+                                }
+                                label="Cena"
+                                sx={{ '.MuiFormControlLabel-label': { fontSize: '16px' } }}
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        onChange={handleChangeCheck}
+                                        name="transporte"
+                                        sx={{
+                                            '& .MuiSvgIcon-root': { fontSize: 24 },
+                                            '&.Mui-checked': {
+                                                color: '#F2A63B',
+                                            }
+                                        }} />
+                                }
+                                label="Transporte"
+                                sx={{ '.MuiFormControlLabel-label': { fontSize: '16px' } }}
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        onChange={handleChangeCheck}
+                                        name="guia"
+                                        sx={{
+                                            '& .MuiSvgIcon-root': { fontSize: 24 },
+                                            '&.Mui-checked': {
+                                                color: '#F2A63B',
+                                            }
+                                        }} />
+                                }
+                                label="Guía Turístico"
+                                sx={{ '.MuiFormControlLabel-label': { fontSize: '16px' } }}
+                            />
+                        </div>
+                    </div>
                     <CreateProductFormSubWrapper>
                         <Select
                             htmlFor="category"
@@ -171,10 +287,17 @@ const CreateProduct = () => {
                         </Select>
 
                         <Input
-                            label="Duracion: *"
-                            onChange={(e) => setProduct({...product, duracion: e.target.value})}
+                            label="Duración (en días): *"
+                            onChange={(e) => setProduct({ ...product, duracion: e.target.value })}
                             type="text"
                             value={product.duracion}
+                        />
+
+                        <Input
+                            label="Precio: *"
+                            onChange={(e) => setProduct({ ...product, precio: e.target.value })}
+                            type="number"
+                            value={product.precio}
                         />
                     </CreateProductFormSubWrapper>
                     <label>Imagenes: *</label>
@@ -187,13 +310,13 @@ const CreateProduct = () => {
                             return (
                                 <input
                                     key={idx}
-                                    style={{marginBottom: '12px'}}
+                                    style={{ marginBottom: '12px' }}
                                     type="text"
                                     value={product.listaImagenes[idx].url}
                                     onChange={(e) => {
                                         const imgArray = [...product.listaImagenes]
-                                        imgArray[idx] = {url: e.target.value}
-                                        setProduct({...product, listaImagenes: imgArray})
+                                        imgArray[idx] = { url: e.target.value }
+                                        setProduct({ ...product, listaImagenes: imgArray })
                                     }}
                                 />
                             )

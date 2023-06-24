@@ -35,7 +35,7 @@ const ProductDetail = () => {
 
     }, [url])
 
-    const { listaImagenes, nombre, descripcion, ciudad, caracteristicasSi } = productData
+    const { listaImagenes, nombre, descripcion, ciudad, caracteristicasSi, precio } = productData
 
     useEffect(() => {
         if (ciudad && ciudad.latitud && ciudad.longitud && userLocation) {
@@ -98,7 +98,7 @@ const ProductDetail = () => {
                             <p style={{ fontWeight: 700, color: '#595E65', fontSize: '14px', marginTop: '10px' }}>Valor total</p>
                             <div className='priceSection'>
                                 <p style={{ color: '#717B8A' }}>USD</p>
-                                <p style={{ color: '#F2A63B', fontSize: '32px' }}>$2500</p>
+                                <p style={{ color: '#F2A63B', fontSize: '32px' }}>${precio}</p>
                             </div>
                             <p className='categoriesText'>Fecha</p>
                             <div className='inputBox'>
