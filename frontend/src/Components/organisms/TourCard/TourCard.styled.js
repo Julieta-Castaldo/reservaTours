@@ -70,6 +70,13 @@ export const TourCardTitle = styled.h3`
   
   color: #58C1CE;
 
+  width: 250px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical; 
+  -webkit-line-clamp: 2; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
+
   @media only screen and (max-width: 600px) {
     text-align: center;
     justify-content: center;

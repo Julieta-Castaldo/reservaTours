@@ -15,18 +15,29 @@ import pointsIcon from '../Util/images/pointsIcon.svg';
 import { useGlobalState } from '../Context/Context';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
+import Swal from 'sweetalert';
+import { useNavigate } from 'react-router-dom';
+
 //Helper
 import { calculateDistance } from '../Helpers/DistanceCalculator';
 import DatePicker from "react-multi-date-picker"
-import { DateObject } from "react-multi-date-picker";
 
 const ProductDetail = () => {
     const { id } = useParams()
+    const { auth } = useGlobalState()
     const [productData, setProductData] = useState({})
     const url = `http://localhost:8080/Tour/porId/` + id.replace(':', '');
     const [isOpenCarousel, setIsOpenCarousel] = useState(false)
     const { userLocation } = useGlobalState();
     const [tourDistance, setTourDistance] = useState(null)
+    const [reservaValues, setReservaValues] = useState({
+        tourId: null,
+        usuarioId: null,
+        fechaInicio: null,
+        duracion: null
+    })
+    const { listaImagenes, nombre, descripcion, ciudad, caracteristicasSi, precio, duracion } = productData
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch(url)
@@ -34,8 +45,6 @@ const ProductDetail = () => {
             .then(data => setProductData(data))
 
     }, [url])
-
-    const { listaImagenes, nombre, descripcion, ciudad, caracteristicasSi, precio } = productData
 
     useEffect(() => {
         if (ciudad && ciudad.latitud && ciudad.longitud && userLocation) {
@@ -47,11 +56,27 @@ const ProductDetail = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
+
+        if(auth && auth.id){
+            setReservaValues({...reservaValues, usuarioId: auth.id})
+        }
+        setReservaValues({...reservaValues, tourId: id, duracion: duracion})
     }, [])
 
-    const [selectedDates, setSelectedDates] = useState([])
-
-
+    const handleReserva = () => {
+        if (!auth) {
+            Swal({
+                position: 'top-end',
+                icon: 'info',
+                title: 'Debes loguearte para reservar un tour',
+                showConfirmButton: false,
+                timer: 2000
+            });
+            navigate('/login')
+        }
+    }
+    
+    console.log(productData)
     return (
         <div>
             <div>
@@ -104,7 +129,7 @@ const ProductDetail = () => {
                             <div className='inputBox'>
                                 <DatePicker
                                     multiple
-                                    value={selectedDates}
+                                    value={reservaValues.fechaInicio}
                                     numberOfMonths={2}
                                     minDate={new Date()}
                                     mapDays={({ date }) => {
@@ -117,16 +142,16 @@ const ProductDetail = () => {
                                         return props
                                     }}
                                     onChange={(values) => {
-                                        let validSelectedDates = []
+                                        let validSelectedDates = null
                                         values.forEach(value => {
                                             let dateValue = new Date(value)
                                             if (dateValue.getDate() > 20 && dateValue.getDate() < 26) {
 
                                             } else {
-                                                validSelectedDates.push(value)
+                                                validSelectedDates = value
                                             }
                                         })
-                                        setSelectedDates(validSelectedDates)
+                                        setReservaValues({...reservaValues, fechaInicio: validSelectedDates})
                                     }}
                                     style={{
                                         color: '#05848A',
@@ -141,16 +166,12 @@ const ProductDetail = () => {
                                 />
                                 <IconCalendar1 color='#58C1CE' size='24' />
                             </div>
-                            <p className='categoriesText'>Viajeros</p>
-                            <div className='inputBox'>
-                                <IconUser color='#58C1CE' />
-                            </div>
                             <div style={{ margin: '16px 0px' }}>
                                 <p style={{ color: '#717B8A' }}>10:00 AM</p>
                                 <p style={{ color: '#717B8A' }}>Hora de inicio</p>
                             </div>
                             <ButtonIcon
-                                text='Proceder a reservar'
+                                text='Reservar tour'
                                 src={
                                     <IconArrowRight2
                                         size='18'
@@ -162,6 +183,7 @@ const ProductDetail = () => {
                                 hoverColor={'#05848A'}
                                 bgColor={'#05848A'}
                                 hoverBgColor={'transparent'}
+                                onClick={handleReserva}
                             />
                         </article>
                     </section>
