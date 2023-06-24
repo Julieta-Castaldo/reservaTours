@@ -10,6 +10,7 @@ import com.example.PI_C3_E6_BACK.persistence.entities.TourEntity;
 import com.example.PI_C3_E6_BACK.persistence.repository.FechaOcupadaRepository;
 import com.example.PI_C3_E6_BACK.persistence.repository.ReservaRepository;
 import com.example.PI_C3_E6_BACK.persistence.repository.TourRepository;
+import org.apache.catalina.LifecycleState;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ReservaService {
@@ -66,5 +69,35 @@ public class ReservaService {
                 log.error(ex.getMessage());
                 return ResponseEntity.badRequest().body(ex.getMessage());
             }
+    }
+
+    public List<ReservaDTO> buscarReservaPorUsuario(int idUsuario){
+        List<ReservaEntity> listReservasEntity = new ArrayList<>();
+        List<ReservaDTO> listReservasDTO = new ArrayList<>();
+        listReservasEntity = repoReserva.findReservaByUser(idUsuario);
+        for (ReservaEntity r : listReservasEntity){
+            ReservaDTO reservaDTO = modelMapper.getModelMapper().map(r, ReservaDTO.class);
+            listReservasDTO.add(reservaDTO);
+        }
+        return listReservasDTO;
+    }
+
+    public List<ReservaDTO> buscarTodos(){
+        List<ReservaEntity> listReservasEntity = new ArrayList<>();
+        List<ReservaDTO> listReservasDTO = new ArrayList<>();
+        listReservasEntity = repoReserva.findAll();
+        for (ReservaEntity r : listReservasEntity){
+            ReservaDTO reservaDTO = modelMapper.getModelMapper().map(r, ReservaDTO.class);
+            listReservasDTO.add(reservaDTO);
+        }
+        return listReservasDTO;
+    }
+
+    public ReservaDTO buscarReservaPorId(int id){
+        ReservaEntity reservaEntity = new ReservaEntity();
+        ReservaDTO reservaDTO = new ReservaDTO();
+        reservaEntity = repoReserva.findReservaById(id);
+        reservaDTO = modelMapper.getModelMapper().map(reservaEntity, ReservaDTO.class);
+        return reservaDTO;
     }
 }

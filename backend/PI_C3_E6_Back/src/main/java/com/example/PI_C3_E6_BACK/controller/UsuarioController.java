@@ -52,4 +52,12 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDTO> updateRoleToAdmin(@PathVariable int id) {
         return usuarioService.cambiarRolUsuario(id);
     }
+
+    @PutMapping("/updateUser")
+    public ResponseEntity<UsuarioDTO> updateUser(@RequestParam int idUsuario,
+                                                 @RequestParam (required = false) String username,
+                                                 @RequestParam (required = false) String lastname,
+                                                 @RequestParam (required = false) String email) {
+        return usuarioService.updateUsuario(idUsuario,username,lastname,email);
+    }
 }
