@@ -22,6 +22,14 @@ public class ReservaDTO implements Serializable {
         this.fechaInicio = fechaInicio;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getTourId() {
         return tourId;
     }
