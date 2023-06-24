@@ -48,7 +48,7 @@ public class UsuarioController {
         return usuarioService.getUsers(pageable);
     }
 
-    @PutMapping("/{id}/rol")
+    @PutMapping("/rol/{id}")
     public ResponseEntity<UsuarioDTO> updateRoleToAdmin(@PathVariable int id) {
         return usuarioService.cambiarRolUsuario(id);
     }
