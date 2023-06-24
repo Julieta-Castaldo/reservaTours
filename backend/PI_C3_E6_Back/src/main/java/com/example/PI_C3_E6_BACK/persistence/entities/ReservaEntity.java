@@ -27,17 +27,33 @@ public class ReservaEntity {
     @Column(name = "duracionTour")
     private int duracion;
 
+    @Column(name = "medioDePago")
+    private String medioDePago;
+
+    @Column(name = "menu")
+    private String menu;
+
+    @Column(name = "alojamiento")
+    private String alojamiento;
+
+    @Column(name = "informacionDeSalud")
+    private String informacionSalud;
+
     //---- Constructor -----
 
 
     public ReservaEntity() {
     }
 
-    public ReservaEntity(TourEntity tour, UsuarioEntity usuario, LocalDate fechaInicioReserva) {
+    public ReservaEntity(TourEntity tour, UsuarioEntity usuario, LocalDate fechaInicioReserva, String medioDePago, String menu, String alojamiento, String informacionSalud) {
         this.tour = tour;
         this.usuario = usuario;
-        this.duracion = tour.getDuracion();
         this.fechaInicioReserva = fechaInicioReserva;
+        this.duracion = tour.getDuracion();
+        this.medioDePago = medioDePago;
+        this.menu = menu;
+        this.alojamiento = alojamiento;
+        this.informacionSalud = informacionSalud;
     }
 
     // Getters y setters
@@ -80,5 +96,37 @@ public class ReservaEntity {
 
     public void setFechaInicioReserva(LocalDate fechaInicioReserva) {
         this.fechaInicioReserva = fechaInicioReserva;
+    }
+
+    public String getMedioDePago() {
+        return medioDePago;
+    }
+
+    public void setMedioDePago(String medioDePago) {
+        this.medioDePago = medioDePago;
+    }
+
+    public String getMenu() {
+        return menu;
+    }
+
+    public void setMenu(String menu) {
+        this.menu = menu;
+    }
+
+    public String getAlojamiento() {
+        return alojamiento;
+    }
+
+    public void setAlojamiento(String alojamiento) {
+        this.alojamiento = alojamiento;
+    }
+
+    public String getInformacionSalud() {
+        return informacionSalud;
+    }
+
+    public void setInformacionSalud(String informacionSalud) {
+        this.informacionSalud = informacionSalud;
     }
 }
