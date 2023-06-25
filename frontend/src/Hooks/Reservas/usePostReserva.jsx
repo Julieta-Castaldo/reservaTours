@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { useGlobalState } from "../../Context/Context";
 
 export const usePostReserva = () => {
-
+    const token = localStorage.getItem('token')
     const handlePostReserva = (data) => {
         fetch('http://localhost:8080/Reserva/crear', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
                 "Content-type": "application/json; charset=UTF-8",
+                'Authorization': `Bearer ${token}`
             }
         })
             .then(response => {

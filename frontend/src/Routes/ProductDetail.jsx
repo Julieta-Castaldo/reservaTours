@@ -16,10 +16,11 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import Swal from 'sweetalert';
 import { useNavigate } from 'react-router-dom';
+import DatePicker from "react-multi-date-picker"
 
 //Helper
 import { calculateDistance } from '../Helpers/DistanceCalculator';
-import DatePicker from "react-multi-date-picker"
+import { DateFormater } from '../Helpers/DateFormater';
 
 //Hooks
 import { useGetTourBussyDates } from '../Hooks/Tours/useGetTourBussyDates';
@@ -66,10 +67,9 @@ const ProductDetail = () => {
         window.scrollTo(0, 0)
 
         if (auth && auth.id) {
-            setReservaValues({ ...reservaValues, usuarioId: auth.id })
+            setReservaValues({ ...reservaValues, usuarioId: auth.id, tourId: id.replace(':', ''), duracion: duracion, tourImage: listaImagenes && listaImagenes[0], precio: precio })
         }
-        setReservaValues({ ...reservaValues, tourId: id, duracion: duracion })
-    }, [])
+    }, [auth, productData])
 
     const handleReserva = () => {
         if (!auth) {
@@ -82,7 +82,10 @@ const ProductDetail = () => {
                 timer: 2000
             });
             navigate('/login')
-        } else navigate('/reservation')
+        } else{
+            localStorage.setItem('prefilledReservationData', JSON.stringify(reservaValues))
+            navigate('/reservation')
+        } 
     }
 
     return (
@@ -162,13 +165,13 @@ const ProductDetail = () => {
                                                 validSelectedDates.push(value)
                                                 let endDate = new Date(value)
                                                 endDate.setDate(endDate.getDate() + duracion)
-                                                validSelectedDates.push(endDate)
+                                                validSelectedDates.push(new Date(endDate))
                                             } else {
                                                 return ''
                                             }
                                         })
                                         setSelectedDates(validSelectedDates)
-                                        setReservaValues({ ...reservaValues, fechaInicio: validSelectedDates })
+                                        setReservaValues({ ...reservaValues, fechaInicio: [DateFormater(validSelectedDates[0]), DateFormater(validSelectedDates[1])] })
                                     }}
                                     style={{
                                         color: '#05848A',
@@ -203,6 +206,7 @@ const ProductDetail = () => {
                                 bgColor={'#05848A'}
                                 hoverBgColor={'transparent'}
                                 onClick={handleReserva}
+                                disabled={reservaValues.fechaInicio === null}
                             />
                         </article>
                     </section>
