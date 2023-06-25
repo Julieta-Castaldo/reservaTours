@@ -2,6 +2,7 @@ package com.example.PI_C3_E6_BACK.controller;
 
 import com.example.PI_C3_E6_BACK.exceptions.ResourceNotFoundException;
 import com.example.PI_C3_E6_BACK.model.CategoriaDTO;
+import com.example.PI_C3_E6_BACK.model.CiudadDTO;
 import com.example.PI_C3_E6_BACK.model.TourDTO;
 import com.example.PI_C3_E6_BACK.service.CategoriaService;
 import com.example.PI_C3_E6_BACK.service.TourService;
@@ -43,6 +44,16 @@ public class CategoriaController implements IController<CategoriaDTO>{
             }
         }else{
             return ResponseEntity.badRequest().body("No se pudo crear la categoría ya que falta ingresar el nombre de la misma");
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> borrarPorId(@PathVariable int id) {
+        try {
+            ResponseEntity response = categoriaService.borrarCategoria(id);
+            return response;
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
 }
