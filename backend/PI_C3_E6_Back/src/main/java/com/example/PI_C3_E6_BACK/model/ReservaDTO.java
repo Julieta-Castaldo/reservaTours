@@ -13,13 +13,25 @@ public class ReservaDTO implements Serializable {
     private LocalDate fechaInicio;
     private int duracion;
 
+    private String medioDePago;
+
+    private String menu;
+
+    private String alojamiento;
+
+    private String informacionDeSalud;
+
     public ReservaDTO() {
     }
 
-    public ReservaDTO(int tourId, int usuarioId, LocalDate fechaInicio) {
+    public ReservaDTO(int tourId, int usuarioId, LocalDate fechaInicio, String medioDePago, String menu, String alojamiento, String informacionDeSalud) {
         this.tourId = tourId;
         this.usuarioId = usuarioId;
         this.fechaInicio = fechaInicio;
+        this.medioDePago = medioDePago;
+        this.menu = menu;
+        this.alojamiento = alojamiento;
+        this.informacionDeSalud = informacionDeSalud;
     }
 
     public int getId() {
@@ -60,5 +72,37 @@ public class ReservaDTO implements Serializable {
 
     public void setDuracion(int duracion) {
         this.duracion = duracion;
+    }
+
+    public String getMedioDePago() {
+        return medioDePago;
+    }
+
+    public void setMedioDePago(String medioDePago) {
+        this.medioDePago = medioDePago;
+    }
+
+    public String getMenu() {
+        return menu;
+    }
+
+    public void setMenu(String menu) {
+        this.menu = menu;
+    }
+
+    public String getAlojamiento() {
+        return alojamiento;
+    }
+
+    public void setAlojamiento(String alojamiento) {
+        this.alojamiento = alojamiento;
+    }
+
+    public String getInformacionDeSalud() {
+        return informacionDeSalud;
+    }
+
+    public void setInformacionDeSalud(String informacionDeSalud) {
+        this.informacionDeSalud = informacionDeSalud;
     }
 }
