@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useGlobalState } from "../../Context/Context";
 
 export const usePostReserva = () => {
-    const token = localStorage.getItem('token')
     const handlePostReserva = (data) => {
+        const token = localStorage.getItem('token')
         fetch('http://localhost:8080/Reserva/crear', {
             method: 'POST',
             body: JSON.stringify(data),
@@ -30,20 +30,11 @@ export const usePostReserva = () => {
                         button: 'Aceptar',
                     });
                 }
-                console.log(response)
                 return response.json()
             })
             .then(data => {
                 console.log(data)
             })
-            .catch(error => {
-                Swal({
-                    title: 'Error',
-                    text: 'No pudimos registrar la reserva. Intente nuevamente más tarde.',
-                    icon: 'error',
-                    button: 'Aceptar',
-                });
-            });
     }
 
     return [handlePostReserva]
