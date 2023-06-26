@@ -82,10 +82,10 @@ const ProductDetail = () => {
                 timer: 2000
             });
             navigate('/login')
-        } else{
+        } else {
             localStorage.setItem('prefilledReservationData', JSON.stringify(reservaValues))
             navigate('/reservation')
-        } 
+        }
     }
 
     return (
@@ -151,9 +151,10 @@ const ProductDetail = () => {
                                                 props.style = { backgroundColor: "#0074D9", color: 'white' }
                                             }
                                         }
-                                        /*if (newDate.getDate() > 20 && newDate.getDate() < 26) {
-                                            props.style = { color: "#8798AD" }
-                                        } else return ''*/
+
+                                        if (bussyDates.includes(DateFormater(newDate))) {
+                                            props.style = { color: 'grey' }
+                                        }
 
                                         return props
                                     }}
@@ -161,10 +162,21 @@ const ProductDetail = () => {
                                         let validSelectedDates = []
                                         values.forEach(value => {
                                             let dateValue = new Date(value)
-                                            if (selectedDates.length === 0 && !bussyDates.includes(dateValue)) {
+                                            let endDate = new Date(value)
+                                            endDate.setDate(endDate.getDate() + duracion)
+                                            let validDateFlag = true;
+                                            for (let index = 0; index <= duracion; index++) {
+                                                let dateToCheck = dateValue
+                                                dateToCheck.setDate(dateToCheck.getDate() + index)
+
+                                                if (bussyDates.includes(DateFormater(dateToCheck))) {
+                                                    validDateFlag = false;
+                                                    return ''
+                                                }
+                                            }
+
+                                            if (validDateFlag  && selectedDates.length === 0) {
                                                 validSelectedDates.push(value)
-                                                let endDate = new Date(value)
-                                                endDate.setDate(endDate.getDate() + duracion)
                                                 validSelectedDates.push(new Date(endDate))
                                             } else {
                                                 return ''
@@ -181,12 +193,11 @@ const ProductDetail = () => {
                                         width: '240px',
                                         backgroundColor: 'transparent',
                                         border: 'none',
-                                        // Agrega más estilos según sea necesario
                                     }}
                                 />
                                 <IconCalendar1 color='#58C1CE' size='24' />
                             </div>
-                    
+
                             <div style={{ margin: '16px 0px' }}>
                                 <p style={{ color: '#717B8A', fontWeight: 700 }}>Duración del tour:</p>
                                 <p style={{ color: '#717B8A' }}>{duracion} días</p>

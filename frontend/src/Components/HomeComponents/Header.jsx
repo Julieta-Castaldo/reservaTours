@@ -38,6 +38,7 @@ const Header = () => {
         setAuth(false)
         localStorage.clear()
         navigate('/')
+        window.scrollTo(0,0)
         
     }
 

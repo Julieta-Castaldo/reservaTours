@@ -15,7 +15,8 @@ export const useGetTourBussyDates = () => {
                 return res.json()
             })
             .then(data => {
-                setBussyDates(data)
+                const dates = data.map(item => item.fechaOcupada)
+                setBussyDates(dates)
             })
     }
 
