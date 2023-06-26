@@ -14,7 +14,7 @@ export const useGetCategories = () => {
             .then(res => res.json())
             .then(data => {
                 setCategories(data)
-                setCategories && setReloadCategories(false)
+                setReloadCategories(false)
             })
     }, []);
 

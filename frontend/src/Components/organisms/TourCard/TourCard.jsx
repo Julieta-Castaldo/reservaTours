@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
 
 export const TourCard = ({product}) => {
     const { listaImagenes, nombre, duracion, ciudad, id } = product
-    console.log(product)
     return (
         <TourCardWrapper>
             <TourCardImgWrapper

@@ -7,18 +7,20 @@ import PropTypes from "prop-types";
 import { IconEdit } from "../../../svgs/IconEdit.jsx";
 import { IconTrash } from "../../../svgs/IconTrash.jsx";
 import Swal from 'sweetalert2';
+//Hooks
+import { useDeleteCategory } from "../../../../Hooks/Categories/useDeleteCategory"
 
-export const AdminCategoriesTable = ({ data, setReloadUsers }) => {
+export const AdminCategoriesTable = ({ data, setReloadCategories }) => {
     const { auth } = useGlobalState()
     const navigate = useNavigate()
-
+    const [handleDeleteCategory] = useDeleteCategory()
     useEffect(() => {
         if (!auth) navigate('/')
     }, [])
 
-    const handleDeleteCategory = () => {
+    const handleDelete = (id) => {
         Swal.fire({
-            title: 'Confirmar delete',
+            title: 'Estás por eliminar una categoría',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -28,11 +30,7 @@ export const AdminCategoriesTable = ({ data, setReloadUsers }) => {
             
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                )
+                handleDeleteCategory(id, setReloadCategories)
             }
         })
     }
@@ -115,7 +113,7 @@ export const AdminCategoriesTable = ({ data, setReloadUsers }) => {
                                                 color={"#F2A63B"}
                                             />
                                         </Link>
-                                        <button onClick={() => handleDeleteCategory()} style={{ border: 'none', backgroundColor: 'transparent' }}>
+                                        <button onClick={() => handleDelete(row.id)} style={{ border: 'none', backgroundColor: 'transparent' }}>
                                             <IconTrash
                                                 color={"#E72328"}
                                             />

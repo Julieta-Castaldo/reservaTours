@@ -16,8 +16,8 @@ export const PanelSection = ({ selectedTab = 'products' }) => {
     const { reloadProductsFlag } = useGlobalState()
     const [users, handleGetUsers] = useGetUsers()
     const [reloadUsers, setReloadUsers] = useState(false)
-    const [reloadCategories, setReloadCategories] = useState(false)
     const [reloadCities, setReloadCities] = useState(false)
+    const [reloadCategories, setReloadCategories] = useState(false)
     const [categories, handleGetCategories] = useGetCategories()
     const [cities, handleGetCities] = useGetCities()
 
@@ -36,10 +36,9 @@ export const PanelSection = ({ selectedTab = 'products' }) => {
     }, [reloadCities])
 
     useEffect(() => {
-        if(reloadCategories){
-            handleGetCategories(setReloadCategories)
-        }
+        if(reloadCategories) handleGetCategories(setReloadCategories)
     }, [reloadCategories])
+
 
     useEffect(() => {
         handleGetUsers()
