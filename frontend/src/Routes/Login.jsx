@@ -7,8 +7,10 @@ import { ButtonIcon } from "../Components/molecules/ButtonIcon/ButtonIcon";
 import { useGlobalState } from "../Context/Context";
 import Swal from 'sweetalert';
 import { validateEmail, validatePassword } from "../Helpers/UserFormValidations";
+import SignInModal from "../Components/molecules/Modal/SignInModal";
 
 const Login = () => {
+    const [openSignIn, setOpenSignIn] = useState(false)
     const { setAuth } = useGlobalState()
     const [user, setUser] = useState({
         email: "",
@@ -53,7 +55,7 @@ const Login = () => {
                 setUser(initialValues)
                 localStorage.setItem('token', jwtToken)
 
-                if(interestingTour) navigate(`/tour/${interestingTour}`)
+                if (interestingTour) navigate(`/tour/${interestingTour}`)
                 else navigate('/')
             })
             .catch(error => {
@@ -95,6 +97,7 @@ const Login = () => {
                 </div>
                 <p className="sectionTitle">Inicia sesión</p>
                 <p className="subtitle">¡Bienvenid@ de vuelta! Por favor, ingresa tus datos de inicio de sesión.</p>
+                <p style={{ fontSize: '14px', color: 'grey', marginTop: '8px' }}>Debes estar logueado para poder reservar. <br /> ¿No tenes una cuenta? <span style={{ color: 'blue', cursor: 'pointer' }} onClick={() => setOpenSignIn(true)}>Crear una</span> </p>
             </section>
             <section className="formSection">
                 <form className="loginForm">
@@ -144,6 +147,8 @@ const Login = () => {
                     </div>
                 </form>
             </section>
+            <SignInModal isOpen={openSignIn} onClose={() => setOpenSignIn(false)}></SignInModal>
+
         </div>
     )
 }
