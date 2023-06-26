@@ -14,7 +14,6 @@ const MakeReservation = () => {
         tourId: null,
         usuarioId: null,
         fechaInicio: null,
-        duracion: null,
         medioDePago: '',
         menu: '',
         alojamiento: '',
@@ -22,7 +21,7 @@ const MakeReservation = () => {
     })
     const [error, setError] = useState(false)
     const prefilledData = JSON.parse(localStorage.getItem('prefilledReservationData'))
-    const { usuarioId, duracion, fechaInicio, tourId, tourImage, precio } = prefilledData
+    const { usuarioId, fechaInicio, tourId, tourImage, precio } = prefilledData
     const [handlePostReserva] = usePostReserva()
 
     useEffect(() => {
@@ -32,7 +31,7 @@ const MakeReservation = () => {
     }, [])
 
     useEffect(() => {
-       setReservationData({...reservationData, tourId: Number(tourId), duracion: duracion, usuarioId: usuarioId, fechaInicio: fechaInicio[0]})
+       setReservationData({...reservationData, tourId: Number(tourId), usuarioId: usuarioId, fechaInicio: fechaInicio[0]})
     }, [prefilledData])
 
     const handleReserva = () => {
