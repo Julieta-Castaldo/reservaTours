@@ -2,6 +2,7 @@ package com.example.PI_C3_E6_BACK.service;
 
 import com.example.PI_C3_E6_BACK.configuration.MapperConfig;
 import com.example.PI_C3_E6_BACK.model.CategoriaDTO;
+import com.example.PI_C3_E6_BACK.model.FechaOcupadaDTO;
 import com.example.PI_C3_E6_BACK.model.ReservaDTO;
 import com.example.PI_C3_E6_BACK.persistence.entities.CategoriaEntity;
 import com.example.PI_C3_E6_BACK.persistence.entities.FechaOcupadaEntity;
@@ -59,7 +60,7 @@ public class ReservaService {
                 // Generar fechas ocupadas dentro del rango de reserva
                 LocalDate fechaActual = r.getFechaInicio();
                 while (!fechaActual.isAfter(fechaFinReserva)) {
-                    FechaOcupadaEntity fechaOcupada = new FechaOcupadaEntity(fechaActual, reserva.getTour());
+                    FechaOcupadaEntity fechaOcupada = new FechaOcupadaEntity(fechaActual, reserva.getTour(), reserva);
                     repoFechaOcupada.save(fechaOcupada);
 
                     fechaActual = fechaActual.plusDays(1); // Avanzar a la siguiente fecha
@@ -77,6 +78,7 @@ public class ReservaService {
         listReservasEntity = repoReserva.findReservaByUser(idUsuario);
         for (ReservaEntity r : listReservasEntity){
             ReservaDTO reservaDTO = modelMapper.getModelMapper().map(r, ReservaDTO.class);
+            reservaDTO.setFechaFinalizacion(r.getFechaInicioReserva().plusDays(r.getDuracion()-1));
             listReservasDTO.add(reservaDTO);
         }
         return listReservasDTO;
