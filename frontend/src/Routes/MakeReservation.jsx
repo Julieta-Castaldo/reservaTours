@@ -26,7 +26,7 @@ const MakeReservation = () => {
     const [error, setError] = useState(false)
     const [selectedDates, setSelectedDates] = useState([])
     const prefilledData = JSON.parse(localStorage.getItem('prefilledReservationData'))
-    const { usuarioId, fechaInicio, tourId, tourImage, precio, bussyDates, dates } = prefilledData
+    const { usuarioId, fechaInicio, tourId, tourImage, precio, bussyDates, dates, duracion } = prefilledData
     const [handlePostReserva] = usePostReserva()
 
     useEffect(() => {
@@ -37,8 +37,11 @@ const MakeReservation = () => {
 
     useEffect(() => {
         setReservationData({ ...reservationData, tourId: Number(tourId), usuarioId: usuarioId, fechaInicio: fechaInicio[0] })
-        setSelectedDates(dates)
     }, [prefilledData])
+
+    useEffect(() => {
+        setSelectedDates(dates)
+    }, [])
 
     const handleReserva = () => {
         if (reservationData.menu === '' || reservationData.alojamiento === '' || reservationData.medioDePago === '') {
@@ -250,12 +253,12 @@ const MakeReservation = () => {
                                         if (validDateFlag && selectedDates.length === 0) {
                                             validSelectedDates.push(value)
                                             validSelectedDates.push(new Date(endDate))
-                                        } else {
-                                            return ''
                                         }
                                     })
+                                    console.log(validSelectedDates)
                                     setSelectedDates(validSelectedDates)
                                     setReservationData({ ...reservationData, fechaInicio: DateFormater(validSelectedDates[0]) })
+
                                 }}
                                 style={{
                                     color: '#05848A',
@@ -267,7 +270,7 @@ const MakeReservation = () => {
                                     border: 'none',
                                 }}
                             />
-                            <p style={{ color: 'grey', fontSize: '12px'}}>*Estás a tiempo de modificar las fechas seleccionadas. Por favor, checkea que sean las correctas antes de continuar</p>
+                            <p style={{ color: 'grey', fontSize: '12px' }}>*Estás a tiempo de modificar las fechas seleccionadas. Por favor, checkea que sean las correctas antes de continuar</p>
                         </div>
                         {tourImage && <img src={tourImage?.url} />}
                     </article>

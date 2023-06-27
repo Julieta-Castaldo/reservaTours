@@ -72,6 +72,7 @@ const ProductDetail = () => {
         window.scrollTo(0, 0)
 
         if (auth && auth.id) {
+            console.log(duracion)
             setReservaValues({ ...reservaValues, usuarioId: auth.id, tourId: id.replace(':', ''), duracion: duracion, tourImage: listaImagenes && listaImagenes[0], precio: precio })
         }
     }, [auth, productData])
