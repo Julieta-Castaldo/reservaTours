@@ -33,12 +33,13 @@ const ProductDetail = () => {
     const [isOpenCarousel, setIsOpenCarousel] = useState(false)
     const { userLocation } = useGlobalState();
     const [tourDistance, setTourDistance] = useState(null)
-    const [selectedDates, setSelectedDates] = useState([])
     const [reservaValues, setReservaValues] = useState({
         tourId: null,
         usuarioId: null,
         fechaInicio: null,
-        duracion: null
+        duracion: null,
+        bussyDates: [],
+        dates: []
     })
     const { listaImagenes, nombre, descripcion, ciudad, caracteristicasSi, precio, duracion } = productData
     const navigate = useNavigate();
@@ -56,6 +57,10 @@ const ProductDetail = () => {
     }, [id])
 
     useEffect(() => {
+        setReservaValues({...reservaValues, bussyDates: bussyDates})
+    }, [bussyDates])
+
+    useEffect(() => {
         if (ciudad && ciudad.latitud && ciudad.longitud && userLocation) {
             setTourDistance(calculateDistance(ciudad.latitud, ciudad.longitud, userLocation[0], userLocation[1]))
         } else {
@@ -67,6 +72,7 @@ const ProductDetail = () => {
         window.scrollTo(0, 0)
 
         if (auth && auth.id) {
+            console.log(duracion)
             setReservaValues({ ...reservaValues, usuarioId: auth.id, tourId: id.replace(':', ''), duracion: duracion, tourImage: listaImagenes && listaImagenes[0], precio: precio })
         }
     }, [auth, productData])
@@ -137,17 +143,17 @@ const ProductDetail = () => {
                                 <p style={{ color: '#F2A63B', fontSize: '32px' }}>${precio}</p>
                             </div>
                             <p className='categoriesText'>Fechas disponibles</p>
-                            <div className='inputBox'>
+                            {bussyDates && <div className='inputBox'>
                                 <DatePicker
                                     multiple
-                                    value={selectedDates}
+                                    value={reservaValues.dates}
                                     numberOfMonths={2}
                                     minDate={new Date()}
                                     mapDays={({ date }) => {
                                         let props = {}
                                         const newDate = new Date(date)
-                                        if (selectedDates.length !== 0) {
-                                            if (newDate > selectedDates[0] && newDate < selectedDates[1]) {
+                                        if (reservaValues.dates.length !== 0) {
+                                            if (newDate > reservaValues.dates[0] && newDate < reservaValues.dates[1]) {
                                                 props.style = { backgroundColor: "#0074D9", color: 'white' }
                                             }
                                         }
@@ -163,7 +169,7 @@ const ProductDetail = () => {
                                         values.forEach(value => {
                                             let dateValue = new Date(value)
                                             let endDate = new Date(value)
-                                            endDate.setDate(endDate.getDate() + duracion)
+                                            endDate.setDate(endDate.getDate() + (duracion - 1))
                                             let validDateFlag = true;
                                             for (let index = 0; index <= duracion; index++) {
                                                 let dateToCheck = dateValue
@@ -175,15 +181,15 @@ const ProductDetail = () => {
                                                 }
                                             }
 
-                                            if (validDateFlag  && selectedDates.length === 0) {
+                                            if (validDateFlag  && reservaValues.dates.length === 0) {
                                                 validSelectedDates.push(value)
-                                                validSelectedDates.push(new Date(endDate))
+                                                let end = new Date(endDate)
+                                                validSelectedDates.push(end.getTime())
                                             } else {
                                                 return ''
                                             }
                                         })
-                                        setSelectedDates(validSelectedDates)
-                                        setReservaValues({ ...reservaValues, fechaInicio: [DateFormater(validSelectedDates[0]), DateFormater(validSelectedDates[1])] })
+                                        setReservaValues({ ...reservaValues, fechaInicio: [DateFormater(validSelectedDates[0]), DateFormater(validSelectedDates[1])], dates: validSelectedDates })
                                     }}
                                     style={{
                                         color: '#05848A',
@@ -196,7 +202,8 @@ const ProductDetail = () => {
                                     }}
                                 />
                                 <IconCalendar1 color='#58C1CE' size='24' />
-                            </div>
+                            </div>}
+                            {!bussyDates && <p style={{ fontSize: 10, color: 'grey' }}>Cargando fechas disponibles...</p>}
 
                             <div style={{ margin: '16px 0px' }}>
                                 <p style={{ color: '#717B8A', fontWeight: 700 }}>Duración del tour:</p>

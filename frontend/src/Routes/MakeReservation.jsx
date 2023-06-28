@@ -5,6 +5,10 @@ import { Divider, Checkbox, TextField, FormControl, Select, InputLabel, MenuItem
 import { ButtonIcon } from "../Components/molecules/ButtonIcon/ButtonIcon.jsx";
 import { IconArrowRight2 } from "../Components/svgs/IconArrowRight2.jsx";
 import './MakeReservation.css'
+import DatePicker from "react-multi-date-picker"
+//Helper
+import { DateFormater } from "../Helpers/DateFormater.jsx";
+//Hooks
 import { usePostReserva } from "../Hooks/Reservas/usePostReserva.jsx";
 
 const MakeReservation = () => {
@@ -20,8 +24,9 @@ const MakeReservation = () => {
         informacionDeSalud: null
     })
     const [error, setError] = useState(false)
+    const [selectedDates, setSelectedDates] = useState([])
     const prefilledData = JSON.parse(localStorage.getItem('prefilledReservationData'))
-    const { usuarioId, fechaInicio, tourId, tourImage, precio } = prefilledData
+    const { usuarioId, fechaInicio, tourId, tourImage, precio, bussyDates, dates, duracion } = prefilledData
     const [handlePostReserva] = usePostReserva()
 
     useEffect(() => {
@@ -31,8 +36,12 @@ const MakeReservation = () => {
     }, [])
 
     useEffect(() => {
-       setReservationData({...reservationData, tourId: Number(tourId), usuarioId: usuarioId, fechaInicio: fechaInicio[0]})
+        setReservationData({ ...reservationData, tourId: Number(tourId), usuarioId: usuarioId, fechaInicio: fechaInicio[0] })
     }, [prefilledData])
+
+    useEffect(() => {
+        setSelectedDates(dates)
+    }, [])
 
     const handleReserva = () => {
         if (reservationData.menu === '' || reservationData.alojamiento === '' || reservationData.medioDePago === '') {
@@ -41,7 +50,7 @@ const MakeReservation = () => {
         }
 
         handlePostReserva(reservationData)
-        
+
     }
 
     useEffect(() => {
@@ -203,8 +212,65 @@ const MakeReservation = () => {
                             <p>USD {precio}</p>
                         </div>
                         <div>
-                            <p>Fecha inicio: {fechaInicio && fechaInicio[0]}</p>
-                            <p>Fecha finalización: {fechaInicio && fechaInicio[1]}</p>
+                            <p>Fecha del Tour</p>
+                            <DatePicker
+                                multiple
+                                value={selectedDates}
+                                numberOfMonths={2}
+                                minDate={new Date()}
+                                mapDays={({ date }) => {
+                                    let props = {}
+                                    const newDate = new Date(date)
+                                    if (selectedDates.length !== 0) {
+                                        if (newDate > selectedDates[0] && newDate < selectedDates[1]) {
+                                            props.style = { backgroundColor: "#0074D9", color: 'white' }
+                                        }
+                                    }
+
+                                    if (bussyDates.includes(DateFormater(newDate))) {
+                                        props.style = { color: 'grey' }
+                                    }
+
+                                    return props
+                                }}
+                                onChange={(values) => {
+                                    let validSelectedDates = []
+                                    values.forEach(value => {
+                                        let dateValue = new Date(value)
+                                        let endDate = new Date(value)
+                                        endDate.setDate(endDate.getDate() + (duracion - 1))
+                                        let validDateFlag = true;
+                                        for (let index = 0; index <= duracion; index++) {
+                                            let dateToCheck = dateValue
+                                            dateToCheck.setDate(dateToCheck.getDate() + index)
+
+                                            if (bussyDates.includes(DateFormater(dateToCheck))) {
+                                                validDateFlag = false;
+                                                return ''
+                                            }
+                                        }
+
+                                        if (validDateFlag && selectedDates.length === 0) {
+                                            validSelectedDates.push(value)
+                                            validSelectedDates.push(new Date(endDate))
+                                        }
+                                    })
+                                    console.log(validSelectedDates)
+                                    setSelectedDates(validSelectedDates)
+                                    setReservationData({ ...reservationData, fechaInicio: DateFormater(validSelectedDates[0]) })
+
+                                }}
+                                style={{
+                                    color: '#05848A',
+                                    fontFamily: 'Roboto',
+                                    fontSize: '16px',
+                                    alignItems: 'flexStart',
+                                    width: '100%',
+                                    backgroundColor: 'transparent',
+                                    border: 'none',
+                                }}
+                            />
+                            <p style={{ color: 'grey', fontSize: '12px' }}>*Estás a tiempo de modificar las fechas seleccionadas. Por favor, checkea que sean las correctas antes de continuar</p>
                         </div>
                         {tourImage && <img src={tourImage?.url} />}
                     </article>

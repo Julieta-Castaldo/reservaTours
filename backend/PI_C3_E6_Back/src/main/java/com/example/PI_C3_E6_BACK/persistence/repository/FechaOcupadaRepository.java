@@ -20,6 +20,9 @@ public interface FechaOcupadaRepository extends JpaRepository<FechaOcupadaEntity
     @Query("SELECT f FROM FechaOcupadaEntity f WHERE f.tour.id = :idTour")
     List<FechaOcupadaEntity> findFechasOcupadasByTourId(@Param("idTour") int idTour);
 
+    @Query("SELECT f FROM FechaOcupadaEntity f WHERE f.reserva.id = :idReserva")
+    List<FechaOcupadaEntity> findFechasOcupadasByReservaId(@Param("idReserva") int idReserva);
+
     //Con este, JPA Repository me verifica si existe una fecha ocupada para un tour específico
     // devuelve true o false
     boolean existsByTourIdAndFechaOcupada(int tourId, LocalDate fechaOcupada);

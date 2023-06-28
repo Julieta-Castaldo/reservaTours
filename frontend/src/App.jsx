@@ -12,6 +12,7 @@ import CategorySection from './Routes/CategorySection';
 import CreateCategory from './Routes/CreateCategory';
 import UserProfile from './Routes/UserProfile';
 import MakeReservation from './Routes/MakeReservation';
+import ConfirmationPage from './Routes/ConfirmationPage';
 import './App.css'
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
                 <Route path='/newCategory' element={<CreateCategory/>} />
                 <Route path='/myProfile' element={<UserProfile/>} />
                 <Route path='/reservation' element={<MakeReservation/>} />
+                <Route path='/confirmationReserva' element={<ConfirmationPage/>}/>
             </Routes>
             <Footer/>
         </div>

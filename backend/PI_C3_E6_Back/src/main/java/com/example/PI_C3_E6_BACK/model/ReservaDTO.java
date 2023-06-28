@@ -21,6 +21,8 @@ public class ReservaDTO implements Serializable {
 
     private String informacionDeSalud;
 
+    private LocalDate fechaFinalizacion;
+
     public ReservaDTO() {
     }
 
@@ -104,5 +106,13 @@ public class ReservaDTO implements Serializable {
 
     public void setInformacionDeSalud(String informacionDeSalud) {
         this.informacionDeSalud = informacionDeSalud;
+    }
+
+    public LocalDate getFechaFinalizacion() {
+        return fechaFinalizacion;
+    }
+
+    public void setFechaFinalizacion(LocalDate fechaFinalizacion) {
+        this.fechaFinalizacion = fechaFinalizacion;
     }
 }

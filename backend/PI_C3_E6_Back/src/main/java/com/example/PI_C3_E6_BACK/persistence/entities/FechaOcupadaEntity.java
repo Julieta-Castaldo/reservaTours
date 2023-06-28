@@ -19,11 +19,16 @@ public class FechaOcupadaEntity {
     @JoinColumn(name = "Tours_id", referencedColumnName = "id", nullable = false)
     private TourEntity tour;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "Reservas_id", referencedColumnName = "id", nullable = false)
+    private ReservaEntity reserva;
+
     //constructors
 
-    public FechaOcupadaEntity(LocalDate fechaOcupada, TourEntity tour) {
+    public FechaOcupadaEntity(LocalDate fechaOcupada, TourEntity tour, ReservaEntity reserva) {
         this.fechaOcupada = fechaOcupada;
         this.tour = tour;
+        this.reserva = reserva;
     }
 
     public FechaOcupadaEntity() {
@@ -54,5 +59,13 @@ public class FechaOcupadaEntity {
 
     public void setTour(TourEntity tour) {
         this.tour = tour;
+    }
+
+    public ReservaEntity getReserva() {
+        return reserva;
+    }
+
+    public void setReserva(ReservaEntity reserva) {
+        this.reserva = reserva;
     }
 }
