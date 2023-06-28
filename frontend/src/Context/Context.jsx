@@ -15,6 +15,7 @@ const Context = ({ children }) => {
     let token = localStorage.getItem('token')
 
     const fetchProducts = async () => {
+        console.log('estoy')
         let res = await fetch(urlProducts)
         let data = await res.json()
         setProducts(data)
