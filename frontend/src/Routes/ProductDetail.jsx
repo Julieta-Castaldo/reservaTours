@@ -203,7 +203,7 @@ const ProductDetail = () => {
                                 />
                                 <IconCalendar1 color='#58C1CE' size='24' />
                             </div>}
-                            {!bussyDates && <p style={{ fontSize: 10, color: 'grey' }}>Cargando fechas...</p>}
+                            {!bussyDates && <p style={{ fontSize: 10, color: 'grey' }}>Cargando fechas disponibles...</p>}
 
                             <div style={{ margin: '16px 0px' }}>
                                 <p style={{ color: '#717B8A', fontWeight: 700 }}>Duración del tour:</p>

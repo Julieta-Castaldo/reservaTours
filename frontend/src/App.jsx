@@ -30,7 +30,7 @@ function App() {
                 <Route path='/newCategory' element={<CreateCategory/>} />
                 <Route path='/myProfile' element={<UserProfile/>} />
                 <Route path='/reservation' element={<MakeReservation/>} />
-                <Route path='/confimationReserva' element={<ConfirmationPage/>}/>
+                <Route path='/confirmationReserva' element={<ConfirmationPage/>}/>
             </Routes>
             <Footer/>
         </div>
