@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { useGlobalState } from "../Context/Context.jsx";
 import { useNavigate } from "react-router-dom";
 import { Stack, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { UserReservationTable } from "../Components/organisms/UsersTable/ReservationsTable.jsx";
 import { validateEmail, validateTextFields } from "../Helpers/UserFormValidations.jsx";
 //Hooks
 import { usePutUser } from "../Hooks/Users/usePutUser.jsx";
+import { useGetUserReservations } from "../Hooks/Reservas/useGetUserReservations.jsx";
 
 const UserProfile = () => {
     const { auth } = useGlobalState();
@@ -13,6 +15,7 @@ const UserProfile = () => {
     const [error, setError] = useState(false)
     const { id, username, lastname, email } = auth;
     const [handlePutUser] = usePutUser()
+    const [reservations, handleGetReservations] = useGetUserReservations();
     const [userValues, setUserValues] = useState({
         idUsuario: null,
         username: '',
@@ -49,7 +52,11 @@ const UserProfile = () => {
     useEffect(() => {
         if (!auth) navigate('/')
 
-        if (auth) setUserValues({ username: username, lastname: lastname, email: email, idUsuario: id })
+        if (auth){
+            setUserValues({ username: username, lastname: lastname, email: email, idUsuario: id })
+            handleGetReservations(id)
+        } 
+            
     }, [])
 
     return (
@@ -99,6 +106,9 @@ const UserProfile = () => {
                         <button type="submit" onClick={validateForm} style={{ padding: '4px 8px' }}>Actualizar perfil</button>
                     </form>
 
+                </div>}
+                {selectedTab === 'reservas' && <div>
+                    <UserReservationTable data={reservations} />
                 </div>}
             </div>
         </div>
