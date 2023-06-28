@@ -37,7 +37,8 @@ export const AdminTabletTHead = styled.thead`
   width: max-content;
   height: max-content;
 
-  background: #EBDECA;
+  //background: #EBDECA;
+  background: ${({background}) => background};
   border-radius: 1rem 1rem 0 0;
 
   position: sticky;
@@ -77,7 +78,7 @@ export const AdminTableTh = styled.th`
   align-items: center;
   justify-content: ${({justify}) => justify ? justify : 'flex-start;'};
 
-  color: #F2A63B;
+  color: ${({color}) => color ? color : '#F2A63B'};
 `;
 
 export const AdminTableTBody = styled.tbody`

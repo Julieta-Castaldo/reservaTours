@@ -29,7 +29,7 @@ export const AdminTable = ({data}) => {
         <AdminTableWrapper>
             <AdminTableSubWrapper>
                 <AdminTableTag>
-                    <AdminTabletTHead>
+                    <AdminTabletTHead bgColor={"#EBDECA"}>
                         <AdminTableTr
                             background={'#EBDECA'}
                         >
