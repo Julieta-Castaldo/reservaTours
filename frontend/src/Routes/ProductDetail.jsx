@@ -143,7 +143,7 @@ const ProductDetail = () => {
                                 <p style={{ color: '#F2A63B', fontSize: '32px' }}>${precio}</p>
                             </div>
                             <p className='categoriesText'>Fechas disponibles</p>
-                            <div className='inputBox'>
+                            {bussyDates && <div className='inputBox'>
                                 <DatePicker
                                     multiple
                                     value={reservaValues.dates}
@@ -202,7 +202,8 @@ const ProductDetail = () => {
                                     }}
                                 />
                                 <IconCalendar1 color='#58C1CE' size='24' />
-                            </div>
+                            </div>}
+                            {!bussyDates && <p style={{ fontSize: 10, color: 'grey' }}>Cargando fechas...</p>}
 
                             <div style={{ margin: '16px 0px' }}>
                                 <p style={{ color: '#717B8A', fontWeight: 700 }}>Duración del tour:</p>
