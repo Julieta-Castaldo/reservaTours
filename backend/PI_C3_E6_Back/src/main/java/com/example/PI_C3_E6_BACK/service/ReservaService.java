@@ -4,6 +4,7 @@ import com.example.PI_C3_E6_BACK.configuration.MapperConfig;
 import com.example.PI_C3_E6_BACK.model.CategoriaDTO;
 import com.example.PI_C3_E6_BACK.model.FechaOcupadaDTO;
 import com.example.PI_C3_E6_BACK.model.ReservaDTO;
+import com.example.PI_C3_E6_BACK.model.ReservaResponseDTO;
 import com.example.PI_C3_E6_BACK.persistence.entities.CategoriaEntity;
 import com.example.PI_C3_E6_BACK.persistence.entities.FechaOcupadaEntity;
 import com.example.PI_C3_E6_BACK.persistence.entities.ReservaEntity;
@@ -72,14 +73,16 @@ public class ReservaService {
             }
     }
 
-    public List<ReservaDTO> buscarReservaPorUsuario(int idUsuario){
+    public List<ReservaResponseDTO> buscarReservaPorUsuario(int idUsuario){
         List<ReservaEntity> listReservasEntity = new ArrayList<>();
-        List<ReservaDTO> listReservasDTO = new ArrayList<>();
+        List<ReservaResponseDTO> listReservasDTO = new ArrayList<>();
         listReservasEntity = repoReserva.findReservaByUser(idUsuario);
         for (ReservaEntity r : listReservasEntity){
             ReservaDTO reservaDTO = modelMapper.getModelMapper().map(r, ReservaDTO.class);
             reservaDTO.setFechaFinalizacion(r.getFechaInicioReserva().plusDays(r.getDuracion()-1));
-            listReservasDTO.add(reservaDTO);
+            ReservaResponseDTO reservaResponseDTO = new ReservaResponseDTO(repoTour.findTourById(
+                    reservaDTO.getTourId()).getNombre(),reservaDTO);
+            listReservasDTO.add(reservaResponseDTO);
         }
         return listReservasDTO;
     }

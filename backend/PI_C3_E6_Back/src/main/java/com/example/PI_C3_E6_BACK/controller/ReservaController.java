@@ -3,6 +3,7 @@ package com.example.PI_C3_E6_BACK.controller;
 import com.example.PI_C3_E6_BACK.model.CategoriaDTO;
 import com.example.PI_C3_E6_BACK.model.RequestTourDTO;
 import com.example.PI_C3_E6_BACK.model.ReservaDTO;
+import com.example.PI_C3_E6_BACK.model.ReservaResponseDTO;
 import com.example.PI_C3_E6_BACK.service.ReservaService;
 import com.example.PI_C3_E6_BACK.service.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,8 @@ public class ReservaController implements IController<ReservaDTO> {
     }
     @GetMapping("/porUsuario/{idUsuario}")
     @ResponseBody
-    public ResponseEntity<List<ReservaDTO>> buscarReservasPorUsuario (@PathVariable int idUsuario){
-        List<ReservaDTO> listaReservaDTO = new ArrayList<>();
+    public ResponseEntity<List<ReservaResponseDTO>> buscarReservasPorUsuario (@PathVariable int idUsuario){
+        List<ReservaResponseDTO> listaReservaDTO = new ArrayList<>();
         try {
             listaReservaDTO = reservaService.buscarReservaPorUsuario(idUsuario);
             return ResponseEntity.ok(listaReservaDTO);
