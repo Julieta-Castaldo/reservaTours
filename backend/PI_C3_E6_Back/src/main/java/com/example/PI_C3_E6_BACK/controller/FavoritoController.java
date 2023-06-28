@@ -20,7 +20,7 @@ public class FavoritoController {
 
     @PostMapping("/actualizar")
     public ResponseEntity<String> createUpdateFavoritos (@RequestBody FavoritoDTO fav){
-        if (fav.getListaFavoritos() != null && fav.getIdUsuario() > 0){
+        if (fav.getIdUsuario() > 0){
             return favoritoService.createUpdateFavoritos(fav);
         }else{
             return ResponseEntity.badRequest().body("Alguno de los datos proporcionados es incorrecto");

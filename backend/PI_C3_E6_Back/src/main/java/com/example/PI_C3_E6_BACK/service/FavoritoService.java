@@ -56,11 +56,12 @@ public class FavoritoService {
                 repoFavoritos.delete(favoritoAnterior);
             }
         }
-        for (Integer idTour : listaFavsNueva){
-            FavoritoEntity favEntity = new FavoritoEntity(usuario,repoTour.findTourById(idTour));
-            repoFavoritos.save(favEntity);
+        if (!listaFavsNueva.isEmpty()) {
+            for (Integer idTour : listaFavsNueva) {
+                FavoritoEntity favEntity = new FavoritoEntity(usuario, repoTour.findTourById(idTour));
+                repoFavoritos.save(favEntity);
+            }
         }
         return ResponseEntity.ok("Se guardaron tus favoritos!");
-
     }
 }
