@@ -178,6 +178,9 @@ const ProductDetail = () => {
                                         return props
                                     }}
                                     onChange={(values) => {
+                                        if (!values) {
+                                            setReservaValues({ ...reservaValues, fechaInicio: null, dates: [] })
+                                        }
                                         let validSelectedDates = []
                                         values.forEach(value => {
                                             let dateValue = new Date(value)
@@ -217,6 +220,7 @@ const ProductDetail = () => {
                                 <IconCalendar1 color='#58C1CE' size='24' />
                             </div>}
                             {!bussyDates && <p style={{ fontSize: 10, color: 'grey' }}>Cargando fechas disponibles...</p>}
+                            {!reservaValues?.fechaInicio && bussyDates && <p style={{ fontSize: 12, color: 'grey', marginTop: 8 }}>Seleccioná la fecha deseada para continuar con la reserva</p>}
 
                             <div style={{ margin: '16px 0px' }}>
                                 <p style={{ color: '#717B8A', fontWeight: 700 }}>Duración del tour:</p>
