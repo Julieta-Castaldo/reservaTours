@@ -36,7 +36,7 @@ export const UserReservationTable = ({ data }) => {
                             >
                                 <AdminTableTh
                                     color={'#fff'}
-                                    width="14rem"
+                                    width="16rem"
                                 >
                                     Tour
                                 </AdminTableTh>
@@ -85,48 +85,48 @@ export const UserReservationTable = ({ data }) => {
                                     return (
                                         <AdminTableTr key={row.id}>
                                             <AdminTableTd
-                                                justify='center'
-                                                width="14rem"
+                                                //justify='center'
+                                                width="16rem"
                                             >
-                                                Nombre del tour
+                                                {row.nombreTour}
                                             </AdminTableTd>
                                             <AdminTableTd
                                                 justify='center'
                                                 width="9rem"
                                             >
-                                                {row.duracion} días
+                                                {row.reservaDTO.duracion} días
                                             </AdminTableTd>
                                             <AdminTableTd
                                                 width="10rem"
                                                 justify='center'
 
                                             >
-                                                {row.menu}
+                                                {row.reservaDTO.menu}
                                             </AdminTableTd>
                                             <AdminTableTd
                                                 width="10rem"
                                                 justify='center'
 
                                             >
-                                                {row.alojamiento}
+                                                {row.reservaDTO.alojamiento}
                                             </AdminTableTd>
                                             <AdminTableTd
                                                 width="12.4rem"
                                                 justify='center'
                                             >
-                                                {row.fechaInicio}
+                                                {row.reservaDTO.fechaInicio}
                                             </AdminTableTd>
                                             <AdminTableTd
                                                 width="12.4rem"
                                                 justify='center'
                                             >
-                                                {row.fechaFinalizacion}
+                                                {row.reservaDTO.fechaFinalizacion}
                                             </AdminTableTd>
                                             <AdminTableTd
                                                 width="12.4rem"
                                                 justify='center'
                                             >
-                                                {row.medioDePago}
+                                                {row.reservaDTO.medioDePago}
                                             </AdminTableTd>
                                         </AdminTableTr>
                                     )
