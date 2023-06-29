@@ -29,7 +29,7 @@ export const AdminTable = ({data}) => {
         <AdminTableWrapper>
             <AdminTableSubWrapper>
                 <AdminTableTag>
-                    <AdminTabletTHead>
+                    <AdminTabletTHead bgColor={"#EBDECA"}>
                         <AdminTableTr
                             background={'#EBDECA'}
                         >
@@ -127,9 +127,10 @@ export const AdminTable = ({data}) => {
                                                     label="Categoría"
                                                     sx={{fontSize: '14px'}}
                                                 >
-                                                    {categories && categories.map(category => {
+                                                    {categories && categories.map((category,idx) => {
                                                         return (
                                                             <MenuItem
+                                                                key={idx}
                                                                 disabled={row.categoria && row.categoria.id === category.id}
                                                                 value={category.id}>{category.nombreCategoria}</MenuItem>
                                                         )

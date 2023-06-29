@@ -44,6 +44,7 @@ const ProductDetail = () => {
     const { listaImagenes, nombre, descripcion, ciudad, caracteristicasSi, precio, duracion } = productData
     const navigate = useNavigate();
     const [bussyDates, handleGetBussyDates] = useGetTourBussyDates()
+    const { searchedDate, setSearchedDate } = useGlobalState()
 
     useEffect(() => {
         fetch(url)
@@ -57,7 +58,7 @@ const ProductDetail = () => {
     }, [id])
 
     useEffect(() => {
-        setReservaValues({...reservaValues, bussyDates: bussyDates})
+        setReservaValues({ ...reservaValues, bussyDates: bussyDates })
     }, [bussyDates])
 
     useEffect(() => {
@@ -72,10 +73,21 @@ const ProductDetail = () => {
         window.scrollTo(0, 0)
 
         if (auth && auth.id) {
-            console.log(duracion)
             setReservaValues({ ...reservaValues, usuarioId: auth.id, tourId: id.replace(':', ''), duracion: duracion, tourImage: listaImagenes && listaImagenes[0], precio: precio })
         }
-    }, [auth, productData])
+
+        if (searchedDate) {
+            let validSelectedDates = []
+            let dateValue = new Date(searchedDate)
+            let endDate = new Date(searchedDate)
+            endDate.setDate(endDate.getDate() + (duracion - 1))
+            validSelectedDates.push(dateValue)
+            let end = new Date(endDate)
+            validSelectedDates.push(end.getTime())
+
+            setReservaValues({ ...reservaValues, fechaInicio: [DateFormater(validSelectedDates[0]), DateFormater(validSelectedDates[1])], dates: validSelectedDates })
+        }
+    }, [auth, productData, searchedDate])
 
     const handleReserva = () => {
         if (!auth) {
@@ -91,6 +103,7 @@ const ProductDetail = () => {
         } else {
             localStorage.setItem('prefilledReservationData', JSON.stringify(reservaValues))
             navigate('/reservation')
+            setSearchedDate(null)
         }
     }
 
@@ -143,7 +156,7 @@ const ProductDetail = () => {
                                 <p style={{ color: '#F2A63B', fontSize: '32px' }}>${precio}</p>
                             </div>
                             <p className='categoriesText'>Fechas disponibles</p>
-                            <div className='inputBox'>
+                            {bussyDates && <div className='inputBox'>
                                 <DatePicker
                                     multiple
                                     value={reservaValues.dates}
@@ -181,7 +194,7 @@ const ProductDetail = () => {
                                                 }
                                             }
 
-                                            if (validDateFlag  && reservaValues.dates.length === 0) {
+                                            if (validDateFlag && reservaValues.dates.length === 0) {
                                                 validSelectedDates.push(value)
                                                 let end = new Date(endDate)
                                                 validSelectedDates.push(end.getTime())
@@ -202,7 +215,8 @@ const ProductDetail = () => {
                                     }}
                                 />
                                 <IconCalendar1 color='#58C1CE' size='24' />
-                            </div>
+                            </div>}
+                            {!bussyDates && <p style={{ fontSize: 10, color: 'grey' }}>Cargando fechas disponibles...</p>}
 
                             <div style={{ margin: '16px 0px' }}>
                                 <p style={{ color: '#717B8A', fontWeight: 700 }}>Duración del tour:</p>

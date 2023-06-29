@@ -5,19 +5,17 @@ import {
 } from "./MainSection.styled.js";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import { Dayjs } from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import SearchIcon from '@mui/icons-material/Search';
-//Hooks
-import { useGetCities } from '../../../Hooks/Cities/useGetCities.jsx'
-import { useGetCategories } from "../../../Hooks/Categories/useGetCategories.jsx";
 import { useEffect, useState } from "react";
 import locationPng from './Icons/IconLocation.svg';
 import categoryPng from './Icons/IconCategory.svg';
-
+//Hooks
+import { useGetCities } from '../../../Hooks/Cities/useGetCities.jsx'
+import { useGetCategories } from "../../../Hooks/Categories/useGetCategories.jsx";
+import { useGlobalState } from "../../../Context/Context.jsx";
 
 const divStyle = {
     display: 'flex',
@@ -33,9 +31,11 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
     const [inputValueCity, setInputValueCity] = useState('')
     const [inputValueCategoy, setInputValueCategory] = useState('')
     const [filtersApplied, setFiltersApplied] = useState({
-        type: '',
-        value: ''
+        ciudad: '',
+        categoria: '',
+        fecha: null
     })
+    const { setSearchedDate } = useGlobalState()
     useEffect(() => {
         handleGetCities()
         handleGetCategories()
@@ -47,7 +47,7 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
         >
             <MainSectionSearchBar>
                 <MainSectionSearchWrapper
-                    // style={{ display: 'flex', justifyContent: 'space-evenly', width: '100%' }}
+                // style={{ display: 'flex', justifyContent: 'space-evenly', width: '100%' }}
                 >
                     <div>
                         <div style={divStyle}>
@@ -79,11 +79,8 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
                             }} />}
                             onChange={(e, newValue) => {
                                 setSelectedCity(newValue ? newValue : '')
-                                if (newValue) setFiltersApplied({ type: 'ciudad', value: newValue.id })
-                                else setFiltersApplied({ type: '', value: '' })
-                                setSelectedCategory('')
-                                setSelectedDate('')
-                                setInputValueCategory('')
+                                if (newValue) setFiltersApplied({ ...filtersApplied, ciudad: newValue.id })
+                                else setFiltersApplied({ ...filtersApplied, ciudad: '' })
                             }}
                         />
                     </div>
@@ -115,11 +112,13 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
 
                             }} />}
                             onChange={(e, newValue) => {
-                                setSelectedCity('')
-                                setFiltersApplied({ type: 'categoria', value: newValue.id })
-                                setSelectedCategory(newValue ? newValue : '')
-                                setSelectedDate('')
-                                setInputValueCity('')
+                                if (newValue) {
+                                    setFiltersApplied({ ...filtersApplied, categoria: newValue.id })
+                                    setSelectedCategory(newValue)
+                                } else {
+                                    setFiltersApplied({ ...filtersApplied, categoria: '' })
+                                    setSelectedCategory('')
+                                }
                             }}
                         />
                     </div>
@@ -127,23 +126,22 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
 
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
+                                //minDate={new Date()}
                                 sx={{ width: 200, fontSize: '20px' }}
                                 value={selectedDate}
                                 onChange={(newValue) => {
                                     if (newValue === 'Invalid Date') {
-                                        setFiltersApplied({ type: 'fecha', value: null })
+                                        setFiltersApplied({ ...filtersApplied, fecha: null })
+                                        setSearchedDate(null)
                                     } else {
                                         const date = new Date(newValue);
                                         const year = date.getFullYear();
                                         const month = String(date.getMonth() + 1).padStart(2, '0');
                                         const day = String(date.getDate()).padStart(2, '0');
                                         const formattedDate = `${year}-${month}-${day}`
-                                        setFiltersApplied({ type: 'fecha', value: '2023-11-11' })
+                                        setSearchedDate(newValue)
+                                        setFiltersApplied({ ...filtersApplied, fecha: formattedDate })
                                     }
-                                    setSelectedCategory('')
-                                    setSelectedCity()
-                                    setInputValueCategory('')
-                                    setInputValueCity('')
                                 }}
                             />
                         </LocalizationProvider>
