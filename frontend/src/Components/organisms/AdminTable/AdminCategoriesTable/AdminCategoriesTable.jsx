@@ -89,7 +89,6 @@ export const AdminCategoriesTable = ({data, setReloadCategories}) => {
                     <AdminTableTBody>
                         {
                             data && data.length !== 0 && data.map((row) => {
-                                console.log(row)
                                 return (
                                     <AdminTableTr key={row.id}>
                                         <AdminTableTd
