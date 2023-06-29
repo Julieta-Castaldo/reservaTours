@@ -18,10 +18,14 @@ const Home = () => {
     const url = `http://localhost:8080/Tour/todosAleatorio`;
     const { reloadProductsFlag, setReloadProductsFlag } = useGlobalState()
     useEffect(() => {
+        setFiltersAppliedFlag(false)
+        setReloadProductsFlag(true)
         fetch(url)
             .then(res => res.json())
-            .then(data => setProducts(data))
-
+            .then(data => {
+                setReloadProductsFlag(false)
+                setProducts(data)
+            })
     }, [url])
 
     useEffect(() => {
@@ -30,10 +34,6 @@ const Home = () => {
         }
     }, [reloadProductsFlag, filtersApplied, filtersAppliedFlag])
 
-
-    useEffect(() => {
-        console.log(filtersAppliedFlag)
-    }, [filtersAppliedFlag])
     return (
         <main>
             <MainSection products={products} setFilters={setFiltersApplied} setFiltersAppliedFlag={setFiltersAppliedFlag} />
