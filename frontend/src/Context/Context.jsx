@@ -12,7 +12,7 @@ const Context = ({ children }) => {
     const urlProducts = `http://localhost:8080/Tour/todos`;
     const [userLocation, setUserLocation] = useState(false)
     const [searchedDate, setSearchedDate] = useState(null)
-
+    const [loadingPlaneFlag, setLoadingPlaneFlag] = useState(false)
     let token = localStorage.getItem('token')
 
     const fetchProducts = async () => {
@@ -58,7 +58,7 @@ const Context = ({ children }) => {
     }, [])
 
     return (
-        <GlobalState.Provider value={{ products, setProducts, token, auth, setAuth, setReloadProductsFlag, reloadProductsFlag, categories, setReloadCategories, userLocation, searchedDate, setSearchedDate }}>
+        <GlobalState.Provider value={{ products, setProducts, token, auth, setAuth, setReloadProductsFlag, reloadProductsFlag, categories, setReloadCategories, userLocation, searchedDate, setSearchedDate, loadingPlaneFlag, setLoadingPlaneFlag }}>
             {children}
         </GlobalState.Provider>
     )

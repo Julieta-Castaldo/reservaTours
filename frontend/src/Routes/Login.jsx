@@ -8,10 +8,12 @@ import { useGlobalState } from "../Context/Context";
 import Swal from 'sweetalert';
 import { validateEmail, validatePassword } from "../Helpers/UserFormValidations";
 import SignInModal from "../Components/molecules/Modal/SignInModal";
+import PlaneAnimation from "../Util/images/PlaneAnimation";
 
 const Login = () => {
     const [openSignIn, setOpenSignIn] = useState(false)
     const { setAuth } = useGlobalState()
+    const { loadingPlaneFlag, setLoadingPlaneFlag } = useGlobalState()
     const [user, setUser] = useState({
         email: "",
         password: ""
@@ -33,6 +35,7 @@ const Login = () => {
     };
 
     const postData = () => {
+        setLoadingPlaneFlag(true)
         fetch('http://localhost:8080/api/login', {
             method: 'POST',
             body: JSON.stringify(user),
@@ -42,6 +45,7 @@ const Login = () => {
         })
             .then(response => response.json())
             .then(data => {
+                setLoadingPlaneFlag(false)
                 Swal({
                     position: 'top-end',
                     icon: 'success',
@@ -100,7 +104,7 @@ const Login = () => {
                 <p style={{ fontSize: '14px', color: 'grey', marginTop: '8px' }}>Debes estar logueado para poder reservar. <br /> ¿No tenes una cuenta? <span style={{ color: 'blue', cursor: 'pointer' }} onClick={() => setOpenSignIn(true)}>Crear una</span> </p>
             </section>
             <section className="formSection">
-                <form className="loginForm">
+                {!loadingPlaneFlag && <form className="loginForm">
 
                     <label>Email</label>
                     <input style={{ marginBottom: '12px', borderColor: error ? 'red' : '' }}
@@ -145,7 +149,11 @@ const Login = () => {
                             disabled={error}
                         />
                     </div>
-                </form>
+                </form>}
+                {loadingPlaneFlag && <div style={{ marginTop: '16px', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', height: '140px' }}>
+                    <p style={{ fontSize: '16px', color: 'grey', marginTop: '8px', fontWeight: 'bold' }}>Iniciando sesión, aguarda unos instantes...</p>
+                    <PlaneAnimation/>
+                </div>}
             </section>
             <SignInModal isOpen={openSignIn} onClose={() => setOpenSignIn(false)}></SignInModal>
 
