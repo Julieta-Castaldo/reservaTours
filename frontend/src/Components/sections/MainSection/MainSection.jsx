@@ -33,8 +33,9 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
     const [inputValueCity, setInputValueCity] = useState('')
     const [inputValueCategoy, setInputValueCategory] = useState('')
     const [filtersApplied, setFiltersApplied] = useState({
-        type: '',
-        value: ''
+        ciudad: '',
+        categoria: '',
+        fecha: null
     })
     useEffect(() => {
         handleGetCities()
@@ -47,7 +48,7 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
         >
             <MainSectionSearchBar>
                 <MainSectionSearchWrapper
-                    // style={{ display: 'flex', justifyContent: 'space-evenly', width: '100%' }}
+                // style={{ display: 'flex', justifyContent: 'space-evenly', width: '100%' }}
                 >
                     <div>
                         <div style={divStyle}>
@@ -79,11 +80,8 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
                             }} />}
                             onChange={(e, newValue) => {
                                 setSelectedCity(newValue ? newValue : '')
-                                if (newValue) setFiltersApplied({ type: 'ciudad', value: newValue.id })
-                                else setFiltersApplied({ type: '', value: '' })
-                                setSelectedCategory('')
-                                setSelectedDate('')
-                                setInputValueCategory('')
+                                if (newValue) setFiltersApplied({ ...filtersApplied, ciudad: newValue.id })
+                                else setFiltersApplied({ ...filtersApplied, ciudad: '' })
                             }}
                         />
                     </div>
@@ -115,11 +113,13 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
 
                             }} />}
                             onChange={(e, newValue) => {
-                                setSelectedCity('')
-                                setFiltersApplied({ type: 'categoria', value: newValue.id })
-                                setSelectedCategory(newValue ? newValue : '')
-                                setSelectedDate('')
-                                setInputValueCity('')
+                                if (newValue) {
+                                    setFiltersApplied({ ...filtersApplied, categoria: newValue.id })
+                                    setSelectedCategory(newValue)
+                                } else {
+                                    setFiltersApplied({ ...filtersApplied, categoria: '' })
+                                    setSelectedCategory('')
+                                }
                             }}
                         />
                     </div>
@@ -131,19 +131,15 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
                                 value={selectedDate}
                                 onChange={(newValue) => {
                                     if (newValue === 'Invalid Date') {
-                                        setFiltersApplied({ type: 'fecha', value: null })
+                                        setFiltersApplied({ ...filtersApplied, fecha: null })
                                     } else {
                                         const date = new Date(newValue);
                                         const year = date.getFullYear();
                                         const month = String(date.getMonth() + 1).padStart(2, '0');
                                         const day = String(date.getDate()).padStart(2, '0');
                                         const formattedDate = `${year}-${month}-${day}`
-                                        setFiltersApplied({ type: 'fecha', value: '2023-11-11' })
+                                        setFiltersApplied({ ...filtersApplied, fecha: formattedDate })
                                     }
-                                    setSelectedCategory('')
-                                    setSelectedCity()
-                                    setInputValueCategory('')
-                                    setInputValueCity('')
                                 }}
                             />
                         </LocalizationProvider>

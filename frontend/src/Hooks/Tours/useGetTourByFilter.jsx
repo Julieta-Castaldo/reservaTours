@@ -8,19 +8,7 @@ export const useGetTourByFilter = () => {
     const { setReloadProductsFlag } = useGlobalState()
 
     const handleGetFilteredProducts = (filter) => {
-        switch (filter.type) {
-            case 'ciudad':
-                urlProducts = `http://localhost:8080/Tour/porCiudad/${filter.value}`
-                break;
-            case 'categoria':
-                urlProducts = `http://localhost:8080/Tour/porCategoria/${filter.value}`
-                break;
-            case 'fecha':
-                urlProducts = `http://localhost:8080/Tour/fechas-disponibles?fecha=${filter.value}`
-                break
-            default:
-                break;
-        }
+        let urlProducts = `http://localhost:8080/Tour/buscador?ciudadId=${filter.ciudad}&categoriaId=${filter.categoria}&fechaDisponible=${filter.fecha}`
         fetch(urlProducts, {
             method: 'GET',
             headers: {
@@ -28,7 +16,6 @@ export const useGetTourByFilter = () => {
             },
         })
             .then(res => {
-                console.log(res)
                 return res.json()
             })
             .then(data => {
