@@ -5,6 +5,7 @@ import { useGlobalState } from "../../Context/Context";
 export const usePostUser = () => {
     const navigate = useNavigate()
     const { setAuth } = useGlobalState()
+    const { setLoadingPlaneFlag } = useGlobalState()
     const handlePostUser = (userData, onClose) => {
         fetch('http://localhost:8080/api/sign-up', {
             method: 'POST',
@@ -14,6 +15,7 @@ export const usePostUser = () => {
             }
         })
             .then(response => {
+                setLoadingPlaneFlag(false)
                 if (response.status === 200) {
                     Swal({
                         position: 'top-end',
@@ -32,7 +34,6 @@ export const usePostUser = () => {
                         button: 'Aceptar',
                     });
                 }
-                console.log(response)
                 return response.json()
             })
             .then(data => {

@@ -81,10 +81,7 @@ const Login = () => {
             return;
         }
 
-
         postData();
-
-
     };
 
     useEffect(() => {
