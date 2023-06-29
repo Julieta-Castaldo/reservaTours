@@ -78,7 +78,7 @@ const MakeReservation = () => {
             <div style={{ display: 'flex' }}>
                 <section style={{ flex: '1', marginLeft: '12%' }}>
                     <article>
-                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', fontSize: '20px', fontFamily: 'Roboto',fontWeight: 'bold',fontWeight: 500, lineHeight: '31.813px' }}>Información personal</Divider>
+                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', fontSize: '20px', fontFamily: 'Roboto',fontWeight: 'bold', lineHeight: '31.813px' }}>Información personal</Divider>
 
 
                         <div>
@@ -119,7 +119,7 @@ const MakeReservation = () => {
                         <p style={{ color: 'var(--3, #58C1CE)', fontSize: '13px', fontFamily: 'Roboto', }}>*Si necesitas actualizar tus datos, podes hacerlo desde tu perfil.</p>
                     </article>
                     <article style={{ width: '100%' }}>
-                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', marginTop: '40px', fontSize: '20px', fontFamily: 'Roboto',fontWeight: 'bold',fontWeight: 500, lineHeight: '31.813px' }}>Detalle de pago</Divider>
+                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', marginTop: '40px', fontSize: '20px', fontFamily: 'Roboto',fontWeight: 'bold', lineHeight: '31.813px' }}>Detalle de pago</Divider>
                         <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
                             <div className="payment-option-tdc"></div>
                             <p className="payment-option-label">Tarjeta de crédito</p>
@@ -168,7 +168,7 @@ const MakeReservation = () => {
                         </div>
                     </article>
                     <article>
-                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', marginTop: '40px', fontSize: '20px', fontFamily: 'Roboto',fontWeight: 'bold',fontWeight: 500, lineHeight: '31.813px' }}>Opciones del tour</Divider>
+                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', marginTop: '40px', fontSize: '20px', fontFamily: 'Roboto',fontWeight: 'bold', lineHeight: '31.813px' }}>Opciones del tour</Divider>
                         <div style={{ display: 'flex' }}>
                             <FormControl sx={{ m: 1, width: '100%' }}>
                                 <InputLabel id="demo-simple-select-helper-label" sx={{ fontFamily: 'Roboto', fontSize: '16px', color: 'var(--text, #58C1CE)' }}>Menú *</InputLabel>
@@ -210,7 +210,7 @@ const MakeReservation = () => {
                         </div>
                     </article>
                     <article>
-                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', marginTop: '40px', fontSize: '20px', fontFamily: 'Roboto',fontWeight: 'bold',fontWeight: 500, lineHeight: '31.813px' }}>Información de salud</Divider>
+                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', marginTop: '40px', fontSize: '20px', fontFamily: 'Roboto',fontWeight: 'bold', lineHeight: '31.813px' }}>Información de salud</Divider>
                         <p className="custom-paragraph">
                             Si hay aspectos de tu salud que deban ser considerados al realizar o participar del tour, no dudes en decírnoslo.
                         </p>

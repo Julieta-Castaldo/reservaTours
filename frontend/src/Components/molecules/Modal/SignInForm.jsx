@@ -5,9 +5,9 @@ import { validateEmail, validatePassword, validateTextFields } from '../../../He
 import { useGlobalState } from '../../../Context/Context';
 import PlaneAnimation from '../../../Util/images/PlaneAnimation';
 
-const SignInForm = ({ onClose }) => {
+const SignInForm = ({ onClose, setChangingPassword, loadingPlaneFlag, setLoadingPlaneFlag }) => {
     const [error, setError] = useState(false)
-    const { loadingPlaneFlag, setLoadingPlaneFlag } = useGlobalState()
+    
     const [newUser, setNewUser] = useState({
         username: '',
         lastname: '',
@@ -68,6 +68,8 @@ const SignInForm = ({ onClose }) => {
                         className={error && error.includes('contraseña') ? 'redInput' : 'greenInput'}
                         type="password"
                         id="password"
+                        onFocus={() => setChangingPassword(true)}
+                        onBlur={() => setChangingPassword(false)}
                         value={newUser.password}
                         onChange={(event) => setNewUser({ ...newUser, password: event.target.value })}
                     />
