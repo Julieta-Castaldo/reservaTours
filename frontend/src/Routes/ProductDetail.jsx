@@ -44,7 +44,7 @@ const ProductDetail = () => {
     const { listaImagenes, nombre, descripcion, ciudad, caracteristicasSi, precio, duracion } = productData
     const navigate = useNavigate();
     const [bussyDates, handleGetBussyDates] = useGetTourBussyDates()
-    const { searchedDate } = useGlobalState()
+    const { searchedDate, setSearchedDate } = useGlobalState()
 
     useEffect(() => {
         fetch(url)
@@ -103,6 +103,7 @@ const ProductDetail = () => {
         } else {
             localStorage.setItem('prefilledReservationData', JSON.stringify(reservaValues))
             navigate('/reservation')
+            setSearchedDate(null)
         }
     }
 

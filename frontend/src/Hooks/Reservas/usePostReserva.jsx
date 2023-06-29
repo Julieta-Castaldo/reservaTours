@@ -41,7 +41,7 @@ export const usePostReserva = () => {
                         if (response.status === 200) {
                             navigate('/confirmationReserva')
                         } else {
-                            Swal({
+                            Swal.fire({
                                 title: 'Error',
                                 text: 'No pudimos registrar la reserva. Intente nuevamente más tarde.',
                                 icon: 'error',

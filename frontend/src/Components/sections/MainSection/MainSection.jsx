@@ -126,6 +126,7 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
 
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
+                                //minDate={new Date()}
                                 sx={{ width: 200, fontSize: '20px' }}
                                 value={selectedDate}
                                 onChange={(newValue) => {
