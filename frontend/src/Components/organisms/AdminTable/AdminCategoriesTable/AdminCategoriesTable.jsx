@@ -89,6 +89,7 @@ export const AdminCategoriesTable = ({data, setReloadCategories}) => {
                     <AdminTableTBody>
                         {
                             data && data.length !== 0 && data.map((row) => {
+                                console.log(row)
                                 return (
                                     <AdminTableTr key={row.id}>
                                         <AdminTableTd
@@ -115,13 +116,6 @@ export const AdminCategoriesTable = ({data, setReloadCategories}) => {
                                             width="12.4rem"
                                             justify='center'
                                         >
-                                            <Link
-                                                to='/admin/'
-                                            >
-                                                <IconEdit
-                                                    color={"#F2A63B"}
-                                                />
-                                            </Link>
                                             <button onClick={() => handleDelete(row.id)}
                                                     style={{border: 'none', backgroundColor: 'transparent'}}>
                                                 <IconTrash
