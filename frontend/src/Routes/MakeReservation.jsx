@@ -91,6 +91,7 @@ const MakeReservation = () => {
                                         value={auth.username}
                                         disabled={true}
                                         className="custom-input"
+                                        style={{ color: '#717B8A'}}
                                     />
                                 </div>
                                 <div style={{ flexGrow: 1, marginRight: '12px', display: 'flex', flexDirection: 'column', marginBottom: '40px' }}>
@@ -101,6 +102,7 @@ const MakeReservation = () => {
                                         value={auth.lastname}
                                         disabled={true}
                                         className="custom-input"
+                                        style={{ color: '#717B8A'}}
                                     />
                                 </div>
                             </div>
@@ -113,6 +115,7 @@ const MakeReservation = () => {
                                     id="email"
                                     value={auth.email}
                                     className="custom-input-email"
+                                    style={{ color: '#717B8A'}}
                                 />
                             </div>
                         </div>
