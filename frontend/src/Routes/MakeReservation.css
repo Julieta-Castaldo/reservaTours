@@ -1,3 +1,99 @@
 MenuItem{
     font-size: 16px;
 }
+
+.finalizar-reserva p:first-child {
+  color: var(--3, #58C1CE);
+  font-size: 28px;
+  font-family: Roboto;
+  font-weight: bold;
+  line-height: 42px;
+}
+
+.finalizar-reserva p:last-child {
+  color: var(--text, #717B8A);
+  font-size: 19px;
+  font-family: Roboto;
+  line-height: 24.964px;
+}
+
+.custom-paragraph {
+    color: var(--raven-500, #9EA9B6);
+    font-size: 17px;
+    font-family: Roboto;
+    margin-bottom: 40px;
+}
+
+.custom-label {
+  color: var(--raven-500, #9EA9B6);
+  font-size: 17px;
+  font-family: Roboto;
+  margin-bottom: 10px;
+}
+
+.custom-input {
+  color: var(--3, #58C1CE);
+  font-size: 17px;
+  font-family: Roboto;
+  opacity: 0.5;
+  width: auto;
+  height: 51px;
+  flex-shrink: 0;
+  border: none;
+  
+  border-radius: 8px;
+  background-color: rgba(0, 235, 235, 0.14);
+}
+
+.custom-input-email {
+  color: var(--3, #58C1CE);
+  font-size: 17px;
+  font-family: Roboto;
+  opacity: 0.5;
+  width: auto;
+  height: 51px;
+  flex-shrink: 0;
+  border: none;
+  
+  border-radius: 8px;
+  background-color: rgba(0, 235, 235, 0.14);
+}
+
+
+.payment-option-label {
+  margin-left: 30px;
+  font-family: Roboto;
+  font-size: 17px;
+  color: var(--raven-500, #9EA9B6);
+  margin-right: auto;
+}
+
+.payment-option-tdc {
+  width: 113px;
+  height: 62px;
+  flex-shrink: 0;
+  background-image: url('/src/Util/images/tdc.png');
+  border-radius: 7px;
+  
+}
+
+
+.payment-option-efectivo {
+  width: 113px;
+  height: 62px;
+  flex-shrink: 0;
+  background-image: url('/src/Util/images/efectivo.png');
+  border-radius: 7px;
+  
+  
+}
+
+.payment-option-transferencia {
+  width: 113px;
+  height: 62px;
+  flex-shrink: 0;
+  background-image: url('/src/Util/images/transferencia.png');
+  border-radius: 7px;
+  
+  
+}

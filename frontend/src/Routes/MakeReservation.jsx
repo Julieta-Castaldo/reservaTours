@@ -10,6 +10,10 @@ import DatePicker from "react-multi-date-picker"
 import { DateFormater } from "../Helpers/DateFormater.jsx";
 //Hooks
 import { usePostReserva } from "../Hooks/Reservas/usePostReserva.jsx";
+import usdImage from '/src/Util/images/total.png';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CircleIcon from '@mui/icons-material/Circle';
+
 
 const MakeReservation = () => {
     const { auth } = useGlobalState()
@@ -59,160 +63,187 @@ const MakeReservation = () => {
     //LADY, TODOS LOS ESTILOS DEBERÍAN PASARSE AL CSS, LOS PUSE ACÁ TEMPORALMENTE
     return (
         <div style={{ padding: '50px 50px' }}>
-            <section className="sectionHeader" style={{ marginBottom: '32px' }}>
+            <section className="sectionHeader" style={{ marginBottom: '32px', marginLeft: '12%' }}>
                 <article style={{ display: 'flex' }}>
-                    <div style={{ backgroundColor: '#58C1CE', height: '80px', width: '80px' }}>
-                        {/*EL ÍCONO VA ACÁ */}
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#D7F0F3', borderRadius: '5px', height: '80px', width: '80px', marginRight: '40px' }}>
+                        <img src="/src/Util/images/carrito.png" alt="Carrito" style={{ width: '60%', objectFit: 'cover' }} />
                     </div>
-                    <div>
+                    <div class="finalizar-reserva">
                         <p>Finalizar reserva</p>
                         <p>¡Solo falta un paso más para tu viaje!</p>
                     </div>
                 </article>
             </section>
             <div style={{ display: 'flex' }}>
-                <section style={{ width: '60%' }}>
+                <section style={{ flex: '1', marginLeft: '12%' }}>
                     <article>
-                        <Divider>Información personal</Divider>
+                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', fontSize: '20px', fontFamily: 'Roboto',fontWeight: 'bold',fontWeight: 500, lineHeight: '31.813px' }}>Información personal</Divider>
+
 
                         <div>
                             <div style={{ display: 'flex' }}>
-                                <div style={{ marginRight: '12px', width: '100%', display: 'flex', flexDirection: 'column' }}>
-                                    <label htmlFor="username">Nombre*</label>
+                                <div style={{ flexGrow: 1, marginRight: '12px', display: 'flex', flexDirection: 'column' }}>
+                                    <label htmlFor="username" className="custom-label">Nombre*</label>
                                     <input
                                         type="text"
                                         id="username"
                                         value={auth.username}
                                         disabled={true}
+                                        className="custom-input"
                                     />
                                 </div>
-                                <div style={{ marginRight: '12px', width: '100%', display: 'flex', flexDirection: 'column' }}>
-                                    <label htmlFor="lastname">Apellido*</label>
-                                    <input
+                                <div style={{ flexGrow: 1, marginRight: '12px', display: 'flex', flexDirection: 'column', marginBottom: '40px' }}>
+                                    <label htmlFor="lastname" className="custom-label">Apellido*</label>
+                                    <input 
                                         type="text"
                                         id="lastname"
                                         value={auth.lastname}
                                         disabled={true}
+                                        className="custom-input"
                                     />
                                 </div>
                             </div>
 
-                            <div style={{ margin: '16px 0', display: 'flex', flexDirection: 'column' }}>
-                                <label htmlFor="email">Email*</label>
+                            <div style={{ flexGrow: 1, marginRight: '12px', display: 'flex', flexDirection: 'column', marginBottom: '40px' }}>
+                                <label htmlFor="email" className="custom-label">Email*</label>
                                 <input
                                     disabled={true}
                                     type="email"
                                     id="email"
                                     value={auth.email}
+                                    className="custom-input-email"
                                 />
                             </div>
                         </div>
-                        <p style={{ color: 'grey' }}>*Si necesitas actualizar tus datos, podes hacerlo desde tu perfil</p>
+                        <p style={{ color: 'var(--3, #58C1CE)', fontSize: '13px', fontFamily: 'Roboto', }}>*Si necesitas actualizar tus datos, podes hacerlo desde tu perfil.</p>
                     </article>
                     <article style={{ width: '100%' }}>
-                        <Divider>Detalle de pago</Divider>
+                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', marginTop: '40px', fontSize: '20px', fontFamily: 'Roboto',fontWeight: 'bold',fontWeight: 500, lineHeight: '31.813px' }}>Detalle de pago</Divider>
                         <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-                            <div style={{ width: '110px', height: '62px', backgroundColor: 'lightblue' }}></div>
-                            <p>TDC</p>
+                            <div className="payment-option-tdc"></div>
+                            <p className="payment-option-label">Tarjeta de crédito</p>
+
                             <Checkbox
                                 onChange={() => setReservationData({ ...reservationData, medioDePago: 'tdc' })}
                                 name="tdc"
                                 checked={reservationData.medioDePago === 'tdc' ? true : false}
                                 sx={{
-                                    '& .MuiSvgIcon-root': { fontSize: 24 },
+                                    '& .MuiSvgIcon-root': { fontSize: 28 },
+                                    '&:checked': { color: '#DDE3EB' },
+                                    '&:not(:checked)': { color: '#58C1CE' },
                                 }} />
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center', width: '100%', marginTop: '16px' }}>
-                            <div style={{ width: '110px', height: '62px', backgroundColor: 'lightblue' }}></div>
-                            <p>Efectivo</p>
+                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', marginTop: '40px', lineHeight: '31.813px' }}></Divider>
+                        <div style={{ display: 'flex', alignItems: 'center', width: '100%', marginTop: '16px' }}>                         
+                            <div className="payment-option-efectivo"></div>
+                            <p className="payment-option-label">Efectivo</p>
                             <Checkbox
                                 onChange={() => setReservationData({ ...reservationData, medioDePago: 'efectivo' })}
                                 name="efectivo"
                                 sx={{
-                                    '& .MuiSvgIcon-root': { fontSize: 24 },
+                                    '& .MuiSvgIcon-root': { fontSize: 28 },
+                                    '&:checked': { color: '#DDE3EB' },
+                                    '&:not(:checked)': { color: '#58C1CE' },
+
                                 }}
                                 checked={reservationData?.medioDePago === 'efectivo' ? true : false}
                             />
                         </div>
+                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', marginTop: '40px', lineHeight: '31.813px' }}></Divider>
                         <div style={{ display: 'flex', alignItems: 'center', width: '100%', marginTop: '16px' }}>
-                            <div style={{ width: '110px', height: '62px', backgroundColor: 'lightblue' }}></div>
-                            <p>Transferencia</p>
+                            <div className="payment-option-transferencia"></div>
+                            <p className="payment-option-label" >Transferencia</p>
                             <Checkbox
                                 onChange={() => setReservationData({ ...reservationData, medioDePago: 'transferencia' })}
                                 name="transferencia"
                                 sx={{
-                                    '& .MuiSvgIcon-root': { fontSize: 24 },
+                                    '& .MuiSvgIcon-root': { fontSize: 28 },
+                                    '&:checked': { color: '#DDE3EB' },
+                                    '&:not(:checked)': { color: '#58C1CE' },
+
                                 }}
                                 checked={reservationData?.medioDePago === 'transferencia' ? true : false}
                             />
                         </div>
                     </article>
                     <article>
-                        <Divider>Opciones del tour</Divider>
+                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', marginTop: '40px', fontSize: '20px', fontFamily: 'Roboto',fontWeight: 'bold',fontWeight: 500, lineHeight: '31.813px' }}>Opciones del tour</Divider>
                         <div style={{ display: 'flex' }}>
                             <FormControl sx={{ m: 1, width: '100%' }}>
-                                <InputLabel id="demo-simple-select-helper-label" sx={{ fontSize: '16px' }}>Menú *</InputLabel>
+                                <InputLabel id="demo-simple-select-helper-label" sx={{ fontFamily: 'Roboto', fontSize: '16px', color: 'var(--text, #58C1CE)' }}>Menú *</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-helper-label"
                                     id="demo-simple-select-helper"
                                     value={reservationData?.menu}
                                     label="Menú *"
-                                    sx={{ fontSize: '16px' }}
+                                    sx={{ fontSize: '17px', fontFamily: 'Roboto', color: 'var(--text, #717B8A)' }}
                                     onChange={(e) => setReservationData({ ...reservationData, menu: e.target.value })}
                                 >
-                                    <MenuItem sx={{ fontSize: '14px' }} value="">
+                                    <MenuItem sx={{ fontSize: '15px', color: 'var(--text, #717B8A)' }} value="">
                                         <em>None</em>
                                     </MenuItem>
-                                    <MenuItem sx={{ fontSize: '14px' }} value='normal'>Normal</MenuItem>
-                                    <MenuItem sx={{ fontSize: '14px' }} value='vegetariano'>Vegetariano</MenuItem>
-                                    <MenuItem sx={{ fontSize: '14px' }} value='vegano'>Vegano</MenuItem>
-                                    <MenuItem sx={{ fontSize: '14px' }} value='celíaco'>Sin glúten</MenuItem>
+                                    <MenuItem sx={{ fontSize: '15px', color: 'var(--text, #717B8A)' }} value='normal'>Normal</MenuItem>
+                                    <MenuItem sx={{ fontSize: '15px', color: 'var(--text, #717B8A)' }} value='vegetariano'>Vegetariano</MenuItem>
+                                    <MenuItem sx={{ fontSize: '15px', color: 'var(--text, #717B8A)' }} value='vegano'>Vegano</MenuItem>
+                                    <MenuItem sx={{ fontSize: '15px', color: 'var(--text, #717B8A)' }} value='celíaco'>Sin glúten</MenuItem>
                                 </Select>
                             </FormControl>
                             <FormControl sx={{ m: 1, width: '100%' }}>
-                                <InputLabel id="demo-simple-select-helper-label" sx={{ fontSize: '16px' }}>Alojamiento *</InputLabel>
+                                <InputLabel id="demo-simple-select-helper-label" sx={{ fontFamily: 'Roboto', fontSize: '16px', color: 'var(--text, #58C1CE)' }}>Alojamiento *</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-helper-label"
                                     id="demo-simple-select-helper"
                                     value={reservationData?.alojamiento}
                                     label="Alojamiento *"
-                                    sx={{ fontSize: '16px' }}
+                                    sx={{ fontSize: '17px', fontFamily: 'Roboto', color: 'var(--text, #717B8A)' }}
                                     onChange={(e) => setReservationData({ ...reservationData, alojamiento: e.target.value })}
                                 >
-                                    <MenuItem sx={{ fontSize: '14px' }} value="">
+                                    <MenuItem sx={{ fontSize: '15px', color: 'var(--text, #717B8A)' }} value="">
                                         <em>None</em>
                                     </MenuItem>
-                                    <MenuItem sx={{ fontSize: '14px' }} value='hostel'>Hostel</MenuItem>
-                                    <MenuItem sx={{ fontSize: '14px' }} value='cabaña'>Cabaña</MenuItem>
-                                    <MenuItem sx={{ fontSize: '14px' }} value='hotel'>Hotel</MenuItem>
+                                    <MenuItem sx={{ fontSize: '15px', color: 'var(--text, #717B8A)' }} value='hostel'>Hostel</MenuItem>
+                                    <MenuItem sx={{ fontSize: '15px', color: 'var(--text, #717B8A)' }} value='cabaña'>Cabaña</MenuItem>
+                                    <MenuItem sx={{ fontSize: '15px', color: 'var(--text, #717B8A)' }} value='hotel'>Hotel</MenuItem>
                                 </Select>
                             </FormControl>
                         </div>
                     </article>
                     <article>
-                        <Divider>Información de salud</Divider>
-                        <p>
+                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', marginTop: '40px', fontSize: '20px', fontFamily: 'Roboto',fontWeight: 'bold',fontWeight: 500, lineHeight: '31.813px' }}>Información de salud</Divider>
+                        <p className="custom-paragraph">
                             Si hay aspectos de tu salud que deban ser considerados al realizar o participar del tour, no dudes en decírnoslo.
                         </p>
                         <TextField
                             id="outlined-multiline-static"
                             multiline
                             rows={6}
-                            sx={{ width: '100%' }}
+                            sx={{ width: '100%', borderRadius: '20px', border: 'none',"& fieldset": { border: 'none' }, background: '#F2FEFE', '.MuiInputBase-input': { fontFamily: 'Roboto', fontSize: '20px', color: 'var(--text, #717B8A)',paddingTop: '10px',} }}
                             onChange={(e) => setReservationData({ ...reservationData, informacionDeSalud: e.target.value })}
                         />
 
                     </article>
                 </section>
-                <section style={{ width: '40%', marginLeft: '24px' }}>
-                    <article style={{ backgroundColor: '#EEF9FA', padding: '16px' }}>
-                        <p>Tu orden</p>
-                        <div style={{ borderRadius: '20px', backgroundColor: 'white', padding: '16px' }}>
-                            <p>Total</p>
-                            <p>USD {precio}</p>
+                <section style={{ width: '480px', marginLeft: '150px', marginRight: '12%' }}>
+                    <article style={{ backgroundColor: '#EEF9FA', padding: '46px', borderRadius: '39px' }}>
+                    <p style={{ fontSize: '30px', color: 'var(--text, #58C1CE)', fontFamily: 'Roboto', fontWeight: 'bold', marginBottom: '30px' }}>Tu orden</p>
+                    <div style={{ borderRadius: '20px', backgroundColor: 'white', padding: '4px', marginBottom: '38px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', marginLeft: 'auto', paddingRight: '4px' }}>
+                            <div style={{ flex: '1', padding: '10px' }}>
+                            <p style={{ fontSize: '24px', marginBottom: '2px', color: 'var(--text, #717B8A)' }}>Total</p>
+                            <div style={{ display: 'flex', alignItems: 'baseline' }}>
+                                <p style={{ fontSize: '14px', marginRight: '6px', marginBottom: 'auto', marginTop: '10px', color: 'var(--text, #717B8A)' }}>USD</p>
+                                <p style={{ fontSize: '40px', fontWeight: 'bold', color: 'var(--text, #F2A63B)' }}>{precio}</p>           
+                            </div>
+                            </div>
+                        
+                            <div style={{ display: 'flex', alignItems: 'center', marginLeft: 'auto', paddingRight: '4px' }}>
+                                <img src={usdImage} alt="USD" style={{ height: '100%', width: '50px' }} />
+                            </div>
                         </div>
-                        <div>
-                            <p>Fecha del Tour</p>
+                    </div>
+                        <div>               
+                            <p style={{ fontSize: '30px', color: 'var(--text, #58C1CE)', fontFamily: 'Roboto', fontWeight: 'bold', marginBottom: '30px' }}>Fecha del Tour</p>
+                            <div style={{ borderRadius: '10px', backgroundColor: 'white', padding: '4px', marginBottom: '38px' }}>
                             <DatePicker
                                 multiple
                                 value={selectedDates}
@@ -223,12 +254,12 @@ const MakeReservation = () => {
                                     const newDate = new Date(date)
                                     if (selectedDates.length !== 0) {
                                         if (newDate > selectedDates[0] && newDate < selectedDates[1]) {
-                                            props.style = { backgroundColor: "#0074D9", color: 'white' }
+                                            props.style = { backgroundColor: "#EEF9FA", color: '9ED3D9' }
                                         }
                                     }
 
                                     if (bussyDates.includes(DateFormater(newDate))) {
-                                        props.style = { color: 'grey' }
+                                        props.style = { color: '9ED3D9' }
                                     }
 
                                     return props
@@ -263,19 +294,20 @@ const MakeReservation = () => {
                                 style={{
                                     color: '#05848A',
                                     fontFamily: 'Roboto',
-                                    fontSize: '16px',
+                                    fontSize: '20px',
                                     alignItems: 'flexStart',
-                                    width: '100%',
+                                    width: '100% !important',
                                     backgroundColor: 'transparent',
                                     border: 'none',
+                                    marginTop: '20px',
+                                    marginBottom: '20px',
                                 }}
                             />
-                            <p style={{ color: 'grey', fontSize: '12px' }}>*Estás a tiempo de modificar las fechas seleccionadas. Por favor, checkea que sean las correctas antes de continuar</p>
+                            </div>
+                            <p style={{ color: 'var(--3, #58C1CE)', fontSize: '13px', fontFamily: 'Roboto', marginBottom: '30px' }}>*Estás a tiempo de modificar las fechas seleccionadas. Por favor, checkea que sean las correctas antes de continuar.</p>
                         </div>
-                        {tourImage && <img src={tourImage?.url} />}
-                    </article>
-                    {error && <p style={{ color: 'red' }}>{error}</p>}
-                    <ButtonIcon
+                        {tourImage && <img src={tourImage?.url} style={{ borderRadius: '19px', background: 'var(--blanco, #FFF)', boxShadow: '0px 4px 4px 0px #B8CBCC', marginBottom: '50px' }} />}
+                        <ButtonIcon
                         text='Reservar tour'
                         src={
                             <IconArrowRight2
@@ -289,7 +321,11 @@ const MakeReservation = () => {
                         bgColor={'#05848A'}
                         hoverBgColor={'transparent'}
                         onClick={handleReserva}
+                        margin={'auto'}
                     />
+                    </article>
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
+                    
                 </section>
             </div>
         </div>
