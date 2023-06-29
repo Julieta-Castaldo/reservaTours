@@ -58,9 +58,6 @@ const MakeReservation = () => {
 
     }
 
-    useEffect(() => {
-        setError(false)
-    }, [reservationData])
     //LADY, TODOS LOS ESTILOS DEBERÍAN PASARSE AL CSS, LOS PUSE ACÁ TEMPORALMENTE
     return (
         <div style={{ padding: '50px 50px' }}>
@@ -78,7 +75,7 @@ const MakeReservation = () => {
             <div style={{ display: 'flex' }}>
                 <section style={{ flex: '1', marginLeft: '12%' }}>
                     <article>
-                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', fontSize: '20px', fontFamily: 'Roboto',fontWeight: 'bold', lineHeight: '31.813px' }}>Información personal</Divider>
+                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', fontSize: '20px', fontFamily: 'Roboto', fontWeight: 'bold', lineHeight: '31.813px' }}>Información personal</Divider>
 
 
                         <div>
@@ -91,18 +88,18 @@ const MakeReservation = () => {
                                         value={auth.username}
                                         disabled={true}
                                         className="custom-input"
-                                        style={{ color: '#717B8A'}}
+                                        style={{ color: '#717B8A' }}
                                     />
                                 </div>
                                 <div style={{ flexGrow: 1, marginRight: '12px', display: 'flex', flexDirection: 'column', marginBottom: '40px' }}>
                                     <label htmlFor="lastname" className="custom-label">Apellido*</label>
-                                    <input 
+                                    <input
                                         type="text"
                                         id="lastname"
                                         value={auth.lastname}
                                         disabled={true}
                                         className="custom-input"
-                                        style={{ color: '#717B8A'}}
+                                        style={{ color: '#717B8A' }}
                                     />
                                 </div>
                             </div>
@@ -115,14 +112,14 @@ const MakeReservation = () => {
                                     id="email"
                                     value={auth.email}
                                     className="custom-input-email"
-                                    style={{ color: '#717B8A'}}
+                                    style={{ color: '#717B8A' }}
                                 />
                             </div>
                         </div>
                         <p style={{ color: 'var(--3, #58C1CE)', fontSize: '13px', fontFamily: 'Roboto', }}>*Si necesitas actualizar tus datos, podes hacerlo desde tu perfil.</p>
                     </article>
                     <article style={{ width: '100%' }}>
-                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', marginTop: '40px', fontSize: '20px', fontFamily: 'Roboto',fontWeight: 'bold', lineHeight: '31.813px' }}>Detalle de pago</Divider>
+                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', marginTop: '40px', fontSize: '20px', fontFamily: 'Roboto', fontWeight: 'bold', lineHeight: '31.813px' }}>Detalle de pago</Divider>
                         <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
                             <div className="payment-option-tdc"></div>
                             <p className="payment-option-label">Tarjeta de crédito</p>
@@ -138,7 +135,7 @@ const MakeReservation = () => {
                                 }} />
                         </div>
                         <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', marginTop: '40px', lineHeight: '31.813px' }}></Divider>
-                        <div style={{ display: 'flex', alignItems: 'center', width: '100%', marginTop: '16px' }}>                         
+                        <div style={{ display: 'flex', alignItems: 'center', width: '100%', marginTop: '16px' }}>
                             <div className="payment-option-efectivo"></div>
                             <p className="payment-option-label">Efectivo</p>
                             <Checkbox
@@ -158,7 +155,10 @@ const MakeReservation = () => {
                             <div className="payment-option-transferencia"></div>
                             <p className="payment-option-label" >Transferencia</p>
                             <Checkbox
-                                onChange={() => setReservationData({ ...reservationData, medioDePago: 'transferencia' })}
+                                onChange={() => {
+                                    setError(false)
+                                    setReservationData({ ...reservationData, medioDePago: 'transferencia' })
+                                }}
                                 name="transferencia"
                                 sx={{
                                     '& .MuiSvgIcon-root': { fontSize: 28 },
@@ -171,7 +171,7 @@ const MakeReservation = () => {
                         </div>
                     </article>
                     <article>
-                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', marginTop: '40px', fontSize: '20px', fontFamily: 'Roboto',fontWeight: 'bold', lineHeight: '31.813px' }}>Opciones del tour</Divider>
+                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', marginTop: '40px', fontSize: '20px', fontFamily: 'Roboto', fontWeight: 'bold', lineHeight: '31.813px' }}>Opciones del tour</Divider>
                         <div style={{ display: 'flex' }}>
                             <FormControl sx={{ m: 1, width: '100%' }}>
                                 <InputLabel id="demo-simple-select-helper-label" sx={{ fontFamily: 'Roboto', fontSize: '16px', color: 'var(--text, #58C1CE)' }}>Menú *</InputLabel>
@@ -181,7 +181,10 @@ const MakeReservation = () => {
                                     value={reservationData?.menu}
                                     label="Menú *"
                                     sx={{ fontSize: '17px', fontFamily: 'Roboto', color: 'var(--text, #717B8A)' }}
-                                    onChange={(e) => setReservationData({ ...reservationData, menu: e.target.value })}
+                                    onChange={(e) => {
+                                        setError(false)
+                                        setReservationData({ ...reservationData, menu: e.target.value })
+                                    }}
                                 >
                                     <MenuItem sx={{ fontSize: '15px', color: 'var(--text, #717B8A)' }} value="">
                                         <em>None</em>
@@ -200,7 +203,10 @@ const MakeReservation = () => {
                                     value={reservationData?.alojamiento}
                                     label="Alojamiento *"
                                     sx={{ fontSize: '17px', fontFamily: 'Roboto', color: 'var(--text, #717B8A)' }}
-                                    onChange={(e) => setReservationData({ ...reservationData, alojamiento: e.target.value })}
+                                    onChange={(e) => {
+                                        setError(false)
+                                        setReservationData({ ...reservationData, alojamiento: e.target.value })
+                                    }}
                                 >
                                     <MenuItem sx={{ fontSize: '15px', color: 'var(--text, #717B8A)' }} value="">
                                         <em>None</em>
@@ -213,7 +219,7 @@ const MakeReservation = () => {
                         </div>
                     </article>
                     <article>
-                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', marginTop: '40px', fontSize: '20px', fontFamily: 'Roboto',fontWeight: 'bold', lineHeight: '31.813px' }}>Información de salud</Divider>
+                        <Divider style={{ color: 'var(--text, #717B8A)', marginBottom: '40px', marginTop: '40px', fontSize: '20px', fontFamily: 'Roboto', fontWeight: 'bold', lineHeight: '31.813px' }}>Información de salud</Divider>
                         <p className="custom-paragraph">
                             Si hay aspectos de tu salud que deban ser considerados al realizar o participar del tour, no dudes en decírnoslo.
                         </p>
@@ -221,7 +227,7 @@ const MakeReservation = () => {
                             id="outlined-multiline-static"
                             multiline
                             rows={6}
-                            sx={{ width: '100%', borderRadius: '20px', border: 'none',"& fieldset": { border: 'none' }, background: '#F2FEFE', '.MuiInputBase-input': { fontFamily: 'Roboto', fontSize: '20px', color: 'var(--text, #717B8A)',paddingTop: '10px',} }}
+                            sx={{ width: '100%', borderRadius: '20px', border: 'none', "& fieldset": { border: 'none' }, background: '#F2FEFE', '.MuiInputBase-input': { fontFamily: 'Roboto', fontSize: '20px', color: 'var(--text, #717B8A)', paddingTop: '10px', } }}
                             onChange={(e) => setReservationData({ ...reservationData, informacionDeSalud: e.target.value })}
                         />
 
@@ -229,84 +235,84 @@ const MakeReservation = () => {
                 </section>
                 <section style={{ width: '480px', marginLeft: '150px', marginRight: '12%' }}>
                     <article style={{ backgroundColor: '#EEF9FA', padding: '46px', borderRadius: '39px' }}>
-                    <p style={{ fontSize: '30px', color: 'var(--text, #58C1CE)', fontFamily: 'Roboto', fontWeight: 'bold', marginBottom: '16px' }}>Tu orden</p>
-                    <div style={{ borderRadius: '20px', backgroundColor: 'white', padding: '4px', marginBottom: '16px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', marginLeft: 'auto', paddingRight: '4px' }}>
-                            <div style={{ flex: '1', padding: '10px' }}>
-                            <p style={{ fontSize: '24px', marginBottom: '2px', color: 'var(--text, #717B8A)' }}>Total</p>
-                            <div style={{ display: 'flex', alignItems: 'baseline' }}>
-                                <p style={{ fontSize: '14px', marginRight: '6px', marginBottom: 'auto', marginTop: '10px', color: 'var(--text, #717B8A)' }}>USD</p>
-                                <p style={{ fontSize: '40px', fontWeight: 'bold', color: 'var(--text, #F2A63B)' }}>{precio}</p>           
-                            </div>
-                            </div>
-                        
+                        <p style={{ fontSize: '30px', color: 'var(--text, #58C1CE)', fontFamily: 'Roboto', fontWeight: 'bold', marginBottom: '16px' }}>Tu orden</p>
+                        <div style={{ borderRadius: '20px', backgroundColor: 'white', padding: '4px', marginBottom: '16px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', marginLeft: 'auto', paddingRight: '4px' }}>
-                                <img src={usdImage} alt="USD" style={{ height: '100%', width: '50px' }} />
+                                <div style={{ flex: '1', padding: '10px' }}>
+                                    <p style={{ fontSize: '24px', marginBottom: '2px', color: 'var(--text, #717B8A)' }}>Total</p>
+                                    <div style={{ display: 'flex', alignItems: 'baseline' }}>
+                                        <p style={{ fontSize: '14px', marginRight: '6px', marginBottom: 'auto', marginTop: '10px', color: 'var(--text, #717B8A)' }}>USD</p>
+                                        <p style={{ fontSize: '40px', fontWeight: 'bold', color: 'var(--text, #F2A63B)' }}>{precio}</p>
+                                    </div>
+                                </div>
+
+                                <div style={{ display: 'flex', alignItems: 'center', marginLeft: 'auto', paddingRight: '4px' }}>
+                                    <img src={usdImage} alt="USD" style={{ height: '100%', width: '50px' }} />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                        <div>               
+                        <div>
                             <p style={{ fontSize: '22px', color: 'var(--text, #58C1CE)', fontFamily: 'Roboto', fontWeight: 'bold', marginBottom: '16px' }}>Fecha del Tour</p>
                             <div style={{ borderRadius: '10px', backgroundColor: 'white', padding: '4px', marginBottom: '16px' }}>
-                            <DatePicker
-                                multiple
-                                value={selectedDates}
-                                numberOfMonths={2}
-                                minDate={new Date()}
-                                mapDays={({ date }) => {
-                                    let props = {}
-                                    const newDate = new Date(date)
-                                    if (selectedDates.length !== 0) {
-                                        if (newDate > selectedDates[0] && newDate < selectedDates[1]) {
-                                            props.style = { backgroundColor: "#EEF9FA", color: '9ED3D9' }
-                                        }
-                                    }
-
-                                    if (bussyDates.includes(DateFormater(newDate))) {
-                                        props.style = { color: '9ED3D9' }
-                                    }
-
-                                    return props
-                                }}
-                                onChange={(values) => {
-                                    let validSelectedDates = []
-                                    values.forEach(value => {
-                                        let dateValue = new Date(value)
-                                        let endDate = new Date(value)
-                                        endDate.setDate(endDate.getDate() + (duracion - 1))
-                                        let validDateFlag = true;
-                                        for (let index = 0; index <= duracion; index++) {
-                                            let dateToCheck = dateValue
-                                            dateToCheck.setDate(dateToCheck.getDate() + index)
-
-                                            if (bussyDates.includes(DateFormater(dateToCheck))) {
-                                                validDateFlag = false;
-                                                return ''
+                                <DatePicker
+                                    multiple
+                                    value={selectedDates}
+                                    numberOfMonths={2}
+                                    minDate={new Date()}
+                                    mapDays={({ date }) => {
+                                        let props = {}
+                                        const newDate = new Date(date)
+                                        if (selectedDates.length !== 0) {
+                                            if (newDate > selectedDates[0] && newDate < selectedDates[1]) {
+                                                props.style = { backgroundColor: "#EEF9FA", color: '9ED3D9' }
                                             }
                                         }
 
-                                        if (validDateFlag && selectedDates.length === 0) {
-                                            validSelectedDates.push(value)
-                                            validSelectedDates.push(new Date(endDate))
+                                        if (bussyDates.includes(DateFormater(newDate))) {
+                                            props.style = { color: '9ED3D9' }
                                         }
-                                    })
-                                    console.log(validSelectedDates)
-                                    setSelectedDates(validSelectedDates)
-                                    setReservationData({ ...reservationData, fechaInicio: DateFormater(validSelectedDates[0]) })
 
-                                }}
-                                style={{
-                                    color: '#05848A',
-                                    fontFamily: 'Roboto',
-                                    fontSize: '20px',
-                                    alignItems: 'flexStart',
-                                    width: '100% !important',
-                                    backgroundColor: 'transparent',
-                                    border: 'none',
-                                    marginTop: '16px',
-                                    marginBottom: '16px',
-                                }}
-                            />
+                                        return props
+                                    }}
+                                    onChange={(values) => {
+                                        let validSelectedDates = []
+                                        values.forEach(value => {
+                                            let dateValue = new Date(value)
+                                            let endDate = new Date(value)
+                                            endDate.setDate(endDate.getDate() + (duracion - 1))
+                                            let validDateFlag = true;
+                                            for (let index = 0; index <= duracion; index++) {
+                                                let dateToCheck = dateValue
+                                                dateToCheck.setDate(dateToCheck.getDate() + index)
+
+                                                if (bussyDates.includes(DateFormater(dateToCheck))) {
+                                                    validDateFlag = false;
+                                                    return ''
+                                                }
+                                            }
+
+                                            if (validDateFlag && selectedDates.length === 0) {
+                                                validSelectedDates.push(value)
+                                                validSelectedDates.push(new Date(endDate))
+                                            }
+                                        })
+                                        console.log(validSelectedDates)
+                                        setSelectedDates(validSelectedDates)
+                                        setReservationData({ ...reservationData, fechaInicio: DateFormater(validSelectedDates[0]) })
+
+                                    }}
+                                    style={{
+                                        color: '#05848A',
+                                        fontFamily: 'Roboto',
+                                        fontSize: '20px',
+                                        alignItems: 'flexStart',
+                                        width: '100% !important',
+                                        backgroundColor: 'transparent',
+                                        border: 'none',
+                                        marginTop: '16px',
+                                        marginBottom: '16px',
+                                    }}
+                                />
                             </div>
                             <p style={{ color: 'var(--3, #58C1CE)', fontSize: '13px', fontFamily: 'Roboto', marginBottom: '16px' }}>*Estás a tiempo de modificar las fechas seleccionadas. Por favor, checkea que sean las correctas antes de continuar.</p>
                         </div>
@@ -314,25 +320,25 @@ const MakeReservation = () => {
                         {descripcion && <p style={{ fontSize: '16px', color: 'var(--text, #717B8A)', fontFamily: 'Roboto', marginBottom: '16px' }}><span style={{ fontWeight: 'bold' }}>Descripción: </span>{descripcion}</p>}
                         {ciudad && <p style={{ fontSize: '16px', color: 'var(--text, #717B8A)', fontFamily: 'Roboto', marginBottom: '16px' }}><span style={{ fontWeight: 'bold' }}>Ubicación: </span>{ciudad?.nombreCiudad} - {ciudad?.descripcionCiudad}</p>}
                         {tourImage && <img src={tourImage?.url} style={{ borderRadius: '19px', background: 'var(--blanco, #FFF)', boxShadow: '0px 4px 4px 0px #B8CBCC', marginBottom: '50px' }} />}
+                        {error && <p style={{ color: 'red', marginBottom: '12px' }}>{error}</p>}
                         <ButtonIcon
-                        text='Reservar tour'
-                        src={
-                            <IconArrowRight2
-                                size='18'
-                                className='iconSVG'
-                            />
-                        }
-                        borderColor={'#05848A'}
-                        color={'white'}
-                        hoverColor={'#05848A'}
-                        bgColor={'#05848A'}
-                        hoverBgColor={'transparent'}
-                        onClick={handleReserva}
-                        margin={'auto'}
-                    />
+                            text='Reservar tour'
+                            src={
+                                <IconArrowRight2
+                                    size='18'
+                                    className='iconSVG'
+                                />
+                            }
+                            borderColor={'#05848A'}
+                            color={'white'}
+                            hoverColor={'#05848A'}
+                            bgColor={'#05848A'}
+                            hoverBgColor={'transparent'}
+                            onClick={handleReserva}
+                            margin={'auto'}
+                        />
                     </article>
-                    {error && <p style={{ color: 'red' }}>{error}</p>}
-                    
+
                 </section>
             </div>
         </div>
