@@ -5,19 +5,17 @@ import {
 } from "./MainSection.styled.js";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import { Dayjs } from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import SearchIcon from '@mui/icons-material/Search';
-//Hooks
-import { useGetCities } from '../../../Hooks/Cities/useGetCities.jsx'
-import { useGetCategories } from "../../../Hooks/Categories/useGetCategories.jsx";
 import { useEffect, useState } from "react";
 import locationPng from './Icons/IconLocation.svg';
 import categoryPng from './Icons/IconCategory.svg';
-
+//Hooks
+import { useGetCities } from '../../../Hooks/Cities/useGetCities.jsx'
+import { useGetCategories } from "../../../Hooks/Categories/useGetCategories.jsx";
+import { useGlobalState } from "../../../Context/Context.jsx";
 
 const divStyle = {
     display: 'flex',
@@ -37,6 +35,7 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
         categoria: '',
         fecha: null
     })
+    const { setSearchedDate } = useGlobalState()
     useEffect(() => {
         handleGetCities()
         handleGetCategories()
@@ -132,12 +131,14 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
                                 onChange={(newValue) => {
                                     if (newValue === 'Invalid Date') {
                                         setFiltersApplied({ ...filtersApplied, fecha: null })
+                                        setSearchedDate(null)
                                     } else {
                                         const date = new Date(newValue);
                                         const year = date.getFullYear();
                                         const month = String(date.getMonth() + 1).padStart(2, '0');
                                         const day = String(date.getDate()).padStart(2, '0');
                                         const formattedDate = `${year}-${month}-${day}`
+                                        setSearchedDate(newValue)
                                         setFiltersApplied({ ...filtersApplied, fecha: formattedDate })
                                     }
                                 }}

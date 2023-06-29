@@ -11,11 +11,11 @@ const Context = ({ children }) => {
     const [reloadCategories, setReloadCategories] = useState(false)
     const urlProducts = `http://localhost:8080/Tour/todos`;
     const [userLocation, setUserLocation] = useState(false)
+    const [searchedDate, setSearchedDate] = useState(null)
 
     let token = localStorage.getItem('token')
 
     const fetchProducts = async () => {
-        console.log('estoy')
         let res = await fetch(urlProducts)
         let data = await res.json()
         setProducts(data)
@@ -58,7 +58,7 @@ const Context = ({ children }) => {
     }, [])
 
     return (
-        <GlobalState.Provider value={{ products, setProducts, token, auth, setAuth, setReloadProductsFlag, reloadProductsFlag, categories, setReloadCategories, userLocation }}>
+        <GlobalState.Provider value={{ products, setProducts, token, auth, setAuth, setReloadProductsFlag, reloadProductsFlag, categories, setReloadCategories, userLocation, searchedDate, setSearchedDate }}>
             {children}
         </GlobalState.Provider>
     )
