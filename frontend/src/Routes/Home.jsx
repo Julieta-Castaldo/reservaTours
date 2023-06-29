@@ -3,8 +3,9 @@ import { MainSection } from "../Components/sections/MainSection/MainSection.jsx"
 import { ToursSection } from "../Components/sections/ToursSection/ToursSection.jsx";
 import { CategoriesSection } from "../Components/sections/CategoriesSection/CategoriesSection.jsx";
 import { DividerSection } from "../Components/sections/DividerSection/DividerSection.jsx";
-import { FeatureBlock } from "../Components/organisms/FeatureBlock/FeatureBlock.jsx";
 import { useGetTourByFilter } from '../Hooks/Tours/useGetTourByFilter.jsx';
+import { useGlobalState } from '../Context/Context.jsx';
+import PlaneAnimation from '../Util/images/PlaneAnimation.jsx';
 
 const Home = () => {
     const [products, setProducts] = useState([])
@@ -13,8 +14,9 @@ const Home = () => {
         type: '',
         value: ''
     })
+    const [filtersAppliedFlag, setFiltersAppliedFlag] = useState(false)
     const url = `http://localhost:8080/Tour/todosAleatorio`;
-    const [reloadProducts, setReloadProducts] = useState(false)
+    const { reloadProductsFlag, setReloadProductsFlag } = useGlobalState()
     useEffect(() => {
         fetch(url)
             .then(res => res.json())
@@ -23,22 +25,29 @@ const Home = () => {
     }, [url])
 
     useEffect(() => {
-        if(reloadProducts && filtersApplied.value !== ''){
+        if (reloadProductsFlag && filtersAppliedFlag) {
             handleGetFilteredProducts(filtersApplied)
-            setReloadProducts(false)
         }
-    }, [reloadProducts, filtersApplied])
+    }, [reloadProductsFlag, filtersApplied, filtersAppliedFlag])
 
+
+    useEffect(() => {
+        console.log(filtersAppliedFlag)
+    }, [filtersAppliedFlag])
     return (
         <main>
-            <MainSection products={products} setFilters={setFiltersApplied} setReloadProducts={setReloadProducts} />
+            <MainSection products={products} setFilters={setFiltersApplied} setFiltersAppliedFlag={setFiltersAppliedFlag} />
             <>
                 <DividerSection padding={'20rem 20% 5rem 20%;'} />
                 <CategoriesSection />
                 <DividerSection padding={'5rem 20% 5rem 20%;'} />
             </>
-
-            <ToursSection products={filtersApplied.value === '' ? products : filteredProducts} title='Nuestros Productos' filteredTours={filtersApplied.type !== ''} />
+            {reloadProductsFlag ? <div style={{ width: '100%', height: '140px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <p style={{ fontSize: '18px', color: '#595E65', marginBottom: '8px' }}>Buscando tours relacionados...</p>
+                <PlaneAnimation />
+            </div> :
+                <ToursSection products={filtersAppliedFlag ? filteredProducts : products} title='Nuestros Productos' />
+            }
         </main>
     )
 }

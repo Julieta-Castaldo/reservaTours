@@ -22,7 +22,7 @@ const divStyle = {
     justifyContent: 'space-between'
 };
 
-export const MainSection = ({ products, setFilters, setReloadProducts }) => {
+export const MainSection = ({ setFilters, setReloadProducts, setFiltersAppliedFlag }) => {
     const [cities, handleGetCities] = useGetCities()
     const [selectedCity, setSelectedCity] = useState('')
     const [selectedDate, setSelectedDate] = useState(null)
@@ -33,9 +33,10 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
     const [filtersApplied, setFiltersApplied] = useState({
         ciudad: '',
         categoria: '',
-        fecha: null
+        fecha: ''
     })
     const { setSearchedDate } = useGlobalState()
+    const { setReloadProductsFlag } = useGlobalState()
     useEffect(() => {
         handleGetCities()
         handleGetCategories()
@@ -131,7 +132,7 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
                                 value={selectedDate}
                                 onChange={(newValue) => {
                                     if (newValue === 'Invalid Date') {
-                                        setFiltersApplied({ ...filtersApplied, fecha: null })
+                                        setFiltersApplied({ ...filtersApplied, fecha: '' })
                                         setSearchedDate(null)
                                     } else {
                                         const date = new Date(newValue);
@@ -150,8 +151,9 @@ export const MainSection = ({ products, setFilters, setReloadProducts }) => {
                     <div>
                         <button
                             onClick={() => {
-                                setReloadProducts(true)
+                                setReloadProductsFlag(true)
                                 setFilters(filtersApplied)
+                                setFiltersAppliedFlag(true)
                             }}
                             style={{ border: 'none', backgroundColor: '#58C1CE', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50px', width: '80px' }}>
                             <SearchIcon sx={{ fontSize: 34, color: 'white' }} />
