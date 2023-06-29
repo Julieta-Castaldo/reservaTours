@@ -30,7 +30,7 @@ const MakeReservation = () => {
     const [error, setError] = useState(false)
     const [selectedDates, setSelectedDates] = useState([])
     const prefilledData = JSON.parse(localStorage.getItem('prefilledReservationData'))
-    const { usuarioId, fechaInicio, tourId, tourImage, precio, bussyDates, dates, duracion } = prefilledData
+    const { usuarioId, fechaInicio, tourId, tourImage, precio, bussyDates, dates, duracion, tourName, descripcion, ciudad } = prefilledData
     const [handlePostReserva] = usePostReserva()
 
     useEffect(() => {
@@ -41,6 +41,7 @@ const MakeReservation = () => {
 
     useEffect(() => {
         setReservationData({ ...reservationData, tourId: Number(tourId), usuarioId: usuarioId, fechaInicio: fechaInicio[0] })
+        console.log(prefilledData)
     }, [prefilledData])
 
     useEffect(() => {
@@ -225,8 +226,8 @@ const MakeReservation = () => {
                 </section>
                 <section style={{ width: '480px', marginLeft: '150px', marginRight: '12%' }}>
                     <article style={{ backgroundColor: '#EEF9FA', padding: '46px', borderRadius: '39px' }}>
-                    <p style={{ fontSize: '30px', color: 'var(--text, #58C1CE)', fontFamily: 'Roboto', fontWeight: 'bold', marginBottom: '30px' }}>Tu orden</p>
-                    <div style={{ borderRadius: '20px', backgroundColor: 'white', padding: '4px', marginBottom: '38px' }}>
+                    <p style={{ fontSize: '30px', color: 'var(--text, #58C1CE)', fontFamily: 'Roboto', fontWeight: 'bold', marginBottom: '16px' }}>Tu orden</p>
+                    <div style={{ borderRadius: '20px', backgroundColor: 'white', padding: '4px', marginBottom: '16px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', marginLeft: 'auto', paddingRight: '4px' }}>
                             <div style={{ flex: '1', padding: '10px' }}>
                             <p style={{ fontSize: '24px', marginBottom: '2px', color: 'var(--text, #717B8A)' }}>Total</p>
@@ -242,8 +243,8 @@ const MakeReservation = () => {
                         </div>
                     </div>
                         <div>               
-                            <p style={{ fontSize: '30px', color: 'var(--text, #58C1CE)', fontFamily: 'Roboto', fontWeight: 'bold', marginBottom: '30px' }}>Fecha del Tour</p>
-                            <div style={{ borderRadius: '10px', backgroundColor: 'white', padding: '4px', marginBottom: '38px' }}>
+                            <p style={{ fontSize: '22px', color: 'var(--text, #58C1CE)', fontFamily: 'Roboto', fontWeight: 'bold', marginBottom: '16px' }}>Fecha del Tour</p>
+                            <div style={{ borderRadius: '10px', backgroundColor: 'white', padding: '4px', marginBottom: '16px' }}>
                             <DatePicker
                                 multiple
                                 value={selectedDates}
@@ -299,13 +300,16 @@ const MakeReservation = () => {
                                     width: '100% !important',
                                     backgroundColor: 'transparent',
                                     border: 'none',
-                                    marginTop: '20px',
-                                    marginBottom: '20px',
+                                    marginTop: '16px',
+                                    marginBottom: '16px',
                                 }}
                             />
                             </div>
-                            <p style={{ color: 'var(--3, #58C1CE)', fontSize: '13px', fontFamily: 'Roboto', marginBottom: '30px' }}>*Estás a tiempo de modificar las fechas seleccionadas. Por favor, checkea que sean las correctas antes de continuar.</p>
+                            <p style={{ color: 'var(--3, #58C1CE)', fontSize: '13px', fontFamily: 'Roboto', marginBottom: '16px' }}>*Estás a tiempo de modificar las fechas seleccionadas. Por favor, checkea que sean las correctas antes de continuar.</p>
                         </div>
+                        {tourName && <p style={{ fontSize: '18px', color: 'var(--text, #58C1CE)', fontFamily: 'Roboto', fontWeight: 'bold', marginBottom: '8px' }}>{tourName}</p>}
+                        {descripcion && <p style={{ fontSize: '16px', color: 'var(--text, #717B8A)', fontFamily: 'Roboto', marginBottom: '16px' }}><span style={{ fontWeight: 'bold' }}>Descripción: </span>{descripcion}</p>}
+                        {ciudad && <p style={{ fontSize: '16px', color: 'var(--text, #717B8A)', fontFamily: 'Roboto', marginBottom: '16px' }}><span style={{ fontWeight: 'bold' }}>Ubicación: </span>{ciudad?.nombreCiudad} - {ciudad?.descripcionCiudad}</p>}
                         {tourImage && <img src={tourImage?.url} style={{ borderRadius: '19px', background: 'var(--blanco, #FFF)', boxShadow: '0px 4px 4px 0px #B8CBCC', marginBottom: '50px' }} />}
                         <ButtonIcon
                         text='Reservar tour'

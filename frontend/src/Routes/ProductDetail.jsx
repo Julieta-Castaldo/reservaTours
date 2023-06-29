@@ -73,7 +73,7 @@ const ProductDetail = () => {
         window.scrollTo(0, 0)
 
         if (auth && auth.id) {
-            setReservaValues({ ...reservaValues, usuarioId: auth.id, tourId: id.replace(':', ''), duracion: duracion, tourImage: listaImagenes && listaImagenes[0], precio: precio })
+            setReservaValues({ ...reservaValues, usuarioId: auth.id, tourId: id.replace(':', ''), duracion: duracion, tourImage: listaImagenes && listaImagenes[0], precio: precio, tourName: nombre, descripcion: descripcion, ciudad: ciudad })
         }
 
         if (searchedDate) {
