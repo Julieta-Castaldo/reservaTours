@@ -5,7 +5,7 @@ export const useGetUserReservations = () => {
     
     const handleGetReservations = useCallback((id) => {
         const token = localStorage.getItem('token')
-        const url = `http://localhost:8080/Reserva/porUsuario/${id}`
+        const url = `http://ec2-18-191-138-20.us-east-2.compute.amazonaws.com/Reserva/porUsuario/${id}`
         fetch(url, {
             method: 'GET',
             headers: {

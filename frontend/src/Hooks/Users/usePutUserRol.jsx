@@ -3,7 +3,7 @@ import Swal from "sweetalert";
 export const usePutUserRol = () => {
     const token = localStorage.getItem('token')
     const handlePutUserRol = (id, setReloadUsers) => {
-        fetch(`http://localhost:8080/User/${id}/rol`, {
+        fetch(`http://ec2-18-191-138-20.us-east-2.compute.amazonaws.com/User/${id}/rol`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

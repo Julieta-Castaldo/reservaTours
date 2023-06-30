@@ -15,7 +15,7 @@ const Home = () => {
         value: ''
     })
     const [filtersAppliedFlag, setFiltersAppliedFlag] = useState(false)
-    const url = `http://localhost:8080/Tour/todosAleatorio`;
+    const url = `http://ec2-18-191-138-20.us-east-2.compute.amazonaws.com/Tour/todosAleatorio`;
     const { reloadProductsFlag, setReloadProductsFlag } = useGlobalState()
     useEffect(() => {
         setFiltersAppliedFlag(false)

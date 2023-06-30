@@ -3,7 +3,7 @@ import Swal from "sweetalert";
 export const usePutUser = () => {
     const token = localStorage.getItem('token')
     const handlePutUser = (data) => {
-        fetch(`http://localhost:8080/User/updateUser`, {
+        fetch(`http://ec2-18-191-138-20.us-east-2.compute.amazonaws.com/User/updateUser`, {
             method: 'PUT',
             body: JSON.stringify(data),
             headers: {

@@ -28,7 +28,7 @@ export const usePostReserva = () => {
             allowOutsideClick: false,
             title: 'Tu reserva está en proceso. Por favor, aguarda unos instantes',
             didOpen: () => {
-                fetch('http://localhost:8080/Reserva/crear', {
+                fetch('http://ec2-18-191-138-20.us-east-2.compute.amazonaws.com/Reserva/crear', {
                     method: 'POST',
                     body: JSON.stringify(data),
                     headers: {

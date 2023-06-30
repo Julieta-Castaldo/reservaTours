@@ -9,7 +9,7 @@ export const usePostCity = () => {
             latitud: Number(cityData.latitud),
             longitud: Number(cityData.longitud)
         }
-        fetch('http://localhost:8080/Ciudades/agregar', {
+        fetch('http://ec2-18-191-138-20.us-east-2.compute.amazonaws.com/Ciudades/agregar', {
             method: 'POST',
             body: JSON.stringify(cityToPost),
             headers: {

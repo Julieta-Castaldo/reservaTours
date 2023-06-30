@@ -21,7 +21,7 @@ import { IconMountain } from "../../svgs/IconMountain.jsx";
 
 export const CategoriesSection = ({ filter }) => {
     const [categories, setCategories] = useState([])
-    const url = `http://localhost:8080/Categoria/todos`;
+    const url = `http://ec2-18-191-138-20.us-east-2.compute.amazonaws.com/Categoria/todos`;
     const [inicio, setInicio] = useState(0)
     const [final, setFinal] = useState(3)
 

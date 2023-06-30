@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 export const useGetUsers = () => {
     const [users, setUsers] = useState([]);
-    const url = 'http://localhost:8080/User/api/users?page=1&size=150'
+    const url = 'http://ec2-18-191-138-20.us-east-2.compute.amazonaws.com/User/api/users?page=1&size=150'
     const token = localStorage.getItem('token')
     const handleGetUsers = useCallback((setReloadUsers) => {
         fetch(url, {

@@ -3,7 +3,7 @@ import Swal from "sweetalert";
 export const useDeleteCity = () => {
     const handleDeleteCity = (id, setReloadCities) => {
         const token = localStorage.getItem('token')
-        fetch(`http://localhost:8080/Ciudades/${id}`, {
+        fetch(`http://ec2-18-191-138-20.us-east-2.compute.amazonaws.com/Ciudades/${id}`, {
             method: 'DELETE',
             headers: {
                 "Content-type": "application/json; charset=UTF-8",

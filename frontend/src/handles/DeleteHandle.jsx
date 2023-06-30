@@ -10,7 +10,7 @@ const DeleteHandle = ({ tourId }) => {
     const {setProducts} = useGlobalState()
 
     const handleDelete = () => {
-        fetch(`http://localhost:8080/Tour/${tourId}`, {
+        fetch(`http://ec2-18-191-138-20.us-east-2.compute.amazonaws.com/Tour/${tourId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

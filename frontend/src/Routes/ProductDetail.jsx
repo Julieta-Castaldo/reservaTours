@@ -29,7 +29,7 @@ const ProductDetail = () => {
     const { id } = useParams()
     const { auth } = useGlobalState()
     const [productData, setProductData] = useState({})
-    const url = `http://localhost:8080/Tour/porId/` + id.replace(':', '');
+    const url = `http://ec2-18-191-138-20.us-east-2.compute.amazonaws.com/Tour/porId/` + id.replace(':', '');
     const [isOpenCarousel, setIsOpenCarousel] = useState(false)
     const { userLocation } = useGlobalState();
     const [tourDistance, setTourDistance] = useState(null)

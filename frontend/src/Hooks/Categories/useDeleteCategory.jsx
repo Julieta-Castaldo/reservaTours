@@ -3,7 +3,7 @@ import Swal from "sweetalert";
 export const useDeleteCategory = () => {
     const handleDeleteCategory = (id, setReloadCategories) => {
         const token = localStorage.getItem('token')
-        fetch(`http://localhost:8080/Categoria/${id}`, {
+        fetch(`http://ec2-18-191-138-20.us-east-2.compute.amazonaws.com/Categoria/${id}`, {
             method: 'DELETE',
             headers: {
                 "Content-type": "application/json; charset=UTF-8",

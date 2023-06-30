@@ -76,7 +76,7 @@ const CreateProduct = () => {
 
     const postTour = (e) => {
         e.preventDefault()
-        fetch('http://localhost:8080/Tour/agregar', {
+        fetch('http://ec2-18-191-138-20.us-east-2.compute.amazonaws.com/Tour/agregar', {
             method: 'POST',
             body: JSON.stringify(product),
             headers: {

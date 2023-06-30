@@ -36,7 +36,7 @@ const Login = () => {
 
     const postData = () => {
         setLoadingPlaneFlag(true)
-        fetch('http://localhost:8080/api/login', {
+        fetch('http://ec2-18-191-138-20.us-east-2.compute.amazonaws.com/api/login', {
             method: 'POST',
             body: JSON.stringify(user),
             headers: {

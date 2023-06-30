@@ -9,7 +9,7 @@ const Context = ({ children }) => {
     const [products, setProducts] = useState([])
     const [categories, handleGetCategories] = useGetCategories();
     const [reloadCategories, setReloadCategories] = useState(false)
-    const urlProducts = `http://localhost:8080/Tour/todos`;
+    const urlProducts = `http://ec2-18-191-138-20.us-east-2.compute.amazonaws.com/Tour/todos`;
     const [userLocation, setUserLocation] = useState(false)
     const [searchedDate, setSearchedDate] = useState(null)
     const [loadingPlaneFlag, setLoadingPlaneFlag] = useState(false)

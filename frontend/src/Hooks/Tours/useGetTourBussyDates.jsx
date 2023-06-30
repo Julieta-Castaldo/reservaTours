@@ -4,7 +4,7 @@ export const useGetTourBussyDates = () => {
     const [bussyDates, setBussyDates] = useState()
 
     const handleGetBussyDates = (tourId) => {
-        fetch(`http://localhost:8080/Tour/fechas-ocupadas-por-tour/${tourId}`, {
+        fetch(`http://ec2-18-191-138-20.us-east-2.compute.amazonaws.com/Tour/fechas-ocupadas-por-tour/${tourId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

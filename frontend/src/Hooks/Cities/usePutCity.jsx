@@ -9,7 +9,7 @@ export const usePutCity = () => {
             latitud: Number(cityData.latitud),
             longitud: Number(cityData.longitud)
         }
-        fetch(`http://localhost:8080/Ciudades/${id}`, {
+        fetch(`http://ec2-18-191-138-20.us-east-2.compute.amazonaws.com/Ciudades/${id}`, {
             method: 'PUT',
             body: JSON.stringify(cityToPost),
             headers: {

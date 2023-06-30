@@ -7,7 +7,7 @@ export const usePostUser = () => {
     const { setAuth } = useGlobalState()
     const { setLoadingPlaneFlag } = useGlobalState()
     const handlePostUser = (userData, onClose) => {
-        fetch('http://localhost:8080/api/sign-up', {
+        fetch('http://ec2-18-191-138-20.us-east-2.compute.amazonaws.com/api/sign-up', {
             method: 'POST',
             body: JSON.stringify(userData),
             headers: {

@@ -5,7 +5,7 @@ export const usePostCategory = () => {
     const token = localStorage.getItem('token')
     const { setReloadCategories } = useGlobalState()
     const handlePostCategory = (category) => {
-        fetch('http://localhost:8080/Categoria/agregar', {
+        fetch('http://ec2-18-191-138-20.us-east-2.compute.amazonaws.com/Categoria/agregar', {
             method: 'POST',
             body: JSON.stringify(category),
             headers: {

@@ -14,7 +14,7 @@ const CategorySection = () => {
     const [categoryName, setCategoryName] = useState('')
     const [loading, setLoading] = useState(false)
 
-    const url = `http://localhost:8080/Tour/pages?page=${currentPage + 1}&size=10&categoryId=${categoryId}`;
+    const url = `http://ec2-18-191-138-20.us-east-2.compute.amazonaws.com/Tour/pages?page=${currentPage + 1}&size=10&categoryId=${categoryId}`;
     useEffect(() => {
         setLoading(true)
         fetch(url)
